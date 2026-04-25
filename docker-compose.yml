@@ -1,0 +1,41 @@
+services:
+  # Tu base de datos PostgreSQL
+  db:
+    image: postgres:15
+    container_name: chefia_db_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: chefia_db
+      POSTGRES_USER: chefia_user
+      POSTGRES_PASSWORD: chefia_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chefia_user -d chefia_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Aquí agregamos tu aplicación de Spring Boot
+  chefia-backend:
+    build: . # Esto asume que tienes un archivo 'Dockerfile' en la misma carpeta
+    container_name: chefia_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db # Espera a que la DB levante antes de iniciar la app
+    env_file:
+      - .env # <--- ESTO ES LO CLAVE: Lee tu archivo .env automáticamente
+    environment:
+      # Mapeamos la variable del .env al entorno del contenedor
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      # También podrías pasar los datos de la DB para que sean dinámicos
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/chefia_db
+      - SPRING_DATASOURCE_USERNAME=chefia_user
+      - SPRING_DATASOURCE_PASSWORD=chefia_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update # Para que cree las tablas automáticamente
+
+volumes:
+  postgres_data:
