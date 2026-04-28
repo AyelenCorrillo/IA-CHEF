@@ -11,7 +11,7 @@
     --Background-color: #F8F4ED;
     --Color-text-and-buttons-green: #5B833F;
     --Color-text-brown-orange: #C66339;
-    --Color-gradient-box: linear-gradient(#F8EBD7 0%, #FBFBF9 53%, #E7EADD 100%);
+    --Color-gradient-box: linear-gradient(135deg, #F8EBD7 0%, #FBFBF9 53%, #E7EADD 100%);
 }
 
 /* Body definition */
