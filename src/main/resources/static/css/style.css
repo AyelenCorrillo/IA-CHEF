@@ -9,11 +9,14 @@
 /* Variables of usage in all project */
 :root {
     --Background-color: #F8F4ED;
+    --Color-tag-description-short: #F4D9B2;
+        --Color-tag-border-description-short: #000000;
     --Color-text-and-buttons-green: #5B833F;
     --Color-text-brown-orange: #C66339;
     --Color-gradient-box: linear-gradient(135deg, #F8EBD7 0%, #FBFBF9 53%, #E7EADD 100%);
-    --Color-menues-texts: #8D8B88;
+    --Color-text-grey: #8D8B88;
         --Color-boton-line: #E4DFD8;
+    --Color-text-buttons-green: #F3F2EB;
 }
 
 /* Body definition */
@@ -51,12 +54,60 @@ body {
 header {
     border-bottom: 1px solid var(--Color-boton-line);
 }
+.tag-description-short {
+    background-color: var(--Color-tag-description-short);
+    border: 1px solid var(--Color-tag-border-description-short);
+    border-radius: 25px;
+    width: fit-content;
+    height: auto;
+    padding: 5px 15px;
+    font-weight: bold;
+    transform: skewY(-5deg);
+}
+
+.index-container {
+    width: 50%;
+    margin: 20px;
+    justify-content: center;
+    position: relative;
+    left: 20px;
+}
 .glass-card {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-/* Listados */
+/* Lists and other elements */
 nav ul li {
-    color: var(--Color-menues-texts);
-}
+    color: var(--Color-text-grey);
+    }
+    
+    .text-green {
+        color: var(--Color-text-and-buttons-green);
+    }
+    
+    .text-brown-orange {
+        color: var(--Color-text-brown-orange);
+    }
+    
+    .text-grey {
+        color: var(--Color-text-grey);
+    }
+    
+    .text-black {
+        color: black;
+    }
+    
+    .text-buttons-green {
+        color: var(--Color-text-buttons-green);
+    }
+    
+    .start-cook {
+        background-color: var(--Color-text-and-buttons-green);
+        color: var(--Color-text-buttons-green);
+        border: none;
+        padding: 10px 10px;
+        border-radius: 25px;
+        cursor: pointer;
+        margin-top: 25px;
+    }
