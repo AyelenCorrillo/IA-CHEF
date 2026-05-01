@@ -12,6 +12,7 @@
     --Color-tag-description-short: #F4D9B2;
     --Color-tag-border-description-short: #000000;
     --Color-text-and-buttons-green: #5B833F;
+    --color-button-active-green: #31a34c;
     --Color-text-brown-orange: #C66339;
     --Color-gradient-box: linear-gradient(135deg, #F8EBD7 0%, #FBFBF9 53%, #E7EADD 100%);
     --Color-text-grey: #8D8B88;
@@ -115,6 +116,15 @@ nav ul li {
         display: flex;
         flex-direction: row;
         }
+button:hover {
+    background-color: var(--color-button-active-green);
+}
+
+button:active {
+    border-bottom: 0 solid var(--Color-tag-border-description-short);
+    border-right: 0 solid var(--Color-tag-border-description-short);
+    transform: translate(5px, 5px);
+}
         
         /* Images */
         
