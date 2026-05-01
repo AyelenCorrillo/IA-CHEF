@@ -106,13 +106,14 @@ nav ul li {
     .start-cook {
         background-color: var(--Color-text-and-buttons-green);
         color: var(--Color-text-buttons-green);
-        border: none;
+        border-bottom: 4px solid var(--Color-tag-border-description-short);
+            border-right: 4px solid var(--Color-tag-border-description-short);
         padding: 10px 10px;
         border-radius: 25px;
         cursor: pointer;
         margin-top: 25px;
         display: flex;
-            flex-direction: row;
+        flex-direction: row;
         }
         
         /* Images */
