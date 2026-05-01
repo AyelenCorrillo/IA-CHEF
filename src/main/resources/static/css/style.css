@@ -10,13 +10,14 @@
 :root {
     --Background-color: #F8F4ED;
     --Color-tag-description-short: #F4D9B2;
-        --Color-tag-border-description-short: #000000;
+    --Color-tag-border-description-short: #000000;
     --Color-text-and-buttons-green: #5B833F;
     --Color-text-brown-orange: #C66339;
     --Color-gradient-box: linear-gradient(135deg, #F8EBD7 0%, #FBFBF9 53%, #E7EADD 100%);
     --Color-text-grey: #8D8B88;
-        --Color-boton-line: #E4DFD8;
+    --Color-boton-line: #E4DFD8;
     --Color-text-buttons-green: #F3F2EB;
+    --Color-curvy-line: #EE9C2B;
 }
 
 /* Body definition */
@@ -110,4 +111,22 @@ nav ul li {
         border-radius: 25px;
         cursor: pointer;
         margin-top: 25px;
-    }
+        display: flex;
+            flex-direction: row;
+        }
+        
+        /* Images */
+        
+        .star_icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .line {
+            position: absolute;
+            left: 300px;
+            width: 261px;
+            height: 35px;
+}
