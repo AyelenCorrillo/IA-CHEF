@@ -12,6 +12,8 @@
     --Color-text-and-buttons-green: #5B833F;
     --Color-text-brown-orange: #C66339;
     --Color-gradient-box: linear-gradient(135deg, #F8EBD7 0%, #FBFBF9 53%, #E7EADD 100%);
+    --Color-menues-texts: #8D8B88;
+        --Color-boton-line: #E4DFD8;
 }
 
 /* Body definition */
@@ -45,9 +47,16 @@ body {
     font-family: 'Fredoka', cursive;
 }
 
-/* Containers div - article - section (boxes) settings */
+/* Header and Containers div - article - section (boxes) settings */
+header {
+    border-bottom: 1px solid var(--Color-boton-line);
+}
 .glass-card {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* Listados */
+nav ul li {
+    color: var(--Color-menues-texts);
 }
