@@ -127,7 +127,12 @@ button:active {
 }
         
         /* Images */
-        
+
+        .logo-AIChef {
+            width: 200px;
+
+        }
+
         .star_icon {
             width: 30px;
             height: 30px;
@@ -136,8 +141,6 @@ button:active {
         }
         
         .line {
-            position: absolute;
-            left: 300px;
-            width: 261px;
-            height: 35px;
+            bottom: -10px;
+            height: 30px;
 }
