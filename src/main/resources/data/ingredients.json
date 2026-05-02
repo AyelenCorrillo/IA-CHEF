@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Tomate",
+    "category": "Verduras",
+    "image": "/images/API_image/tomate.png"
+  },
+  {
+    "name": "Cebolla",
+    "category": "Verduras",
+    "image": "/images/API_image/cebolla.png"
+  },
+  {
+    "name": "Carne",
+    "category": "Proteinas",
+    "image": "/images/API_image/carne.png"
+  },
+  {
+    "name": "Limón",
+    "category": "Verduras",
+    "image": "/images/API_image/limon.png"
+  },
+  {
+    "name": "Ajo",
+    "category": "Verduras",
+    "image": "/images/API_image/ajo.png"
+  },
+  {
+    "name": "Papa",
+    "category": "Verduras",
+    "image": "/images/API_image/papa.png"
+  },
+    {
+    "name": "Huevos",
+    "category": "Proteinas",
+    "image": "/images/API_image/huevos.png"
+  },
+
+    {
+    "name": "Palta",
+    "category": "Frutas",
+    "image": "/images/API_image/palta.png"
+  }
+
+]

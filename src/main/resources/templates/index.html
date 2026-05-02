@@ -64,7 +64,7 @@
 
     <!-- INGREDIENTES -->
     <section id="ingredientes" class="py-20 px-6">
-      <div class="container mx-auto max-w-3xl text-center">
+      <div class="container mx-auto max-w-7xl text-center">
 
     <div class="inline-flex items-center justify-center gap-1 px-4 py-1 bg-[#E1E4D3] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
         <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
@@ -92,25 +92,77 @@
     </p>
     </div>
 
-  <!-- INPUT SECTION -->
-  <div class="grid lg:grid-cols-[1fr_380px] gap-8 items-start mt-10">
+ <!-- INGREDIENTES SECTION -->
+<div class="grid lg:grid-cols-[1fr_380px] gap-8 items-start mt-10">
+
   <div>
-    
-    <div class="flex gap-3 mb-6">
+
+    <div class="flex gap-3 mb-4">
       <input
         type="text"
         placeholder="Buscar o agregar ingrediente..."
-        class="flex-1 px-5 py-3.5 rounded-2xl border-2 border-black/20 bg-white text-black placeholder:text-grey focus:outline-none focus:border-[#5B833F]"/>
-
+        class="flex-1 px-5 py-3.5 rounded-2xl border-2 border-black/20 bg-white text-black placeholder:text-grey focus:outline-none focus:border-[#5B833F]"
+      />
     </div>
 
-  </div>
+    <div class="flex flex-wrap gap-2 mb-4">
 
-  <div class="gradient-box border-2 border-dashed border-black/30 rounded-3xl p-6 min-h-[300px] bg-[#FBFBF9]">
-    <p class="text-center text-grey">Tu tabla de ingredientes</p>
-  </div>
+    <button onclick="filterIngredients('all')" class="filter-btn px-3 py-1 font-semibold bg-[#5B833F] text-[#EEEEE3] border-black border-2 rounded-full shadow-[2px_2px_0px_black]">Todos</button>
+    <button onclick="filterIngredients('Verduras')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🥬 Verduras</button>
+    <button onclick="filterIngredients('Frutas')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍎 Frutas</button>
+    <button onclick="filterIngredients('Proteinas')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍗 Proteínas</button>
+    <button onclick="filterIngredients('Lacteos')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🧀 Lácteos</button>
+    <button onclick="filterIngredients('Otros')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍚 Otros</button>
 
 </div>
+
+    <form action="/generar-recetas" method="post">
+
+      <div class="grid grid-cols-5 gap-2 mt-2">
+
+        <div th:each="ing : ${ingredientes}"
+            class="ingredient-card"
+            th:attr="data-category=${ing.category}">
+
+          <label class="cursor-pointer block">
+
+            <input type="checkbox"
+                   name="ingredientesSeleccionados"
+                   th:value="${ing.name}"
+                   class="hidden peer" />
+
+            <div class="bg-white border-2 border-[#E0DEDD] rounded-xl p-2 w-35 h-35 text-center flex flex-col items-center justify-center transition
+                        peer-checked:border-black
+                        peer-checked:shadow-[2px_2px_0px_black]
+                        peer-checked:scale-105">
+
+              <img th:src="@{${ing.image}}" class="w-20 h-20 mb-1" />
+              <p class="text-m font-semibold" th:text="${ing.name}"></p>
+
+            </div>
+
+          </label>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  <div class="flex flex-col">
+
+    <div class="gradient-box border-2 border-dashed border-black/30 rounded-3xl p-6 min-h-[300px] bg-[#FBFBF9]">
+      <p class="text-center text-grey">Tu tabla de ingredientes</p>
+    </div>
+
+    <button type="submit"
+            class="mt-4 px-6 py-3 bg-[#5B833F] text-[#EEEEE3] font-semibold text-white rounded-full w-full">
+      Generar 3 recetas
+    </button>
+
+  </div>
+
+</form>
 
     </section>
 
@@ -120,6 +172,9 @@
 
         <!-- acá después van las cards de recetas -->
     </section>
+
+
+    <script src="/js/filters.js"></script>
 
 </body>
 </html>
