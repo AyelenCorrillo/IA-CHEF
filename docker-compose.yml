@@ -20,10 +20,14 @@ services:
 
   # Aquí agregamos tu aplicación de Spring Boot
   chefia-backend:
-    build: . # Esto asume que tienes un archivo 'Dockerfile' en la misma carpeta
+    build: # Esto asume que tienes un archivo 'Dockerfile' en la misma carpeta
+      context: .
+      dockerfile: Dockerfile.dev
     container_name: chefia_app
     ports:
       - "8080:8080"
+    volumes:
+    - .:/app
     depends_on:
       - db # Espera a que la DB levante antes de iniciar la app
     env_file:
