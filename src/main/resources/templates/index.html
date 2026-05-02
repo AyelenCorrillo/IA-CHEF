@@ -7,55 +7,119 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Home</title>
 </head>
+
 <body class="min-h-screen flex flex-col">
-    <header class="h-20 flex flex-row justify-between items-center px-4">
+
+    <!-- HEADER -->
+    <header class="h-20 flex flex-row justify-between sticky items-center px-4">
         <div>
             <img class="logo-AIChef" src="/images/logo_AIChef.png" alt="Logo AI Chef">
         </div>
         <nav>
             <ul class="flex flex-row gap-8 font-gantari">
-                <a href="#"><li>Ingredientes</li></a>
-                <a href="#"><li>Recetas</li></a>
+                <a href="#ingredientes"><li>Ingredientes</li></a>
+                <a href="#recetas"><li>Recetas</li></a>
             </ul>
         </nav>
     </header>
-    <main class="px-8 pt-10 flex-1 flex items-start">
-    <div class="index-container flex flex-col gap-6 max-w-5xl w-full">
 
-        <!-- tag -->
-        <div class="inline-flex items-center gap-2 px-4 py-1 bg-[#F4D9B2] border-2 border-black/80 rounded-full font-bold -skew-y-3 w-fit">
-            <img src="/images/star-icon-black.png" class="w-4 h-4" alt="star icon">
-            <span>Recetas con IA, hechas con lo que tenés</span>
+    <!-- HOME -->
+    <main id="home" class="px-8 pt-10 flex-1 flex items-start">
+
+        <div class="index-container flex flex-col gap-6 max-w-5xl w-full">
+
+            <div class="inline-flex items-center gap-2 px-4 py-1 bg-[#F4D9B2] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit">
+                <img src="/images/star-icon-black.png" class="w-4 h-4" alt="star icon">
+                <span>Recetas con IA, hechas con lo que tenés</span>
+            </div>
+
+            <h1 class="text-[100px] font-fraunces font-bold leading-[1]">
+                De la 
+                <span class="relative inline-block w-fit">
+                    <span class="text-green">heladera</span>
+                    <svg class="line absolute left-0 w-full" viewBox="0 0 300 60" preserveAspectRatio="none">
+                        <path d="M0 35 C 75 -10, 225 70, 300 35"
+                              stroke-width="12"
+                              stroke="#EE9C2B"
+                              fill="none"
+                              stroke-linecap="round"/>               
+                    </svg>
+                </span>
+                al <span class="text-brown-orange"><i>plato</i></span>.
+            </h1>
+
+            <p class="text-[30px] font-basic leading-[1.5] text-grey">
+                Decinos que tenés en la cocina y la IA te sugiere 
+                <span class="text-black">3 recetas</span> paso a paso, como un chef profesional.
+            </p>
+
+            <a href="#ingredientes"
+               class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#5B833F] text-white font-semibold border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
+                <img src="/images/star_icon.png" class="w-5 h-5">
+                Empezar a cocinar
+            </a>
+
         </div>
+    </main>
 
-        <!-- title -->
-        <h1 class="text-[100px] font-fraunces font-bold leading-[1]">
-            De la <span class="relative inline-block w-fit">
-    <span class="text-green">heladera</span>
-    <svg class="line absolute left-0 w-full" viewBox="0 0 300 60" preserveAspectRatio="none">
-        <path d="M0 35 C 75 -10, 225 70, 300 35"
-              stroke-width="12"
-              stroke="#EE9C2B"
-              fill="none"
-              stroke-linecap="round"/>               
-    </svg>
-    </span>
-        al <span class="text-brown-orange"><i>plato</i></span>.</h1>
+    <!-- INGREDIENTES -->
+    <section id="ingredientes" class="py-20 px-6">
+      <div class="container mx-auto max-w-3xl text-center">
 
-        <!-- text -->
-        <p class="text-[30px] font-basic leading-[1.5] text-grey">
-            Decinos que tenés en la cocina y la IA te sugiere 
-            <span class="text-black">3 recetas</span> paso a paso, como un chef profesional.
-        </p>
+    <div class="inline-flex items-center justify-center gap-1 px-4 py-1 bg-[#E1E4D3] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
+        <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
+        <span>Tu cocina, tu lienzo</span>
+    </div>
 
-        <!-- button -->
-        <a href="#ingredientes"
-           class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#5B833F] text-white font-semibold border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
-            <img src="/images/star_icon.png" class="w-5 h-5">
-            Empezar a cocinar
-        </a>
+    <h2 class="text-[60px] font-fraunces font-bold italic leading-[1.1] mb-6">
+        ¿Qué tenés en la 
+        <span class="relative inline-block w-fit">
+            <span class="text-green">cocina</span>
+
+            <svg class="line absolute left-0 w-full" viewBox="0 0 300 60" preserveAspectRatio="none">
+                <path d="M0 35 C 75 -10, 225 70, 300 35"
+                      stroke-width="10"
+                      stroke="#EE9C2B"
+                      fill="none"
+                      stroke-linecap="round"/>
+            </svg>
+        </span>
+        ?
+    </h2>
+
+    <p class="text-[20px] font-basic text-grey leading-[1.5]">
+        Buscá ingredientes a tu izquierda y arrastralos a tu tabla.
+    </p>
+    </div>
+
+  <!-- INPUT SECTION -->
+  <div class="grid lg:grid-cols-[1fr_380px] gap-8 items-start mt-10">
+  <div>
+    
+    <div class="flex gap-3 mb-6">
+      <input
+        type="text"
+        placeholder="Buscar o agregar ingrediente..."
+        class="flex-1 px-5 py-3.5 rounded-2xl border-2 border-black/20 bg-white text-black placeholder:text-grey focus:outline-none focus:border-[#5B833F]"/>
 
     </div>
-</main>
+
+  </div>
+
+  <div class="gradient-box border-2 border-dashed border-black/30 rounded-3xl p-6 min-h-[300px] bg-[#FBFBF9]">
+    <p class="text-center text-grey">Tu tabla de ingredientes</p>
+  </div>
+
+</div>
+
+    </section>
+
+    <!-- RECETAS -->
+    <section id="recetas" class="min-h-screen px-8 py-20">
+        <h2 class="text-5xl font-fraunces font-bold">Recetas</h2>
+
+        <!-- acá después van las cards de recetas -->
+    </section>
+
 </body>
 </html>
