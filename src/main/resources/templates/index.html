@@ -110,6 +110,43 @@
     <p class="text-center text-grey">Tu tabla de ingredientes</p>
   </div>
 
+<form action="/generar-recetas" method="post">
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
+
+    <div th:each="ing : ${ingredientes}" class="ingredient-card">
+
+      <label class="block cursor-pointer">
+
+        <input
+          type="checkbox"
+          name="ingredientesSeleccionados"
+          th:value="${ing}"
+          class="hidden peer"
+        />
+
+        <div class="box border-2 border-black rounded-xl p-3 text-center transition 
+                    peer-checked:bg-green-200 peer-checked:scale-105">
+
+          <p th:text="${ing}"></p>
+
+        </div>
+
+      </label>
+
+    </div>
+
+  </div>
+
+  <div class="text-center mt-10">
+    <button type="submit" id="btnGenerar"
+            class="px-6 py-3 bg-green-700 text-white rounded-full">
+      Generar recetas
+    </button>
+  </div>
+
+</form>
+
 </div>
 
     </section>

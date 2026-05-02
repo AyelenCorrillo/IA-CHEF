@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import jakarta.persistence.PrePersist;
 
 @Entity
 @Table(name = "recetas")
@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Receta {
 
     @Id
@@ -37,6 +38,9 @@ public class Receta {
     private String imagenUrl;
 
     private LocalDateTime fechaCreacion;
-}
-    
 
+    @PrePersist
+    public void prePersist() {
+    this.fechaCreacion = LocalDateTime.now();
+    }
+}

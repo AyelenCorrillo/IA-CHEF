@@ -107,4 +107,27 @@ nav ul li {
         .line {
             bottom: -10px;
             height: 25px;
-}
+        }
+
+        .ingredient {
+        cursor: pointer;
+        display: block;
+        }
+
+        .ingredient input {
+        display: none;
+        }
+
+        .box {
+        border: 2px solid black;
+        padding: 10px;
+        text-align: center;
+        border-radius: 10px;
+        transition: 0.2s;
+        }
+
+        .ingredient input:checked + .box {
+        background: #d1f7d6;
+        border-color: green;
+        transform: scale(1.05);
+        }
