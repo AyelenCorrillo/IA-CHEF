@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chefia.app.dto.RecetaDTO;
+import com.chefia.app.model.Ingredient;
 import com.chefia.app.repository.RecetaRepository;
 import com.chefia.app.service.RecetaService;
 import com.chefia.app.service.IngredientService;
@@ -34,9 +35,18 @@ public class RecetaController {
      * Muestra la pantalla principal con la grilla de ingredientes.
      */
     @GetMapping("/")
-    public String mostrarIndex(Model model) {
+    public String mostrarIndex(@RequestParam(required = false) String cat,
+                           Model model) {
 
-    model.addAttribute("ingredientes", ingredientService.getIngredients());
+    List<Ingredient> ingredientes = ingredientService.getIngredients();
+
+    if (cat != null && !cat.isEmpty()) {
+        ingredientes = ingredientes.stream()
+                .filter(i -> i.getCategory().equalsIgnoreCase(cat))
+                .toList();
+    }
+
+    model.addAttribute("ingredientes", ingredientes);
 
     return "index";
 }
