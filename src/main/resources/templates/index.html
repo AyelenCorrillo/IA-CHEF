@@ -112,6 +112,7 @@
 
 <form action="/generar-recetas" method="post">
 
+  <!-- SOLO INGREDIENTES -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
 
     <div th:each="ing : ${ingredientes}" class="ingredient-card">
@@ -126,9 +127,11 @@
         />
 
         <div class="box border-2 border-black rounded-xl p-3 text-center transition 
-                    peer-checked:bg-green-200 peer-checked:scale-105">
+            peer-checked:bg-green-200 peer-checked:scale-105">
 
-          <p th:text="${ing}"></p>
+            <img th:src="@{${ing.image}}" class="w-12 h-12 mx-auto mb-2" />
+
+            <p th:text="${ing.name}"></p>
 
         </div>
 
@@ -138,8 +141,10 @@
 
   </div>
 
+  <!-- BOTÓN -->
   <div class="text-center mt-10">
-    <button type="submit" id="btnGenerar"
+    <button type="submit"
+            id="btnGenerar"
             class="px-6 py-3 bg-green-700 text-white rounded-full">
       Generar recetas
     </button>

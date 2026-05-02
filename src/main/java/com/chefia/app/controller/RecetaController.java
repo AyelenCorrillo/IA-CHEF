@@ -1,6 +1,5 @@
 package com.chefia.app.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -13,16 +12,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.chefia.app.dto.RecetaDTO;
 import com.chefia.app.repository.RecetaRepository;
 import com.chefia.app.service.RecetaService;
+import com.chefia.app.service.IngredientService;
 
 @Controller
 public class RecetaController {
 
     private final RecetaService recetaService;
     private final RecetaRepository recetaRepository;
+    private final IngredientService ingredientService;
 
-    public RecetaController(RecetaService recetaService, RecetaRepository recetaRepository) {
-        this.recetaService = recetaService;
-        this.recetaRepository = recetaRepository;
+
+    public RecetaController(RecetaService recetaService,
+                        RecetaRepository recetaRepository,
+                        IngredientService ingredientService) {
+    this.recetaService = recetaService;
+    this.recetaRepository = recetaRepository;
+    this.ingredientService = ingredientService;
     }
 
     /**
@@ -30,16 +35,11 @@ public class RecetaController {
      */
     @GetMapping("/")
     public String mostrarIndex(Model model) {
-        // Lista de ingredientes para la vista (pueden venir de una DB o ser estáticos)
-        List<String> ingredientesDisponibles = Arrays.asList(
-            "Tomate", "Cebolla", "Ajo", "Pimiento", "Papa", "Zanahoria", 
-            "Espinaca", "Palta", "Limón", "Naranja", "Banana", "Manzana", 
-            "Pollo", "Carne", "Pescado"
-        );
-        model.addAttribute("ingredientes", ingredientesDisponibles);
-        return "index";
-    }
 
+    model.addAttribute("ingredientes", ingredientService.getIngredients());
+
+    return "index";
+}
     /**
      * Procesa los ingredientes seleccionados y pide las 3 recetas a Groq.
      */
