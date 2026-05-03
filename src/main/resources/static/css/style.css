@@ -113,3 +113,7 @@ nav ul li {
             bottom: -10px;
             height: 25px;
 }
+.color-border-foggy-day {
+    border: 1px solid var(--Color-border-foggy-day);
+    box-shadow: 2px 2px var(--Color-text-grey);
+}
