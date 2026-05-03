@@ -87,13 +87,17 @@ nav ul li {
         .text-green-recipes {
             color: var(--Color-border-text-green-recipes);
         }
-    .text-brown-orange {
-        color: var(--Color-text-brown-orange);
-    }
-    
-    .text-grey {
-        color: var(--Color-text-grey);
-    }
+        
+                .color-border-text-green-recipes {
+                    border: 1px solid var(--Color-border-text-green-recipes);
+                    padding: 0.75rem;
+                    border-radius: 1rem;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    min-width: 3rem;
+                }
     
     .text-black {
         color: black;
