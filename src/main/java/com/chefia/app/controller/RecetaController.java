@@ -1,8 +1,8 @@
 package com.chefia.app.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,34 +10,46 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chefia.app.dto.RecetaDTO;
+import com.chefia.app.model.Ingredient;
 import com.chefia.app.repository.RecetaRepository;
 import com.chefia.app.service.RecetaService;
+import com.chefia.app.service.IngredientService;
 
+@Controller
 public class RecetaController {
 
     private final RecetaService recetaService;
     private final RecetaRepository recetaRepository;
+    private final IngredientService ingredientService;
 
-    public RecetaController(RecetaService recetaService, RecetaRepository recetaRepository) {
-        this.recetaService = recetaService;
-        this.recetaRepository = recetaRepository;
+
+    public RecetaController(RecetaService recetaService,
+                        RecetaRepository recetaRepository,
+                        IngredientService ingredientService) {
+    this.recetaService = recetaService;
+    this.recetaRepository = recetaRepository;
+    this.ingredientService = ingredientService;
     }
 
     /**
      * Muestra la pantalla principal con la grilla de ingredientes.
      */
     @GetMapping("/")
-    public String mostrarIndex(Model model) {
-        // Lista de ingredientes para la vista (pueden venir de una DB o ser estáticos)
-        List<String> ingredientesDisponibles = Arrays.asList(
-            "Tomate", "Cebolla", "Ajo", "Pimiento", "Papa", "Zanahoria", 
-            "Espinaca", "Palta", "Limón", "Naranja", "Banana", "Manzana", 
-            "Pollo", "Carne", "Pescado"
-        );
-        model.addAttribute("ingredientes", ingredientesDisponibles);
-        return "index";
+    public String mostrarIndex(@RequestParam(required = false) String cat,
+                           Model model) {
+
+    List<Ingredient> ingredientes = ingredientService.getIngredients();
+
+    if (cat != null && !cat.isEmpty()) {
+        ingredientes = ingredientes.stream()
+                .filter(i -> i.getCategory().equalsIgnoreCase(cat))
+                .toList();
     }
 
+    model.addAttribute("ingredientes", ingredientes);
+
+    return "index";
+}
     /**
      * Procesa los ingredientes seleccionados y pide las 3 recetas a Groq.
      */

@@ -113,11 +113,3 @@ nav ul li {
             bottom: -10px;
             height: 25px;
 }
-.color-border-foggy-day {
-    border: 1px solid var(--Color-border-foggy-day);
-    box-shadow: 1px 1px var(--Color-text-grey);
-}
-
-.color-border-text-green-recipes {
-    border: 1px solid var(--Color-border-text-green-recipes);
-}
