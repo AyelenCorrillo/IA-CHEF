@@ -18,6 +18,8 @@
     --Color-boton-line: #E4DFD8;
     --Color-text-buttons-green: #F3F2EB;
     --Color-curvy-line: #EE9C2B;
+    --Color-border-foggy-day: #E9E4DC;
+        --Color-border-text-green-recipes: #608745;
 }
 
 html {
@@ -81,7 +83,10 @@ nav ul li {
     .text-green {
         color: var(--Color-text-and-buttons-green);
     }
-    
+
+        .text-green-recipes {
+            color: var(--Color-border-text-green-recipes);
+        }
     .text-brown-orange {
         color: var(--Color-text-brown-orange);
     }
@@ -107,4 +112,12 @@ nav ul li {
         .line {
             bottom: -10px;
             height: 25px;
+}
+.color-border-foggy-day {
+    border: 1px solid var(--Color-border-foggy-day);
+    box-shadow: 1px 1px var(--Color-text-grey);
+}
+
+.color-border-text-green-recipes {
+    border: 1px solid var(--Color-border-text-green-recipes);
 }
