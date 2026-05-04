@@ -19,7 +19,8 @@
     --Color-text-buttons-green: #F3F2EB;
     --Color-curvy-line: #EE9C2B;
     --Color-border-foggy-day: #E9E4DC;
-        --Color-border-text-green-recipes: #608745;
+    --Color-border-text-green-recipes: #608745;
+    --Color-text-brown-steps: #CC754F;
 }
 
 html {
@@ -80,43 +81,46 @@ nav ul li {
     color: var(--Color-text-grey);
     }
     
-    .text-green {
-        color: var(--Color-text-and-buttons-green);
-    }
+.text-green {
+    color: var(--Color-text-and-buttons-green);
+}
 
-        .text-green-recipes {
-            color: var(--Color-border-text-green-recipes);
-        }
+.text-green-recipes {
+    color: var(--Color-border-text-green-recipes);
+}
         
-                .color-border-text-green-recipes {
-                    border: 1px solid var(--Color-border-text-green-recipes);
-                    padding: 0.75rem;
-                    border-radius: 9999px;
-                        overflow: hidden;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 0.5rem;
-                    min-width: 3rem;
-                }
+.color-border-text-green-recipes {
+    border: 1px solid var(--Color-border-text-green-recipes);
+    padding: 0.75rem;
+    border-radius: 9999px;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 3rem;
+}
+.text-brown {
+    color: var(--Color-text-brown-steps);
+}
     
-    .text-black {
-        color: black;
-    }
+.text-black {
+    color: black;
+}
     
-    .text-buttons-green {
-        color: var(--Color-text-buttons-green);
-    }
+.text-buttons-green {
+    color: var(--Color-text-buttons-green);
+}
         
-        /* Images */
+/* Images */
 
-        .logo-AIChef {
-            width: 200px;
-        }
+.logo-AIChef {
+    width: 200px;
+}
 
-        .line {
-            bottom: -10px;
-            height: 25px;
+.line {
+    bottom: -10px;
+    height: 25px;
 }
 .color-border-foggy-day {
     border: 1px solid var(--Color-border-foggy-day);
