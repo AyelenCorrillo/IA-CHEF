@@ -83,13 +83,24 @@ INSERT INTO public.ingredientes VALUES (24, 'Otros', '/images/API_image/aceite.p
 INSERT INTO public.ingredientes VALUES (25, 'Otros', '/images/API_image/harina.png', 'Harina', NULL, NULL);
 INSERT INTO public.ingredientes VALUES (26, 'Proteinas', '/images/API_image/pollo.png', 'Pollo', NULL, NULL);
 INSERT INTO public.ingredientes VALUES (27, 'Proteinas', '/images/API_image/carne.png', 'Carne', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (28, 'Verduras', '/images/API_image/zucchini.png', 'Zucchini', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (29, 'Verduras', '/images/API_image/berenjena.png', 'Berenjena', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (30, 'Verduras', '/images/API_image/pepino.png', 'Pepino', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (31, 'Verduras', '/images/API_image/limon.png', 'Limon', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (32, 'Otros', '/images/API_image/avena.png', 'Avena', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (33, 'Lacteos', '/images/API_image/quesocrema.png', 'Queso crema', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (34, 'Legumbres', '/images/API_image/lentejas.png', 'Lentejas', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (35, 'Legumbres', '/images/API_image/garbanzos.png', 'Garbanzos', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (36, 'Verduras', '/images/API_image/choclo.png', 'Choclo', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (37, 'Legumbres', '/images/API_image/arvejas.png', 'Arvejas', NULL, NULL);
+INSERT INTO public.ingredientes VALUES (38, 'Legumbres', '/images/API_image/porotos.png', 'Porotos', NULL, NULL);
 
 
 --
 -- Name: ingredientes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chefia_user
 --
 
-SELECT pg_catalog.setval('public.ingredientes_id_seq', 27, true);
+SELECT pg_catalog.setval('public.ingredientes_id_seq', 38, true);
 
 
 --
