@@ -93,14 +93,14 @@ INSERT INTO public.ingredientes VALUES (34, 'Legumbres', '/images/API_image/lent
 INSERT INTO public.ingredientes VALUES (35, 'Legumbres', '/images/API_image/garbanzos.png', 'Garbanzos', NULL, NULL);
 INSERT INTO public.ingredientes VALUES (36, 'Verduras', '/images/API_image/choclo.png', 'Choclo', NULL, NULL);
 INSERT INTO public.ingredientes VALUES (37, 'Legumbres', '/images/API_image/arvejas.png', 'Arvejas', NULL, NULL);
-
+INSERT INTO public.ingredientes VALUES (38, 'Legumbres', '/images/API_image/porotos.png', 'Porotos', NULL, NULL);
 
 
 --
 -- Name: ingredientes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chefia_user
 --
 
-SELECT pg_catalog.setval('public.ingredientes_id_seq', 27, true);
+SELECT pg_catalog.setval('public.ingredientes_id_seq', 38, true);
 
 
 --
