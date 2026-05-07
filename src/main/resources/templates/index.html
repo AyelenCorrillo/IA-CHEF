@@ -66,7 +66,7 @@
     <section id="ingredientes" class="py-20 px-6">
       <div class="container mx-auto max-w-7xl text-center">
 
-    <div class="inline-flex items-center justify-center gap-1 px-4 py-1 bg-[#E1E4D3] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
+    <div class="inline-flex items-center justify-center gap-1 px-4 py-0.5 bg-[#E1E4D3] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
         <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
         <span>Tu cocina, tu lienzo</span>
     </div>
@@ -99,6 +99,7 @@
 
     <div class="flex gap-3 mb-4">
       <input
+        id="ingredientSearch"
         type="text"
         placeholder="Buscar o agregar ingrediente..."
         class="flex-1 px-5 py-3.5 rounded-2xl border-2 border-black/20 bg-white text-black placeholder:text-grey focus:outline-none focus:border-[#5B833F]"
@@ -177,9 +178,29 @@
 
     </section>
 
-    <!-- RECETAS -->
+
     <section id="recetas" class="min-h-screen px-8 py-20">
-        <h2 class="text-5xl font-fraunces font-bold">Recetas</h2>
+        
+           <div class="container mx-auto text-center mb-14">
+
+        <div class="inline-flex items-center justify-center gap-2 px-4 py-0.5 bg-[#EFE2D6] border-2 border-black/70 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
+            <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
+            <span class="text-black">Recién salidas del horno</span>
+        </div>
+
+        <h2 class="text-[64px] font-fraunces font-bold italic leading-none mb-4">
+            Tus 3 
+            <span class="text-[#C66339]">recetas</span>
+        </h2>
+
+        <p class="text-[22px] text-[#7A746E] leading-relaxed font-basic">
+            La IA combinó tus ingredientes en estas tres opciones.
+            <br>
+            Elegí la que más te tiente.
+        </p>
+
+    </div>
+
         <div class="flex flex-row justify-center gap-8 mt-10">
             <article class="rounded-xl p-[10px] w-[291px] h-[671px] flex flex-col color-border-foggy-day">
                 <div class="border-b-2 border-dashed border-gray-300">

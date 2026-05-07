@@ -192,3 +192,20 @@ function removeIngredient(name) {
 
     renderDropZone();
 }
+
+const searchInput = document.getElementById('ingredientSearch');
+const ingredientCards = document.querySelectorAll('.ingredient-card');
+
+searchInput.addEventListener('input', () => {
+    const searchText = searchInput.value.toLowerCase();
+
+    ingredientCards.forEach(card => {
+        const ingredientName = card.textContent.toLowerCase();
+
+        if (ingredientName.includes(searchText)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
