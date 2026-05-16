@@ -38,13 +38,13 @@ public class RecetaController {
     public String mostrarIndex(@RequestParam(required = false) String cat,
                            Model model) {
 
-    List<Ingredient> ingredientes = ingredientService.getIngredients();
+    List<Ingredient> ingredientes;
 
-    if (cat != null && !cat.isEmpty()) {
-        ingredientes = ingredientes.stream()
-                .filter(i -> i.getCategory().equalsIgnoreCase(cat))
-                .toList();
-    }
+        if (cat != null && !cat.isEmpty()) {
+    ingredientes = ingredientService.getIngredientsByCategory(cat);
+        } else {
+            ingredientes = ingredientService.getIngredients();
+        }
 
     model.addAttribute("ingredientes", ingredientes);
 

@@ -5,9 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -15,6 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "ingredientes")
+@ToString(exclude = "category")
 public class Ingredient {
     
     @Id 
@@ -24,8 +28,9 @@ public class Ingredient {
     @Column(name = "nombre")
     private String name;
 
-    @Column(name = "categoria")
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Category category;
     
     @Column(name = "imagen_url")
     private String image;
