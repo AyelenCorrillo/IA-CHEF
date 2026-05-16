@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +18,12 @@
         </div>
         <nav>
             <ul class="flex flex-row gap-8 font-gantari">
-                <a href="#ingredientes"><li>Ingredientes</li></a>
-                <a href="#recetas"><li>Recetas</li></a>
+                <a href="#ingredientes">
+                    <li>Ingredientes</li>
+                </a>
+                <a href="#recetas">
+                    <li>Recetas</li>
+                </a>
             </ul>
         </nav>
     </header>
@@ -28,33 +33,31 @@
 
         <div class="index-container flex flex-col gap-6 max-w-5xl w-full">
 
-            <div class="inline-flex items-center gap-2 px-4 py-1 bg-[#F4D9B2] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1 bg-[#F4D9B2] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit">
                 <img src="/images/star-icon-black.png" class="w-4 h-4" alt="star icon">
                 <span>Recetas con IA, hechas con lo que tenés</span>
             </div>
 
             <h1 class="text-[100px] font-fraunces font-bold leading-[1]">
-                De la 
+                De la
                 <span class="relative inline-block w-fit">
                     <span class="text-green">heladera</span>
                     <svg class="line absolute left-0 w-full" viewBox="0 0 300 60" preserveAspectRatio="none">
-                        <path d="M0 35 C 75 -10, 225 70, 300 35"
-                              stroke-width="12"
-                              stroke="#EE9C2B"
-                              fill="none"
-                              stroke-linecap="round"/>               
+                        <path d="M0 35 C 75 -10, 225 70, 300 35" stroke-width="12" stroke="#EE9C2B" fill="none"
+                            stroke-linecap="round" />
                     </svg>
                 </span>
                 al <span class="text-brown-orange"><i>plato</i></span>.
             </h1>
 
             <p class="text-[30px] font-basic leading-[1.5] text-grey">
-                Decinos que tenés en la cocina y la IA te sugiere 
+                Decinos que tenés en la cocina y la IA te sugiere
                 <span class="text-black">3 recetas</span> paso a paso, como un chef profesional.
             </p>
 
             <a href="#ingredientes"
-               class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#5B833F] text-white font-semibold border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#5B833F] text-white font-semibold border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
                 <img src="/images/star_icon.png" class="w-5 h-5">
                 Empezar a cocinar
             </a>
@@ -64,234 +67,380 @@
 
     <!-- INGREDIENTES -->
     <section id="ingredientes" class="py-20 px-6">
-      <div class="container mx-auto max-w-7xl text-center">
+        <div class="container mx-auto max-w-7xl text-center">
 
-    <div class="inline-flex items-center justify-center gap-1 px-4 py-0.5 bg-[#E1E4D3] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
-        <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
-        <span>Tu cocina, tu lienzo</span>
-    </div>
+            <div
+                class="inline-flex items-center justify-center gap-1 px-4 py-0.5 bg-[#E1E4D3] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
+                <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
+                <span>Tu cocina, tu lienzo</span>
+            </div>
 
-    <h2 class="text-[60px] font-fraunces font-bold italic leading-[1.1] mb-6">
-        ¿Qué tenés en la 
-        <span class="relative inline-block w-fit">
-            <span class="text-green">cocina</span>
+            <h2 class="text-[60px] font-fraunces font-bold italic leading-[1.1] mb-6">
+                ¿Qué tenés en la
+                <span class="relative inline-block w-fit">
+                    <span class="text-green">cocina</span>
 
-            <svg class="line absolute left-0 w-full" viewBox="0 0 300 60" preserveAspectRatio="none">
-                <path d="M0 35 C 75 -10, 225 70, 300 35"
-                      stroke-width="10"
-                      stroke="#EE9C2B"
-                      fill="none"
-                      stroke-linecap="round"/>
-            </svg>
-        </span>
-        ?
-    </h2>
+                    <svg class="line absolute left-0 w-full" viewBox="0 0 300 60" preserveAspectRatio="none">
+                        <path d="M0 35 C 75 -10, 225 70, 300 35" stroke-width="10" stroke="#EE9C2B" fill="none"
+                            stroke-linecap="round" />
+                    </svg>
+                </span>
+                ?
+            </h2>
 
-    <p class="text-[20px] font-basic text-grey leading-[1.5]">
-        Buscá ingredientes a tu izquierda y arrastralos a tu tabla.
-    </p>
-    </div>
+            <p class="text-[20px] font-basic text-grey leading-[1.5]">
+                Buscá ingredientes a tu izquierda y arrastralos a tu tabla.
+            </p>
+        </div>
 
- <!-- INGREDIENTES SECTION -->
-<div class="grid lg:grid-cols-[1fr_380px] gap-8 items-start mt-10">
+        <!-- INGREDIENTES SECTION -->
+        <div class="grid lg:grid-cols-[1fr_380px] gap-8 items-start mt-10">
 
-  <div>
+            <div>
 
-    <div class="flex gap-3 mb-4">
-      <input
-        id="ingredientSearch"
-        type="text"
-        placeholder="Buscar o agregar ingrediente..."
-        class="flex-1 px-5 py-3.5 rounded-2xl border-2 border-black/20 bg-white text-black placeholder:text-grey focus:outline-none focus:border-[#5B833F]"
-      />
-    </div>
+                <div class="flex gap-3 mb-4">
+                    <input id="ingredientSearch" type="text" placeholder="Buscar o agregar ingrediente..."
+                        class="flex-1 px-5 py-3.5 rounded-2xl border-2 border-black/20 bg-white text-black placeholder:text-grey focus:outline-none focus:border-[#5B833F]" />
+                </div>
 
-    <div class="flex flex-wrap gap-2 mb-4">
+                <div class="flex flex-wrap gap-2 mb-4">
 
-    <button onclick="filterIngredients('all')" class="filter-btn px-3 py-1 font-semibold bg-[#5B833F] text-[#EEEEE3] border-black border-2 rounded-full shadow-[2px_2px_0px_black]">Todos</button>
-    <button onclick="filterIngredients('Verduras')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🥬 Verduras</button>
-    <button onclick="filterIngredients('Frutas')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍎 Frutas</button>
-    <button onclick="filterIngredients('Proteinas')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍗 Proteínas</button>
-    <button onclick="filterIngredients('Lacteos')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🧀 Lácteos</button>
-    <button onclick="filterIngredients('Legumbres')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🌱 Legumbres</button>
-    <button onclick="filterIngredients('Otros')" class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍚 Otros</button>
+                    <button onclick="filterIngredients('all')"
+                        class="filter-btn px-3 py-1 font-semibold bg-[#5B833F] text-[#EEEEE3] border-black border-2 rounded-full shadow-[2px_2px_0px_black]">Todos</button>
+                    <button onclick="filterIngredients('Verduras')"
+                        class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🥬
+                        Verduras</button>
+                    <button onclick="filterIngredients('Frutas')"
+                        class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍎
+                        Frutas</button>
+                    <button onclick="filterIngredients('Proteinas')"
+                        class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍗
+                        Proteínas</button>
+                    <button onclick="filterIngredients('Lacteos')"
+                        class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🧀
+                        Lácteos</button>
+                    <button onclick="filterIngredients('Legumbres')"
+                        class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🌱
+                        Legumbres</button>
+                    <button onclick="filterIngredients('Otros')"
+                        class="filter-btn px-3 py-1 font-semibold bg-white border-[#E0DEDD] border-2 rounded-full">🍚
+                        Otros</button>
 
-</div>
+                </div>
 
-    <form action="/generar-recetas" method="post">
+                <form action="/generar-recetas" method="post">
 
-      <div class="grid grid-cols-5 gap-2 mt-2">
+                    <div class="grid grid-cols-5 gap-2 mt-2">
 
-        <div th:each="ing : ${ingredientes}"
-            class="ingredient-card"
-            th:attr="data-category=${ing.category}, data-name=${ing.name}"
-            draggable="true">
+                        <div th:each="ing : ${ingredientes}" class="ingredient-card"
+                            th:attr="data-category=${ing.category}, data-name=${ing.name}" draggable="true">
 
-          <label class="cursor-pointer block">
+                            <label class="cursor-pointer block">
 
-            <input type="checkbox"
-                   name="ingredientesSeleccionados"
-                   th:value="${ing.name}"
-                   class="hidden peer" />
+                                <input type="checkbox" name="ingredientesSeleccionados" th:value="${ing.name}"
+                                    class="hidden peer" />
 
-            <div class="bg-white border-2 border-[#E0DEDD] rounded-xl p-2 w-35 h-35 text-center flex flex-col items-center justify-center transition
+                                <div class="bg-white border-2 border-[#E0DEDD] rounded-xl p-2 w-35 h-35 text-center flex flex-col items-center justify-center transition
                         peer-checked:border-black
                         peer-checked:shadow-[2px_2px_0px_black]
                         peer-checked:scale-100 
                         pointer-events-auto">
 
-              <img th:src="@{${ing.image}}" class="w-20 h-20 mb-1" />
-              <p class="text-m font-semibold" th:text="${ing.name}"></p>
+                                    <img th:src="@{${ing.image}}" class="w-20 h-20 mb-1" />
+                                    <p class="text-m font-semibold" th:text="${ing.name}"></p>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+                    </div>
 
             </div>
 
-          </label>
+            <div class="flex flex-col">
+                <div id="drop-zone"
+                    class="gradient-box border-2 border-dashed border-black/30 rounded-3xl p-6 min-h-[300px] bg-[#FBFBF9] flex flex-col items-center justify-center text-center shadow-[6px_6px_0px_#d1d5db]">
 
-        </div>
+                    <img src="/images/tomate-icon.png" alt="Tomate Icon">
 
-      </div>
+                    <p class="text-lg font-semibold text-gray-800">
+                        Tu tabla está vacía
+                    </p>
 
-  </div>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Arrastrá o hace click - mínimo 2 ingredientes
+                    </p>
 
-  <div class="flex flex-col">
-<div id="drop-zone" class="gradient-box border-2 border-dashed border-black/30 rounded-3xl p-6 min-h-[300px] bg-[#FBFBF9] flex flex-col items-center justify-center text-center shadow-[6px_6px_0px_#d1d5db]">
+                </div>
+                <button type="submit"
+                    class="mt-4 px-6 py-3 bg-[#5B833F] text-[#EEEEE3] font-semibold text-white rounded-full w-full border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
+                    Generar 3 recetas
+                </button>
 
-  <img src="/images/tomate-icon.png" alt="Tomate Icon">
+            </div>
 
-  <p class="text-lg font-semibold text-gray-800">
-    Tu tabla está vacía
-  </p>
-
-  <p class="text-sm text-gray-500 mt-1">
-    Arrastrá o hace click - mínimo 2 ingredientes
-  </p>
-
-</div>
-    <button type="submit"
-            class="mt-4 px-6 py-3 bg-[#5B833F] text-[#EEEEE3] font-semibold text-white rounded-full w-full border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
-      Generar 3 recetas
-    </button>
-
-  </div>
-
-</form>
+            </form>
 
     </section>
 
 
     <section id="recetas" class="min-h-screen px-8 py-20">
-        
-           <div class="container mx-auto text-center mb-14">
 
-        <div class="inline-flex items-center justify-center gap-2 px-4 py-0.5 bg-[#EFE2D6] border-2 border-black/70 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
-            <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
-            <span class="text-black">Recién salidas del horno</span>
+        <div class="container mx-auto text-center mb-14">
+
+            <div
+                class="inline-flex items-center justify-center gap-2 px-4 py-0.5 bg-[#EFE2D6] border-2 border-black/70 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
+                <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
+                <span class="text-black">Recién salidas del horno</span>
+            </div>
+
+            <h2 class="text-[64px] font-fraunces font-bold italic leading-none mb-4">
+                Tus 3
+                <span class="text-[#C66339]">recetas</span>
+            </h2>
+
+            <p class="text-[22px] text-[#7A746E] leading-relaxed font-basic">
+                La IA combinó tus ingredientes en estas tres opciones.
+                <br>
+                Elegí la que más te tiente.
+            </p>
+
         </div>
 
-        <h2 class="text-[64px] font-fraunces font-bold italic leading-none mb-4">
-            Tus 3 
-            <span class="text-[#C66339]">recetas</span>
-        </h2>
-
-        <p class="text-[22px] text-[#7A746E] leading-relaxed font-basic">
-            La IA combinó tus ingredientes en estas tres opciones.
-            <br>
-            Elegí la que más te tiente.
-        </p>
-
-    </div>
-
         <div class="flex flex-row justify-center gap-8 mt-10">
-            <article class="rounded-xl p-[10px] w-[291px] h-[671px] flex flex-col color-border-foggy-day">
-                <div class="border-b-2 border-dashed border-gray-300">
-                <img src="" alt="" class="rounded-t-lg w-full">
-                <h5 class="font-fraunces italic font-semibold text-[25px]">
-                    <!-- Título de la receta -->
-                </h5>
-                <p class="text-grey font-barlow text-[15px] font-medium">
-                    <!-- Descripción de la receta -->
-                </p>
-                <div class="flex flex-row gap-8">
-                    <div class="rounded-full color-border-text-green-recipes w-auto">
-                        <img src="/images/time.png" alt="icono time" class="w-6 h-6"><p class="font-barlow font-semibold text-[16px] text-green-recipes">
-                            <!-- Contenedor de tiempo -->
-                        </p>
-                    </div>
-                    <div class="rounded-full color-border-text-green-recipes w-auto">
-                        <img src="/images/users.png" alt="icono people" class="w-6 h-6"><p class="font-barlow font-semibold text-[16px] text-green-recipes">
-                            <!-- Contenedor de cantidad de personas -->
-                        </p>
-                    </div>
+
+
+            <article
+                class="rounded-[28px] overflow-hidden w-[291px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
+
+                <div
+                    class="h-20 overflow-hidden border-b-2 border-black/10 bg-[#E8E1D7] relative flex items-center justify-center">
+
+                    <svg class="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="pattern-receta" x="0" y="0" width="32" height="32"
+                                patternUnits="userSpaceOnUse">
+                                <circle cx="16" cy="16" r="1" fill="currentColor" class="text-black" />
+                                <path d="M8 8 Q16 4 24 8" stroke="currentColor" stroke-width="0.4" fill="none"
+                                    class="text-black opacity-40" />
+                            </pattern>
+                        </defs>
+
+                        <rect width="100%" height="100%" fill="url(#pattern-receta)" />
+                    </svg>
+
+                    <div class="relative z-10 flex items-center justify-center">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[#DCE8CC] flex items-center justify-center border border-dashed border-[#7C9B5A] rotate-6">
+                            <img src="/images/chef-hat-green-image.png" alt="chef hat" class="w-6 h-6 rotate-12">
+                        </div>
                     </div>
                 </div>
-                <div class="flex flex-row w-full justify-between items-center">
-                    <div class="flex flex-row">
-                        <img src="" alt="gorro de chef"><p class="font-barlow text-[15px] text-brown font-bold">VER PASOS</p>
+
+                <!-- CONTENIDO -->
+                <div class="p-6 flex flex-col flex-1">
+
+                    <h5 class="font-fraunces italic font-semibold text-[32px] text-[#4B3425] leading-tight mb-4">
+                        <!-- Título de la receta -->
+                    </h5>
+
+                    <p class="text-[#7D746C] font-barlow text-[16px] leading-relaxed mb-6">
+                        <!-- Descripción de la receta -->
+                    </p>
+
+                    <div class="flex gap-3 mb-4">
+                        <div
+                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                            <img src="/images/time.png" alt="time" class="w-4 h-4">
+                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
+                                <!-- Contenedor de tiempo -->
+                            </p>
+                        </div>
+
+                        <div
+                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                            <img src="/images/users.png" alt="users" class="w-4 h-4">
+                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
+                                <!-- Contenedor de cantidad de personas -->
+                            </p>
+                        </div>
+
                     </div>
-                    <div class="flex flex-row">
-                        <img src="/images/down-arrow-orange.png" alt="flecha hacia abajo marrón" class="w-4 h-4">
+
+                    <!-- LINEA -->
+                    <div class="border-t-2 border-dashed border-gray-300 pt-4">
+
+                        <div class="flex justify-between items-center">
+
+                            <div class="flex items-center gap-3">
+                                <img src="/images/chef-hat-green.png" alt="chef hat" class="w-6 h-6">
+
+                                <p class="font-barlow text-[16px] text-[#6E8B4E] font-bold">
+                                    VER PASOS
+                                </p>
+                            </div>
+
+                            <img src="/images/down-arrow-green.png" alt="flecha" class="w-3 h-3">
+                        </div>
+
                     </div>
                 </div>
             </article>
-            <article class="rounded-xl p-[10px] w-[291px] h-[671px] flex flex-col color-border-foggy-day">
-                <div class="border-b-2 border-dashed border-gray-300">
-                <img src="" alt="" class="rounded-t-lg w-full">
-                <h5 class="font-fraunces italic font-semibold text-[25px]">
-                    <!-- Título de la receta -->
-                </h5>
-                <p class="text-grey font-barlow text-[15px] font-medium">
-                    <!-- Descripción de la receta -->
-                </p>
-                <div class="flex flex-row gap-8">
-                    <div class="rounded-full color-border-text-green-recipes w-auto">
-                        <img src="/images/time.png" alt="icono time" class="w-6 h-6"><p class="font-barlow font-semibold text-[16px] text-green-recipes">
-                            <!-- Contenedor de tiempo -->
-                        </p>
-                    </div>
-                    <div class="rounded-full color-border-text-green-recipes w-auto">
-                        <img src="/images/users.png" alt="icono people" class="w-6 h-6"><p class="font-barlow font-semibold text-[16px] text-green-recipes">
-                            <!-- Contenedor de cantidad de personas -->
-                        </p>
-                    </div>
+
+            <article
+                class="rounded-[28px] overflow-hidden w-[291px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
+
+                <div
+                    class="h-20 overflow-hidden border-b-2 border-black/10 bg-[#E8E1D7] relative flex items-center justify-center">
+
+                    <svg class="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="pattern-receta" x="0" y="0" width="32" height="32"
+                                patternUnits="userSpaceOnUse">
+                                <circle cx="16" cy="16" r="1" fill="currentColor" class="text-black" />
+                                <path d="M8 8 Q16 4 24 8" stroke="currentColor" stroke-width="0.4" fill="none"
+                                    class="text-black opacity-40" />
+                            </pattern>
+                        </defs>
+
+                        <rect width="100%" height="100%" fill="url(#pattern-receta)" />
+                    </svg>
+
+                    <div class="relative z-10 flex items-center justify-center">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[#DCE8CC] flex items-center justify-center border border-dashed border-[#7C9B5A] rotate-6">
+                            <img src="/images/chef-hat-green-image.png" alt="chef hat" class="w-6 h-6 rotate-12">
+                        </div>
                     </div>
                 </div>
-                <div class="flex flex-row w-full justify-between items-center">
-                    <div class="flex flex-row">
-                        <img src="" alt="gorro de chef"><p class="font-barlow text-[15px] text-brown font-bold">VER PASOS</p>
+
+                <!-- CONTENIDO -->
+                <div class="p-6 flex flex-col flex-1">
+
+                    <h5 class="font-fraunces italic font-semibold text-[32px] text-[#4B3425] leading-tight mb-4">
+                        <!-- Título de la receta -->
+                    </h5>
+
+                    <p class="text-[#7D746C] font-barlow text-[16px] leading-relaxed mb-6">
+                        <!-- Descripción de la receta -->
+                    </p>
+
+                    <div class="flex gap-3 mb-4">
+                        <div
+                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                            <img src="/images/time.png" alt="time" class="w-4 h-4">
+                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
+                                <!-- Contenedor de tiempo -->
+                            </p>
+                        </div>
+
+                        <div
+                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                            <img src="/images/users.png" alt="users" class="w-4 h-4">
+                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
+                                <!-- Contenedor de cantidad de personas -->
+                            </p>
+                        </div>
+
                     </div>
-                    <div class="flex flex-row">
-                        <img src="/images/down-arrow-orange.png" alt="flecha hacia abajo marrón" class="w-4 h-4">
+
+                    <!-- LINEA -->
+                    <div class="border-t-2 border-dashed border-gray-300 pt-4">
+
+                        <div class="flex justify-between items-center">
+
+                            <div class="flex items-center gap-3">
+                                <img src="/images/chef-hat-green.png" alt="chef hat" class="w-6 h-6">
+
+                                <p class="font-barlow text-[16px] text-[#6E8B4E] font-bold">
+                                    VER PASOS
+                                </p>
+                            </div>
+
+                            <img src="/images/down-arrow-green.png" alt="flecha" class="w-3 h-3">
+                        </div>
+
                     </div>
                 </div>
             </article>
-            <article class="rounded-xl p-[10px] w-[291px] h-[671px] flex flex-col color-border-foggy-day">
-                <div class="border-b-2 border-dashed border-gray-300">
-                <img src="" alt="" class="rounded-t-lg w-full">
-                <h5 class="font-fraunces italic font-semibold text-[25px]">
-                    <!-- Título de la receta -->
-                </h5>
-                <p class="text-grey font-barlow text-[15px] font-medium">
-                    <!-- Descripción de la receta -->
-                </p>
-                <div class="flex flex-row gap-8">
-                    <div class="rounded-full color-border-text-green-recipes w-auto">
-                        <img src="/images/time.png" alt="icono time" class="w-6 h-6"><p class="font-barlow font-semibold text-[16px] text-green-recipes">
-                            <!-- Contenedor de tiempo -->
-                        </p>
-                    </div>
-                    <div class="rounded-full color-border-text-green-recipes w-auto">
-                        <img src="/images/users.png" alt="icono people" class="w-6 h-6"><p class="font-barlow font-semibold text-[16px] text-green-recipes">
-                            <!-- Contenedor de cantidad de personas -->
-                        </p>
-                    </div>
+
+
+
+            <article
+                class="rounded-[28px] overflow-hidden w-[291px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
+
+                <div
+                    class="h-20 overflow-hidden border-b-2 border-black/10 bg-[#E8E1D7] relative flex items-center justify-center">
+
+                    <svg class="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="pattern-receta" x="0" y="0" width="32" height="32"
+                                patternUnits="userSpaceOnUse">
+                                <circle cx="16" cy="16" r="1" fill="currentColor" class="text-black" />
+                                <path d="M8 8 Q16 4 24 8" stroke="currentColor" stroke-width="0.4" fill="none"
+                                    class="text-black opacity-40" />
+                            </pattern>
+                        </defs>
+
+                        <rect width="100%" height="100%" fill="url(#pattern-receta)" />
+                    </svg>
+
+                    <div class="relative z-10 flex items-center justify-center">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[#DCE8CC] flex items-center justify-center border border-dashed border-[#7C9B5A] rotate-6">
+                            <img src="/images/chef-hat-green-image.png" alt="chef hat" class="w-6 h-6 rotate-12">
+                        </div>
                     </div>
                 </div>
-                <div class="flex flex-row w-full justify-between items-center">
-                    <div class="flex flex-row">
-                        <img src="" alt="gorro de chef"><p class="font-barlow text-[15px] text-brown font-bold">VER PASOS</p>
+
+                <!-- CONTENIDO -->
+                <div class="p-6 flex flex-col flex-1">
+
+                    <h5 class="font-fraunces italic font-semibold text-[32px] text-[#4B3425] leading-tight mb-4">
+                        <!-- Título de la receta -->
+                    </h5>
+
+                    <p class="text-[#7D746C] font-barlow text-[16px] leading-relaxed mb-6">
+                        <!-- Descripción de la receta -->
+                    </p>
+
+                    <div class="flex gap-3 mb-4">
+                        <div
+                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                            <img src="/images/time.png" alt="time" class="w-4 h-4">
+                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
+                                <!-- Contenedor de tiempo -->
+                            </p>
+                        </div>
+
+                        <div
+                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                            <img src="/images/users.png" alt="users" class="w-4 h-4">
+                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
+                                <!-- Contenedor de cantidad de personas -->
+                            </p>
+                        </div>
+
                     </div>
-                    <div class="flex flex-row">
-                        <img src="/images/down-arrow-orange.png" alt="flecha hacia abajo marrón" class="w-4 h-4">
+
+                    <!-- LINEA -->
+                    <div class="border-t-2 border-dashed border-gray-300 pt-4">
+
+                        <div class="flex justify-between items-center">
+
+                            <div class="flex items-center gap-3">
+                                <img src="/images/chef-hat-green.png" alt="chef hat" class="w-6 h-6">
+
+                                <p class="font-barlow text-[16px] text-[#6E8B4E] font-bold">
+                                    VER PASOS
+                                </p>
+                            </div>
+
+                            <img src="/images/down-arrow-green.png" alt="flecha" class="w-3 h-3">
+                        </div>
+
                     </div>
                 </div>
             </article>
@@ -302,4 +451,5 @@
     <script src="/js/filters.js"></script>
 
 </body>
+
 </html>
