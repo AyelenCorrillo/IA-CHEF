@@ -14,6 +14,10 @@ public class IngredientService {
     private IngredientRepository ingredientRepository; 
 
     public List<Ingredient> getIngredients() {
-        return ingredientRepository.findAll(); // <--- Ahora vienen de la DB
+        return ingredientRepository.findAll();
     }
+
+    public List<Ingredient> getIngredientsByCategory(String categoryName) {
+    return ingredientRepository.findByCategory_Name(categoryName);
+}
 }

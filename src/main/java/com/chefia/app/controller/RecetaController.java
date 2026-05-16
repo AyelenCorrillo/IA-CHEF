@@ -42,7 +42,7 @@ public class RecetaController {
 
     if (cat != null && !cat.isEmpty()) {
         ingredientes = ingredientes.stream()
-                .filter(i -> i.getCategory().equalsIgnoreCase(cat))
+                .filter(i -> i.getCategory().getName().equalsIgnoreCase(cat))
                 .toList();
     }
 

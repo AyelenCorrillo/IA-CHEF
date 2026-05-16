@@ -9,6 +9,6 @@ import com.chefia.app.model.Ingredient;
 
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
-    // Esto te permitirá buscar por categoría para tus filtros
-    List<Ingredient> findByCategory(String category);
+
+    List<Ingredient> findByCategory_Name(String name);
 }
