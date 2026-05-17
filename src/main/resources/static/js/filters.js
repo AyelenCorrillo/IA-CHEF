@@ -6,7 +6,16 @@ function filterIngredients(category) {
     cards.forEach(card => {
         const cat = card.getAttribute('data-category');
 
-        if (category === 'all' || cat === category) {
+        const ingredientName = card.dataset.name;
+
+        const alreadySelected = selectedIngredients.some(
+            item => item.name === ingredientName
+        );
+
+        if (
+            (category === 'all' || cat === category)
+            && !alreadySelected
+        ) {
             card.style.display = 'block';
         } else {
             card.style.display = 'none';
@@ -179,6 +188,13 @@ function addIngredient(ing, img) {
     if (selectedIngredients.some(item => item.name === ing)) return;
 
     selectedIngredients.push({ name: ing, img });
+
+    const card =
+    document.querySelector(`.ingredient-card[data-name="${ing}"]`);
+
+        if (card) {
+            card.style.display = "none";
+    }
 
     renderDropZone();
 }

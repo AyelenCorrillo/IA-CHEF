@@ -130,10 +130,11 @@
 
                 <form action="/generar-recetas" method="post" onsubmit="return validateForm()">
 
-                    <div class="grid grid-cols-5 gap-2 mt-2">
+                    <div
+                        class="grid grid-cols-5 gap-2 mt-2 max-h-[420px] overflow-y-auto pr-2 custom-scroll scroll-smooth">
 
                         <div th:each="ing : ${ingredientes}" class="ingredient-card"
-                            th:attr="data-category=${ing.category.name}, data-name=${ing.name}" draggable="true">
+                                        th:attr="data-category=${ing.category.name}, data-name=${ing.name}" draggable="true">
 
                             <label class="cursor-pointer block">
 
@@ -141,10 +142,11 @@
                                     th:attr="data-name=${ing.name}" class="sr-only peer" />
 
                                 <div class="bg-white border-2 border-[#E0DEDD] rounded-xl p-2 w-35 h-35 text-center flex flex-col items-center justify-center transition
-                        peer-checked:border-black
-                        peer-checked:shadow-[2px_2px_0px_black]
-                        peer-checked:scale-100 
-                        pointer-events-auto">
+                                duration-200 cursor-pointer hover:border-black hover:shadow-[4px_4px_0px_black] hover:-translate-y-1
+                                peer-checked:border-black
+                                peer-checked:shadow-[2px_2px_0px_black]
+                                peer-checked:scale-100 
+                                pointer-events-auto">
 
                                     <img th:src="@{${ing.image}}" class="w-20 h-20 mb-1" />
                                     <p class="text-m font-semibold" th:text="${ing.name}"></p>
