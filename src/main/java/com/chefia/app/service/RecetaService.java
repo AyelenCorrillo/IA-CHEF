@@ -55,6 +55,13 @@ public class RecetaService {
                 - Use realistic recipes
                 - Include clear cooking steps
 
+                IMPORTANT:
+                - "ingredientes" must be an array of strings
+                - Do NOT return ingredient objects
+                - Do NOT use keys like "nombre" or "cantidad" inside ingredientes
+                - Correct example:
+                  "ingredientes": ["2 papas", "1 zanahoria"]
+
                 JSON format:
                 [
                     {
@@ -77,7 +84,6 @@ public class RecetaService {
                     .retrieve()
                     .body(String.class);
 
-            
             System.out.println(response);
 
             return extraerRecetasDeJson(response);

@@ -214,18 +214,76 @@ searchInput.addEventListener('input', () => {
 });
 
 function renderRecipes(recetas) {
+
     const container = document.getElementById("recipes-container");
     const template = document.getElementById("recipe-template");
 
     container.innerHTML = "";
 
     recetas.forEach(receta => {
+
         const clone = template.content.cloneNode(true);
 
-        clone.querySelector(".recipe-title").textContent = receta.nombre;
+        clone.querySelector(".recipe-title").textContent =
+            receta.nombre;
 
         clone.querySelector(".recipe-desc").textContent =
             receta.ingredientes.map(i => i.nombre ?? i).join(", ");
+
+        // PASOS
+        const pasosContainer =
+            clone.querySelector(".recipe-steps");
+
+        pasosContainer.innerHTML = receta.pasos
+            .map((paso, index) => `
+                <div class="flex gap-2">
+                    <span class="font-bold text-[#6E8B4E]">
+                        ${index + 1}.
+                    </span>
+
+                    <p>${paso}</p>
+                </div>
+            `)
+            .join("");
+
+                const toggleBtn =
+            clone.querySelector(".recipe-toggle");
+
+        const arrow =
+            clone.querySelector(".recipe-arrow");
+
+        const text =
+            clone.querySelector(".recipe-text");
+
+        const hat =
+            clone.querySelector(".recipe-hat");
+
+        toggleBtn.addEventListener("click", () => {
+
+        const abierto =
+            pasosContainer.classList.toggle("hidden");
+
+            arrow.classList.toggle("rotate-180");
+
+            text.classList.toggle("text-[#CC754F]");
+
+            text.classList.toggle("text-[#6E8B4E]");
+
+            // cambiar color flecha
+            arrow.classList.toggle("brightness-0");
+            arrow.classList.toggle("sepia");
+            arrow.classList.toggle("saturate-[5]");
+            arrow.classList.toggle("hue-rotate-[340deg]");
+
+            // cambiar imagen gorrito
+            hat.src = abierto
+                ? "/images/chef-hat-green.png"
+                : "/images/chef-hat-orange.png";
+
+            arrow.src = abierto
+                ? "/images/down-arrow-green.png"
+            : "/images/down-arrow-orange.png";
+        });
 
         container.appendChild(clone);
     });
@@ -269,3 +327,5 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
         behavior: "smooth"
     });
 });
+
+
