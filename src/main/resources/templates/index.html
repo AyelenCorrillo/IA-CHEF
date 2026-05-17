@@ -134,7 +134,7 @@
                         class="grid grid-cols-5 gap-2 mt-2 max-h-[420px] overflow-y-auto pr-2 custom-scroll scroll-smooth">
 
                         <div th:each="ing : ${ingredientes}" class="ingredient-card"
-                                        th:attr="data-category=${ing.category.name}, data-name=${ing.name}" draggable="true">
+                            th:attr="data-category=${ing.category.name}, data-name=${ing.name}" draggable="true">
 
                             <label class="cursor-pointer block">
 
@@ -176,9 +176,19 @@
                     </p>
 
                 </div>
-                <button id="generate-recipes" type="button"
-                    class="mt-4 px-6 py-3 bg-[#5B833F] text-[#EEEEE3] font-semibold text-white rounded-full w-full border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
-                    Generar 3 recetas
+
+                <button id="generate-recipes" type="button" disabled
+                    class="mt-4 px-6 py-3 bg-[#5B833F] text-[#EEEEE3] font-semibold rounded-full border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-full
+                    disabled:bg-[#B7C7A1] disabled:cursor-not-allowed disabled:shadow-[4px_4px_0px_#9CA3AF] disabled:border-[#9CA3AF]">
+
+                    <div class="flex items-center justify-center gap-2">
+
+                        <img src="/images/star_icon.png" class="w-5 h-5" alt="star icon">
+
+                        <span>Generar 3 recetas</span>
+
+                    </div>
+
                 </button>
 
             </div>

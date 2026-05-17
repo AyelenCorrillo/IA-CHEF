@@ -72,20 +72,20 @@ const dropZone = document.getElementById("drop-zone");
 let selectedIngredients = [];
 
 document.querySelectorAll(".ingredient-card").forEach(card => {
-    
-    card.addEventListener("dragstart", (e) => {
-    const data = {
-        name: card.dataset.name,
-        img: card.querySelector("img").src
-    };
 
-    e.dataTransfer.setData("ingredient", JSON.stringify(data));
-});
+    card.addEventListener("dragstart", (e) => {
+        const data = {
+            name: card.dataset.name,
+            img: card.querySelector("img").src
+        };
+
+        e.dataTransfer.setData("ingredient", JSON.stringify(data));
+    });
 
     card.addEventListener("click", () => {
-    const ing = card.dataset.name;
-    const img = card.querySelector("img").src;
-    addIngredient(ing, img);
+        const ing = card.dataset.name;
+        const img = card.querySelector("img").src;
+        addIngredient(ing, img);
     });
 });
 
@@ -145,7 +145,7 @@ function renderDropZone() {
         return;
     }
 
-        dropZone.innerHTML = `
+    dropZone.innerHTML = `
     <div class="w-full flex flex-col items-start justify-start">
 
         <p class="text-sm font-semibold mb-4">
@@ -190,12 +190,13 @@ function addIngredient(ing, img) {
     selectedIngredients.push({ name: ing, img });
 
     const card =
-    document.querySelector(`.ingredient-card[data-name="${ing}"]`);
+        document.querySelector(`.ingredient-card[data-name="${ing}"]`);
 
-        if (card) {
-            card.style.display = "none";
+    if (card) {
+        card.style.display = "none";
     }
-
+    
+    updateGenerateButton();
     renderDropZone();
 }
 
@@ -209,6 +210,7 @@ function removeIngredient(name) {
     const checkbox = document.querySelector(`input[value="${name}"]`);
     if (checkbox) checkbox.checked = false;
 
+    updateGenerateButton();
     renderDropZone();
 }
 
@@ -262,7 +264,7 @@ function renderRecipes(recetas) {
             `)
             .join("");
 
-                const toggleBtn =
+        const toggleBtn =
             clone.querySelector(".recipe-toggle");
 
         const arrow =
@@ -276,8 +278,8 @@ function renderRecipes(recetas) {
 
         toggleBtn.addEventListener("click", () => {
 
-        const abierto =
-            pasosContainer.classList.toggle("hidden");
+            const abierto =
+                pasosContainer.classList.toggle("hidden");
 
             arrow.classList.toggle("rotate-180");
 
@@ -298,7 +300,7 @@ function renderRecipes(recetas) {
 
             arrow.src = abierto
                 ? "/images/down-arrow-green.png"
-            : "/images/down-arrow-orange.png";
+                : "/images/down-arrow-orange.png";
         });
 
         container.appendChild(clone);
@@ -310,16 +312,35 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
 
     e.preventDefault();
 
+    const button = document.getElementById("generate-recipes");
+
+    button.disabled = true;
+
+    button.innerHTML = `
+    <div class="flex items-center justify-center gap-2">
+        <img src="/images/star_icon.png" class="w-5 h-5">
+        <span>Cocinando ideas...</span>
+    </div>
+`;
+
+    button.classList.remove(
+        "bg-[#5B833F]",
+        "text-[#EEEEE3]"
+    );
+
+    button.classList.add(
+        "bg-[#B7C7A1]",
+        "text-white",
+        "cursor-not-allowed"
+    );
+
+    button.classList.add("animate-pulse");
+
     const ingredientes = Array.from(
         document.querySelectorAll(
             'input[name="ingredientesSeleccionados"]:checked'
         )
     ).map(i => i.value);
-
-    if (ingredientes.length < 2) {
-        alert("Seleccioná al menos 2 ingredientes");
-        return;
-    }
 
     const res = await fetch("/generar-recetas", {
         method: "POST",
@@ -339,9 +360,31 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
 
     renderRecipes(recetas);
 
+    button.disabled = false;
+
+    button.innerHTML = "Generar 3 recetas";
+
+    button.classList.remove(
+        "bg-[#B7C7A1]",
+        "cursor-not-allowed"
+    );
+
+    button.classList.add(
+        "bg-[#5B833F]",
+        "text-[#EEEEE3]"
+    );
+
+    button.classList.remove("animate-pulse");
+
     seccion.scrollIntoView({
         behavior: "smooth"
     });
 });
 
+function updateGenerateButton() {
 
+    const button =
+        document.getElementById("generate-recipes");
+
+    button.disabled = selectedIngredients.length < 2;
+}
