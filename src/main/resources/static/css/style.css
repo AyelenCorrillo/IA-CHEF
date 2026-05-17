@@ -127,3 +127,7 @@ nav ul li {
     border: 1px solid var(--Color-border-foggy-day);
     box-shadow: 2px 2px var(--Color-text-grey);
 }
+
+.hidden {
+    display: none;
+}

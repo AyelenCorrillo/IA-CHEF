@@ -166,19 +166,22 @@ function renderDropZone() {
 
 
 function addIngredient(ing, img) {
+
+    const checkbox = document.querySelector(`input[data-name="${ing}"]`);
+
+    if (checkbox) {
+        checkbox.checked = true;
+        console.log("CHECKED:", ing);
+    } else {
+        console.log("NO ENCONTRADO:", ing);
+    }
+
     if (selectedIngredients.some(item => item.name === ing)) return;
 
-    selectedIngredients.push({ name: ing, img: img });
-
-    const checkbox = document.querySelector(`input[value="${ing}"]`);
-    if (checkbox) checkbox.checked = true;
-
-    const card = document.querySelector(`.ingredient-card[data-name="${ing}"]`);
-    if (card) card.style.display = "none";
+    selectedIngredients.push({ name: ing, img });
 
     renderDropZone();
 }
-
 
 function removeIngredient(name) {
 
@@ -207,5 +210,62 @@ searchInput.addEventListener('input', () => {
         } else {
             card.style.display = 'none';
         }
+    });
+});
+
+function renderRecipes(recetas) {
+    const container = document.getElementById("recipes-container");
+    const template = document.getElementById("recipe-template");
+
+    container.innerHTML = "";
+
+    recetas.forEach(receta => {
+        const clone = template.content.cloneNode(true);
+
+        clone.querySelector(".recipe-title").textContent = receta.nombre;
+
+        clone.querySelector(".recipe-desc").textContent =
+            receta.ingredientes.map(i => i.nombre ?? i).join(", ");
+
+        container.appendChild(clone);
+    });
+}
+
+
+document.getElementById("generate-recipes").addEventListener("click", async (e) => {
+
+    e.preventDefault();
+
+    const ingredientes = Array.from(
+        document.querySelectorAll(
+            'input[name="ingredientesSeleccionados"]:checked'
+        )
+    ).map(i => i.value);
+
+    if (ingredientes.length < 2) {
+        alert("Seleccioná al menos 2 ingredientes");
+        return;
+    }
+
+    const res = await fetch("/generar-recetas", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ ingredientes })
+    });
+
+    const recetas = await res.json();
+
+    console.log(recetas);
+
+    const seccion = document.getElementById("recetas");
+
+    seccion.classList.remove("hidden");
+
+    renderRecipes(recetas);
+
+    seccion.scrollIntoView({
+        behavior: "smooth"
     });
 });
