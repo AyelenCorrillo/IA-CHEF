@@ -10,4 +10,6 @@ public class RecetaDTO {
 
     private List<String> ingredientes;
     private List<String> pasos;
+    private String tiempo;
+    private String porciones;
 }

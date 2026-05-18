@@ -54,6 +54,8 @@ public class RecetaService {
                 - Do not add extra text
                 - Use realistic recipes
                 - Include clear cooking steps
+                - Tiempo must be a short string like "25 min"
+                - Porciones must be a short string like "2 personas"
 
                 IMPORTANT:
                 - "ingredientes" must be an array of strings
@@ -67,7 +69,9 @@ public class RecetaService {
                     {
                         "nombre": "",
                         "ingredientes": [],
-                        "pasos": []
+                        "pasos": [],
+                        "tiempo": "",
+                        "porciones": ""
                     }
                 ]
                 """.formatted(listaIngredientes);

@@ -248,6 +248,12 @@ function renderRecipes(recetas) {
         clone.querySelector(".recipe-desc").textContent =
             receta.ingredientes.map(i => i.nombre ?? i).join(", ");
 
+        clone.querySelector(".recipe-time").textContent =
+            receta.tiempo;
+
+        clone.querySelector(".recipe-servings").textContent =
+            receta.porciones;
+
         // PASOS
         const pasosContainer =
             clone.querySelector(".recipe-steps");
