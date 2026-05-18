@@ -12,7 +12,6 @@ import org.springframework.web.client.RestClient;
 import com.chefia.app.dto.RecetaDTO;
 import com.chefia.app.model.Receta;
 import com.chefia.app.repository.RecetaRepository;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,6 +52,7 @@ public class RecetaService {
                 - Do not add explanations
                 - Do not add extra text
                 - Use realistic recipes
+                - Use all the ingredients listed in each recipe.
                 - Include clear cooking steps
                 - Tiempo must be a short string like "25 min"
                 - Porciones must be a short string like "2 personas"
