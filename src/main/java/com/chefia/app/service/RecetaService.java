@@ -13,26 +13,25 @@ import com.chefia.app.dto.RecetaDTO;
 import com.chefia.app.model.Receta;
 import com.chefia.app.repository.RecetaRepository;
 
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class RecetaService {
 
     private final RestClient restClient;
     private final RecetaRepository recetaRepository;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${GROQ_API_KEY}")
     private String apiKey;
 
     private final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
-    public RecetaService(RestClient restClient, RecetaRepository recetaRepository, ObjectMapper objectMapper) {
+    public RecetaService(RestClient restClient, RecetaRepository recetaRepository) {
         this.restClient = restClient;
         this.recetaRepository = recetaRepository;
-        this.objectMapper = objectMapper;
     }
 
     /**
@@ -40,20 +39,42 @@ public class RecetaService {
      */
     public List<RecetaDTO> obtenerSugerenciasDeIA(List<String> ingredientes) {
         String listaIngredientes = String.join(", ", ingredientes);
-        
+
         // Prompt optimizado para recibir un JSON limpio que Jackson pueda parsear
         String prompt = """
-            Genera 3 recetas utilizando únicamente o principalmente estos ingredientes: %s.
-            Responde exclusivamente en formato JSON, un array de objetos con esta estructura:
-            [
-              {
-                "nombre": "Nombre del plato",
-                "ingredientes": "lista de ingredientes usados",
-                "pasos": "instrucciones detalladas de preparación"
-              }
-            ]
-            No incluyas explicaciones adicionales, solo el array JSON.
-            """.formatted(listaIngredientes);
+                You are a professional chef AI.
+
+                Generate exactly 3 recipes using mainly these ingredients:
+                %s
+
+                Rules:
+                - Return ONLY valid JSON
+                - Do not use markdown
+                - Do not add explanations
+                - Do not add extra text
+                - Use realistic recipes
+                - Include clear cooking steps
+                - Tiempo must be a short string like "25 min"
+                - Porciones must be a short string like "2 personas"
+
+                IMPORTANT:
+                - "ingredientes" must be an array of strings
+                - Do NOT return ingredient objects
+                - Do NOT use keys like "nombre" or "cantidad" inside ingredientes
+                - Correct example:
+                  "ingredientes": ["2 papas", "1 zanahoria"]
+
+                JSON format:
+                [
+                    {
+                        "nombre": "",
+                        "ingredientes": [],
+                        "pasos": [],
+                        "tiempo": "",
+                        "porciones": ""
+                    }
+                ]
+                """.formatted(listaIngredientes);
 
         try {
             String response = restClient.post()
@@ -61,12 +82,13 @@ public class RecetaService {
                     .header("Authorization", "Bearer " + apiKey)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(Map.of(
-                            "model", "llama3-8b-8192",
+                            "model", "llama-3.1-8b-instant",
                             "messages", List.of(Map.of("role", "user", "content", prompt)),
-                            "temperature", 0.7
-                    ))
+                            "temperature", 0.4))
                     .retrieve()
                     .body(String.class);
+
+            System.out.println(response);
 
             return extraerRecetasDeJson(response);
         } catch (Exception e) {
@@ -82,27 +104,41 @@ public class RecetaService {
     private List<RecetaDTO> extraerRecetasDeJson(String response) throws Exception {
         JsonNode root = objectMapper.readTree(response);
         // Groq devuelve el contenido dentro de choices[0].message.content
-        String contenidoJson = root.path("choices").get(0).path("message").path("content").stringValue();
-        
-        // Si textValue fue null, le asignamos un String vacío para que no explote el .replace()
-        if (contenidoJson == null) {
-            contenidoJson = ""; 
+        JsonNode choices = root.path("choices");
+
+        if (!choices.isArray() || choices.isEmpty()) {
+            throw new RuntimeException("Respuesta inválida de Groq");
         }
 
-        return objectMapper.readValue(contenidoJson, new TypeReference<List<RecetaDTO>>() {});
+        String contenidoJson = choices.get(0)
+                .path("message")
+                .path("content")
+                .asText();
+
+        if (contenidoJson == null || contenidoJson.isBlank()) {
+            throw new RuntimeException("Groq devolvió contenido vacío");
+        }
+
+        return objectMapper.readValue(contenidoJson, new TypeReference<List<RecetaDTO>>() {
+        });
     }
 
     /**
      * Guarda la receta seleccionada en la base de datos PostgreSQL.
      */
     public void guardarEnBaseDeDatos(RecetaDTO dto) {
-        Receta receta = Receta.builder()
-                .nombre(dto.getNombre())
-                .ingredientes(dto.getIngredientes())
-                .instrucciones(dto.getPasos())
-                .build();
-        
+
+        Receta receta = new Receta();
+
+        receta.setNombre(dto.getNombre());
+
+        String ingredientesTexto = String.join(", ", dto.getIngredientes());
+        String pasosTexto = String.join("\n", dto.getPasos());
+
+        receta.setIngredientes(ingredientesTexto);
+        receta.setInstrucciones(pasosTexto);
+
         recetaRepository.save(receta);
     }
-    
+
 }

@@ -1,12 +1,15 @@
 package com.chefia.app.dto;
 
 import lombok.Data;
+import java.util.List;
 
 @Data
 public class RecetaDTO {
 
     private String nombre;
-    private String ingredientes;
-    private String pasos;
-    
+
+    private List<String> ingredientes;
+    private List<String> pasos;
+    private String tiempo;
+    private String porciones;
 }

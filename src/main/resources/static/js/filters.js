@@ -6,7 +6,16 @@ function filterIngredients(category) {
     cards.forEach(card => {
         const cat = card.getAttribute('data-category');
 
-        if (category === 'all' || cat === category) {
+        const ingredientName = card.dataset.name;
+
+        const alreadySelected = selectedIngredients.some(
+            item => item.name === ingredientName
+        );
+
+        if (
+            (category === 'all' || cat === category)
+            && !alreadySelected
+        ) {
             card.style.display = 'block';
         } else {
             card.style.display = 'none';
@@ -63,20 +72,20 @@ const dropZone = document.getElementById("drop-zone");
 let selectedIngredients = [];
 
 document.querySelectorAll(".ingredient-card").forEach(card => {
-    
-    card.addEventListener("dragstart", (e) => {
-    const data = {
-        name: card.dataset.name,
-        img: card.querySelector("img").src
-    };
 
-    e.dataTransfer.setData("ingredient", JSON.stringify(data));
-});
+    card.addEventListener("dragstart", (e) => {
+        const data = {
+            name: card.dataset.name,
+            img: card.querySelector("img").src
+        };
+
+        e.dataTransfer.setData("ingredient", JSON.stringify(data));
+    });
 
     card.addEventListener("click", () => {
-    const ing = card.dataset.name;
-    const img = card.querySelector("img").src;
-    addIngredient(ing, img);
+        const ing = card.dataset.name;
+        const img = card.querySelector("img").src;
+        addIngredient(ing, img);
     });
 });
 
@@ -136,7 +145,7 @@ function renderDropZone() {
         return;
     }
 
-        dropZone.innerHTML = `
+    dropZone.innerHTML = `
     <div class="w-full flex flex-col items-start justify-start">
 
         <p class="text-sm font-semibold mb-4">
@@ -166,19 +175,30 @@ function renderDropZone() {
 
 
 function addIngredient(ing, img) {
+
+    const checkbox = document.querySelector(`input[data-name="${ing}"]`);
+
+    if (checkbox) {
+        checkbox.checked = true;
+        console.log("CHECKED:", ing);
+    } else {
+        console.log("NO ENCONTRADO:", ing);
+    }
+
     if (selectedIngredients.some(item => item.name === ing)) return;
 
-    selectedIngredients.push({ name: ing, img: img });
+    selectedIngredients.push({ name: ing, img });
 
-    const checkbox = document.querySelector(`input[value="${ing}"]`);
-    if (checkbox) checkbox.checked = true;
+    const card =
+        document.querySelector(`.ingredient-card[data-name="${ing}"]`);
 
-    const card = document.querySelector(`.ingredient-card[data-name="${ing}"]`);
-    if (card) card.style.display = "none";
-
+    if (card) {
+        card.style.display = "none";
+    }
+    
+    updateGenerateButton();
     renderDropZone();
 }
-
 
 function removeIngredient(name) {
 
@@ -190,6 +210,7 @@ function removeIngredient(name) {
     const checkbox = document.querySelector(`input[value="${name}"]`);
     if (checkbox) checkbox.checked = false;
 
+    updateGenerateButton();
     renderDropZone();
 }
 
@@ -209,3 +230,167 @@ searchInput.addEventListener('input', () => {
         }
     });
 });
+
+function renderRecipes(recetas) {
+
+    const container = document.getElementById("recipes-container");
+    const template = document.getElementById("recipe-template");
+
+    container.innerHTML = "";
+
+    recetas.forEach(receta => {
+
+        const clone = template.content.cloneNode(true);
+
+        clone.querySelector(".recipe-title").textContent =
+            receta.nombre;
+
+        clone.querySelector(".recipe-desc").textContent =
+            receta.ingredientes.map(i => i.nombre ?? i).join(", ");
+
+        clone.querySelector(".recipe-time").textContent =
+            receta.tiempo;
+
+        clone.querySelector(".recipe-servings").textContent =
+            receta.porciones;
+
+        // PASOS
+        const pasosContainer =
+            clone.querySelector(".recipe-steps");
+
+        pasosContainer.innerHTML = receta.pasos
+            .map((paso, index) => `
+                <div class="flex gap-2">
+                    <span class="font-bold text-[#6E8B4E]">
+                        ${index + 1}.
+                    </span>
+
+                    <p>${paso}</p>
+                </div>
+            `)
+            .join("");
+
+        const toggleBtn =
+            clone.querySelector(".recipe-toggle");
+
+        const arrow =
+            clone.querySelector(".recipe-arrow");
+
+        const text =
+            clone.querySelector(".recipe-text");
+
+        const hat =
+            clone.querySelector(".recipe-hat");
+
+        toggleBtn.addEventListener("click", () => {
+
+            const abierto =
+                pasosContainer.classList.toggle("hidden");
+
+            arrow.classList.toggle("rotate-180");
+
+            text.classList.toggle("text-[#CC754F]");
+
+            text.classList.toggle("text-[#6E8B4E]");
+
+            // cambiar color flecha
+            arrow.classList.toggle("brightness-0");
+            arrow.classList.toggle("sepia");
+            arrow.classList.toggle("saturate-[5]");
+            arrow.classList.toggle("hue-rotate-[340deg]");
+
+            // cambiar imagen gorrito
+            hat.src = abierto
+                ? "/images/chef-hat-green.png"
+                : "/images/chef-hat-orange.png";
+
+            arrow.src = abierto
+                ? "/images/down-arrow-green.png"
+                : "/images/down-arrow-orange.png";
+        });
+
+        container.appendChild(clone);
+    });
+}
+
+
+document.getElementById("generate-recipes").addEventListener("click", async (e) => {
+
+    e.preventDefault();
+
+    const button = document.getElementById("generate-recipes");
+
+    button.disabled = true;
+
+    button.innerHTML = `
+    <div class="flex items-center justify-center gap-2">
+        <img src="/images/star_icon.png" class="w-5 h-5">
+        <span>Cocinando ideas...</span>
+    </div>
+`;
+
+    button.classList.remove(
+        "bg-[#5B833F]",
+        "text-[#EEEEE3]"
+    );
+
+    button.classList.add(
+        "bg-[#B7C7A1]",
+        "text-white",
+        "cursor-not-allowed"
+    );
+
+    button.classList.add("animate-pulse");
+
+    const ingredientes = Array.from(
+        document.querySelectorAll(
+            'input[name="ingredientesSeleccionados"]:checked'
+        )
+    ).map(i => i.value);
+
+    const res = await fetch("/generar-recetas", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ ingredientes })
+    });
+
+    const recetas = await res.json();
+
+    console.log(recetas);
+
+    const seccion = document.getElementById("recetas");
+
+    seccion.classList.remove("hidden");
+
+    renderRecipes(recetas);
+
+    button.disabled = false;
+
+    button.innerHTML = "Generar 3 recetas";
+
+    button.classList.remove(
+        "bg-[#B7C7A1]",
+        "cursor-not-allowed"
+    );
+
+    button.classList.add(
+        "bg-[#5B833F]",
+        "text-[#EEEEE3]"
+    );
+
+    button.classList.remove("animate-pulse");
+
+    seccion.scrollIntoView({
+        behavior: "smooth"
+    });
+});
+
+function updateGenerateButton() {
+
+    const button =
+        document.getElementById("generate-recipes");
+
+    button.disabled = selectedIngredients.length < 2;
+}

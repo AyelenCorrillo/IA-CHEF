@@ -128,23 +128,25 @@
 
                 </div>
 
-                <form action="/generar-recetas" method="post">
+                <form action="/generar-recetas" method="post" onsubmit="return validateForm()">
 
-                    <div class="grid grid-cols-5 gap-2 mt-2">
+                    <div
+                        class="grid grid-cols-5 gap-2 mt-2 max-h-[420px] overflow-y-auto pr-2 custom-scroll scroll-smooth">
 
                         <div th:each="ing : ${ingredientes}" class="ingredient-card"
-                            th:attr="data-category=${ing.category}, data-name=${ing.name}" draggable="true">
+                            th:attr="data-category=${ing.category.name}, data-name=${ing.name}" draggable="true">
 
                             <label class="cursor-pointer block">
 
                                 <input type="checkbox" name="ingredientesSeleccionados" th:value="${ing.name}"
-                                    class="hidden peer" />
+                                    th:attr="data-name=${ing.name}" class="sr-only peer" />
 
                                 <div class="bg-white border-2 border-[#E0DEDD] rounded-xl p-2 w-35 h-35 text-center flex flex-col items-center justify-center transition
-                        peer-checked:border-black
-                        peer-checked:shadow-[2px_2px_0px_black]
-                        peer-checked:scale-100 
-                        pointer-events-auto">
+                                duration-200 cursor-pointer hover:border-black hover:shadow-[4px_4px_0px_black] hover:-translate-y-1
+                                peer-checked:border-black
+                                peer-checked:shadow-[2px_2px_0px_black]
+                                peer-checked:scale-100 
+                                pointer-events-auto">
 
                                     <img th:src="@{${ing.image}}" class="w-20 h-20 mb-1" />
                                     <p class="text-m font-semibold" th:text="${ing.name}"></p>
@@ -174,9 +176,19 @@
                     </p>
 
                 </div>
-                <button type="submit"
-                    class="mt-4 px-6 py-3 bg-[#5B833F] text-[#EEEEE3] font-semibold text-white rounded-full w-full border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
-                    Generar 3 recetas
+
+                <button id="generate-recipes" type="button" disabled
+                    class="mt-4 px-6 py-3 bg-[#5B833F] text-[#EEEEE3] font-semibold rounded-full border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-full
+                    disabled:bg-[#B7C7A1] disabled:cursor-not-allowed disabled:shadow-[4px_4px_0px_#9CA3AF] disabled:border-[#9CA3AF]">
+
+                    <div class="flex items-center justify-center gap-2">
+
+                        <img src="/images/star_icon.png" class="w-5 h-5" alt="star icon">
+
+                        <span>Generar 3 recetas</span>
+
+                    </div>
+
                 </button>
 
             </div>
@@ -186,7 +198,7 @@
     </section>
 
 
-    <section id="recetas" class="min-h-screen px-8 py-20">
+    <section id="recetas" class="hidden min-h-screen px-8 py-20">
 
         <div class="container mx-auto text-center mb-14">
 
@@ -211,239 +223,87 @@
 
         <div class="flex flex-row justify-center gap-8 mt-10">
 
+            <div id="recipes-container" class="flex gap-6 flex-wrap"></div>
+            <template id="recipe-template">
+                <article
+                    class="rounded-[28px] overflow-hidden w-[330px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
 
-            <article
-                class="rounded-[28px] overflow-hidden w-[291px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
+                    <div
+                        class="h-20 overflow-hidden border-b-2 border-black/10 bg-[#E8E1D7] relative flex items-center justify-center">
 
-                <div
-                    class="h-20 overflow-hidden border-b-2 border-black/10 bg-[#E8E1D7] relative flex items-center justify-center">
+                        <svg class="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="pattern-receta" x="0" y="0" width="32" height="32"
+                                    patternUnits="userSpaceOnUse">
+                                    <circle cx="16" cy="16" r="1" fill="currentColor" class="text-black" />
+                                    <path d="M8 8 Q16 4 24 8" stroke="currentColor" stroke-width="0.4" fill="none"
+                                        class="text-black opacity-40" />
+                                </pattern>
+                            </defs>
 
-                    <svg class="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <pattern id="pattern-receta" x="0" y="0" width="32" height="32"
-                                patternUnits="userSpaceOnUse">
-                                <circle cx="16" cy="16" r="1" fill="currentColor" class="text-black" />
-                                <path d="M8 8 Q16 4 24 8" stroke="currentColor" stroke-width="0.4" fill="none"
-                                    class="text-black opacity-40" />
-                            </pattern>
-                        </defs>
+                            <rect width="100%" height="100%" fill="url(#pattern-receta)" />
+                        </svg>
 
-                        <rect width="100%" height="100%" fill="url(#pattern-receta)" />
-                    </svg>
-
-                    <div class="relative z-10 flex items-center justify-center">
-                        <div
-                            class="w-10 h-10 rounded-full bg-[#DCE8CC] flex items-center justify-center border border-dashed border-[#7C9B5A] rotate-6">
-                            <img src="/images/chef-hat-green-image.png" alt="chef hat" class="w-6 h-6 rotate-12">
+                        <div class="relative z-10 flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 rounded-full bg-[#DCE8CC] flex items-center justify-center border border-dashed border-[#7C9B5A] rotate-6">
+                                <img src="/images/chef-hat-green-image.png" alt="chef hat" class="w-6 h-6 rotate-12">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- CONTENIDO -->
-                <div class="p-6 flex flex-col flex-1">
+                    <div class="p-6 flex flex-col flex-1">
 
-                    <h5 class="font-fraunces italic font-semibold text-[32px] text-[#4B3425] leading-tight mb-4">
-                        <!-- Título de la receta -->
-                    </h5>
+                        <h5
+                            class="font-fraunces italic font-semibold text-[32px] text-[#4B3425] leading-tight mb-4 recipe-title">
+                        </h5>
 
-                    <p class="text-[#7D746C] font-barlow text-[16px] leading-relaxed mb-6">
-                        <!-- Descripción de la receta -->
-                    </p>
+                        <p class="text-[#7D746C] font-barlow text-[16px] leading-relaxed mb-6 recipe-desc">
+                        </p>
 
-                    <div class="flex gap-3 mb-4">
-                        <div
-                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
-                            <img src="/images/time.png" alt="time" class="w-4 h-4">
-                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
-                                <!-- Contenedor de tiempo -->
-                            </p>
-                        </div>
+                        <div class="flex gap-3 mb-4">
 
-                        <div
-                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
-                            <img src="/images/users.png" alt="users" class="w-4 h-4">
-                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
-                                <!-- Contenedor de cantidad de personas -->
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <!-- LINEA -->
-                    <div class="border-t-2 border-dashed border-gray-300 pt-4">
-
-                        <div class="flex justify-between items-center">
-
-                            <div class="flex items-center gap-3">
-                                <img src="/images/chef-hat-green.png" alt="chef hat" class="w-6 h-6">
-
-                                <p class="font-barlow text-[16px] text-[#6E8B4E] font-bold">
-                                    VER PASOS
-                                </p>
+                            <div
+                                class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                                <img src="/images/time.png" class="w-4 h-4">
+                                <p class="recipe-time font-barlow font-semibold text-[14px] text-[#6E8B4E]"></p>
                             </div>
 
-                            <img src="/images/down-arrow-green.png" alt="flecha" class="w-3 h-3">
-                        </div>
-
-                    </div>
-                </div>
-            </article>
-
-            <article
-                class="rounded-[28px] overflow-hidden w-[291px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
-
-                <div
-                    class="h-20 overflow-hidden border-b-2 border-black/10 bg-[#E8E1D7] relative flex items-center justify-center">
-
-                    <svg class="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <pattern id="pattern-receta" x="0" y="0" width="32" height="32"
-                                patternUnits="userSpaceOnUse">
-                                <circle cx="16" cy="16" r="1" fill="currentColor" class="text-black" />
-                                <path d="M8 8 Q16 4 24 8" stroke="currentColor" stroke-width="0.4" fill="none"
-                                    class="text-black opacity-40" />
-                            </pattern>
-                        </defs>
-
-                        <rect width="100%" height="100%" fill="url(#pattern-receta)" />
-                    </svg>
-
-                    <div class="relative z-10 flex items-center justify-center">
-                        <div
-                            class="w-10 h-10 rounded-full bg-[#DCE8CC] flex items-center justify-center border border-dashed border-[#7C9B5A] rotate-6">
-                            <img src="/images/chef-hat-green-image.png" alt="chef hat" class="w-6 h-6 rotate-12">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CONTENIDO -->
-                <div class="p-6 flex flex-col flex-1">
-
-                    <h5 class="font-fraunces italic font-semibold text-[32px] text-[#4B3425] leading-tight mb-4">
-                        <!-- Título de la receta -->
-                    </h5>
-
-                    <p class="text-[#7D746C] font-barlow text-[16px] leading-relaxed mb-6">
-                        <!-- Descripción de la receta -->
-                    </p>
-
-                    <div class="flex gap-3 mb-4">
-                        <div
-                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
-                            <img src="/images/time.png" alt="time" class="w-4 h-4">
-                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
-                                <!-- Contenedor de tiempo -->
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
-                            <img src="/images/users.png" alt="users" class="w-4 h-4">
-                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
-                                <!-- Contenedor de cantidad de personas -->
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <!-- LINEA -->
-                    <div class="border-t-2 border-dashed border-gray-300 pt-4">
-
-                        <div class="flex justify-between items-center">
-
-                            <div class="flex items-center gap-3">
-                                <img src="/images/chef-hat-green.png" alt="chef hat" class="w-6 h-6">
-
-                                <p class="font-barlow text-[16px] text-[#6E8B4E] font-bold">
-                                    VER PASOS
-                                </p>
+                            <div
+                                class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                                <img src="/images/users.png" class="w-4 h-4">
+                                <p class="recipe-servings font-barlow font-semibold text-[14px] text-[#6E8B4E]"></p>
                             </div>
 
-                            <img src="/images/down-arrow-green.png" alt="flecha" class="w-3 h-3">
                         </div>
 
-                    </div>
-                </div>
-            </article>
+                        <div class="border-t-2 border-dashed border-gray-300 pt-4">
 
+                            <button class="recipe-toggle w-full flex justify-between items-center">
 
+                                <div class="flex items-center gap-3">
+                                    <img src="/images/chef-hat-green.png" class="recipe-hat w-6 h-6">
 
-            <article
-                class="rounded-[28px] overflow-hidden w-[291px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
+                                    <p class="recipe-text font-barlow text-[16px] text-[#6E8B4E] font-bold">
+                                        VER PASOS
+                                    </p>
+                                </div>
 
-                <div
-                    class="h-20 overflow-hidden border-b-2 border-black/10 bg-[#E8E1D7] relative flex items-center justify-center">
+                                <img src="/images/down-arrow-green.png"
+                                    class="recipe-arrow w-3 h-3 transition-transform duration-300">
+                            </button>
 
-                    <svg class="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <pattern id="pattern-receta" x="0" y="0" width="32" height="32"
-                                patternUnits="userSpaceOnUse">
-                                <circle cx="16" cy="16" r="1" fill="currentColor" class="text-black" />
-                                <path d="M8 8 Q16 4 24 8" stroke="currentColor" stroke-width="0.4" fill="none"
-                                    class="text-black opacity-40" />
-                            </pattern>
-                        </defs>
-
-                        <rect width="100%" height="100%" fill="url(#pattern-receta)" />
-                    </svg>
-
-                    <div class="relative z-10 flex items-center justify-center">
-                        <div
-                            class="w-10 h-10 rounded-full bg-[#DCE8CC] flex items-center justify-center border border-dashed border-[#7C9B5A] rotate-6">
-                            <img src="/images/chef-hat-green-image.png" alt="chef hat" class="w-6 h-6 rotate-12">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CONTENIDO -->
-                <div class="p-6 flex flex-col flex-1">
-
-                    <h5 class="font-fraunces italic font-semibold text-[32px] text-[#4B3425] leading-tight mb-4">
-                        <!-- Título de la receta -->
-                    </h5>
-
-                    <p class="text-[#7D746C] font-barlow text-[16px] leading-relaxed mb-6">
-                        <!-- Descripción de la receta -->
-                    </p>
-
-                    <div class="flex gap-3 mb-4">
-                        <div
-                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
-                            <img src="/images/time.png" alt="time" class="w-4 h-4">
-                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
-                                <!-- Contenedor de tiempo -->
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex items-center gap-2 px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
-                            <img src="/images/users.png" alt="users" class="w-4 h-4">
-                            <p class="font-barlow font-semibold text-[14px] text-[#6E8B4E]">
-                                <!-- Contenedor de cantidad de personas -->
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <!-- LINEA -->
-                    <div class="border-t-2 border-dashed border-gray-300 pt-4">
-
-                        <div class="flex justify-between items-center">
-
-                            <div class="flex items-center gap-3">
-                                <img src="/images/chef-hat-green.png" alt="chef hat" class="w-6 h-6">
-
-                                <p class="font-barlow text-[16px] text-[#6E8B4E] font-bold">
-                                    VER PASOS
-                                </p>
+                            <!-- PASOS -->
+                            <div class="recipe-steps hidden mt-4 text-sm text-[#5C544C] space-y-3">
                             </div>
 
-                            <img src="/images/down-arrow-green.png" alt="flecha" class="w-3 h-3">
                         </div>
-
                     </div>
-                </div>
-            </article>
+                </article>
+            </template>
+
+        </div>
+
         </div>
     </section>
 

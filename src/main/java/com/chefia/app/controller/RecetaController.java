@@ -1,13 +1,16 @@
 package com.chefia.app.controller;
 
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Controller;
 
 import com.chefia.app.dto.RecetaDTO;
 import com.chefia.app.model.Ingredient;
@@ -53,20 +56,19 @@ public class RecetaController {
     /**
      * Procesa los ingredientes seleccionados y pide las 3 recetas a Groq.
      */
-    @PostMapping("/generar-recetas")
-    public String generarRecetas(@RequestParam(name = "ingredientesSeleccionados", required = false) List<String> seleccionados, Model model) {
-        if (seleccionados == null || seleccionados.size() < 2) {
-            model.addAttribute("error", "Por favor, seleccioná al menos 2 ingredientes.");
-            // Re-cargamos los ingredientes para no romper la vista
-            return "redirect:/?error=true";
-        }
+@ResponseBody
+@PostMapping("/generar-recetas")
+public List<RecetaDTO> generarRecetas(
+        @RequestBody Map<String, List<String>> body) {
 
-        List<RecetaDTO> opciones = recetaService.obtenerSugerenciasDeIA(seleccionados);
-        model.addAttribute("opciones", opciones);
-        
-        // Esta vista mostrará las 3 tarjetas de la imagen que pasaste
-        return "recetas-sugeridas"; 
+    List<String> seleccionados = body.get("ingredientes");
+
+    if (seleccionados == null || seleccionados.size() < 2) {
+        return List.of();
     }
+
+    return recetaService.obtenerSugerenciasDeIA(seleccionados);
+}
 
     /**
      * Guarda la receta que el usuario eligió al tocar "Seguir pasos".
