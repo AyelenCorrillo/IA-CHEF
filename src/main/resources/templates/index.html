@@ -6,24 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Home</title>
+    <title>AI Chef</title>
 </head>
 
 <body class="min-h-screen flex flex-col">
 
     <!-- HEADER -->
-    <header class="h-20 flex flex-row justify-between sticky items-center px-4">
+    <header
+        class="fixed top-0 left-0 w-full h-15 flex flex-row justify-between items-center px-6 z-50 bg-[#F8F4ED]/70 backdrop-blur-md border-b border-[#E4DFD8]">
+
         <div>
             <img class="logo-AIChef" src="/images/logo_AIChef.png" alt="Logo AI Chef">
         </div>
+
         <nav>
-            <ul class="flex flex-row gap-8 font-gantari">
-                <a href="#ingredientes">
-                    <li>Ingredientes</li>
-                </a>
-                <a href="#recetas">
-                    <li>Recetas</li>
-                </a>
+            <ul class="flex flex-row gap-8 font-gantari text-lg">
+
+                <li>
+                    <a href="#ingredientes"
+                        class="transition-colors duration-200 hover:text-[#5B833F] active:text-[#5B833F]">
+                        Ingredientes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#recetas"
+                        class="transition-colors duration-200 hover:text-[#5B833F] active:text-[#5B833F]">
+                        Recetas
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </header>
@@ -48,10 +60,10 @@
                             stroke-linecap="round" />
                     </svg>
                 </span>
-                al <span class="text-brown-orange"><i>plato</i></span>.
+                al <span class="text-[#C66339]"><i>plato</i></span>.
             </h1>
 
-            <p class="text-[30px] font-basic leading-[1.5] text-grey">
+            <p class="text-[25px] text-[#7A746E] font-basic leading-[1.5]">
                 Decinos que tenés en la cocina y la IA te sugiere
                 <span class="text-black">3 recetas</span> paso a paso, como un chef profesional.
             </p>
@@ -88,7 +100,7 @@
                 ?
             </h2>
 
-            <p class="text-[20px] font-basic text-grey leading-[1.5]">
+            <p class="text-[20px] text-[#7A746E] font-basic leading-[1.5]">
                 Buscá ingredientes a tu izquierda y arrastralos a tu tabla.
             </p>
         </div>
@@ -131,7 +143,7 @@
                 <form action="/generar-recetas" method="post" onsubmit="return validateForm()">
 
                     <div
-                        class="grid grid-cols-5 gap-2 mt-2 max-h-[420px] overflow-y-auto pr-2 custom-scroll scroll-smooth">
+                        class="grid grid-cols-5 gap-2 mt-2 max-h-[440px] overflow-y-auto pr-2 custom-scroll scroll-smooth">
 
                         <div th:each="ing : ${ingredientes}" class="ingredient-card"
                             th:attr="data-category=${ing.category.name}, data-name=${ing.name}" draggable="true">
@@ -158,6 +170,8 @@
                         </div>
 
                     </div>
+
+                </form>
 
             </div>
 
@@ -193,7 +207,7 @@
 
             </div>
 
-            </form>
+        </div>
 
     </section>
 
@@ -304,12 +318,16 @@
 
         </div>
 
-        </div>
     </section>
 
+    <div class="border-t-2 border-dashed border-gray-300 mt-4"></div>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-sm text-gray-400">
+        <p>AI Chef — Proyecto Integrador PP4 © 2026</p>
+    </footer>
 
     <script src="/js/filters.js"></script>
-
 </body>
 
 </html>
