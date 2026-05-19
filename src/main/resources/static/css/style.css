@@ -34,6 +34,10 @@ body {
     color: black;
 }
 
+main {
+    padding-top: 100px;
+}
+
 /* Fonts applications */
 .font-jomhuria {
     font-family: 'Jomhuria', cursive;
@@ -123,13 +127,10 @@ nav ul li {
     bottom: -10px;
     height: 25px;
 }
+
 .color-border-foggy-day {
     border: 1px solid var(--Color-border-foggy-day);
     box-shadow: 2px 2px var(--Color-text-grey);
-}
-
-.hidden {
-    display: none;
 }
 
 .custom-scroll::-webkit-scrollbar {
