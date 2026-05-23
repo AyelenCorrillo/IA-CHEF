@@ -20,7 +20,7 @@
         </div>
 
         <nav>
-            <ul class="flex flex-row gap-8 font-gantari text-lg">
+            <ul class="flex flex-row gap-4 md:gap-8 font-gantari text-sm md:text-lg">
 
                 <li>
                     <a href="#ingredientes"
@@ -41,17 +41,17 @@
     </header>
 
     <!-- HOME -->
-    <main id="home" class="px-8 pt-10 flex-1 flex items-start">
+    <main id="home" class="px-5 md:px-8 pt-10 flex-1 flex items-start">
 
         <div class="index-container flex flex-col gap-6 max-w-5xl w-full">
 
             <div
-                class="inline-flex items-center gap-2 px-4 py-1 bg-[#F4D9B2] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit">
-                <img src="/images/star-icon-black.png" class="w-4 h-4" alt="star icon">
+                class="inline-flex items-center gap-1 md:gap-2 px-3 md:px-4 py-1 bg-[#F4D9B2] border-2 border-black/80 rounded-full font-semibold text-[11px] md:text-base -skew-y-3 w-fit">
+                <img src="/images/star-icon-black.png" class="w-3 h-3 md:w-4 md:h-4" alt="star icon">
                 <span>Recetas con IA, hechas con lo que tenés</span>
             </div>
 
-            <h1 class="text-[100px] font-fraunces font-bold leading-[1]">
+            <h1 class="text-[45px] md:text-[80px] lg:text-[100px] font-fraunces font-bold leading-[1.2] md:leading-[1.05] lg:leading-[1]">
                 De la
                 <span class="relative inline-block w-fit">
                     <span class="text-green">heladera</span>
@@ -63,7 +63,7 @@
                 al <span class="text-[#C66339]"><i>plato</i></span>.
             </h1>
 
-            <p class="text-[25px] text-[#7A746E] font-basic leading-[1.5]">
+            <p class="text-[18px] md:text-[22px] lg:text-[25px] text-[#7A746E] font-basic leading-[1.5]">
                 Decinos que tenés en la cocina y la IA te sugiere
                 <span class="text-black">3 recetas</span> paso a paso, como un chef profesional.
             </p>
@@ -82,17 +82,17 @@
         <div class="container mx-auto max-w-7xl text-center">
 
             <div
-                class="inline-flex items-center justify-center gap-1 px-4 py-0.5 bg-[#E1E4D3] border-2 border-black/80 rounded-full font-semibold -skew-y-3 w-fit mx-auto mb-6">
-                <img src="/images/carrot.png" class="w-8 h-8 rotate-30" alt="carrot icon">
+                class="inline-flex items-center justify-center gap-1 px-3 md:px-4 py-0.5 bg-[#E1E4D3] border-2 border-black/80 rounded-full font-semibold text-[11px] md:text-base -skew-y-3 w-fit mx-auto mb-6">
+                <img src="/images/carrot.png" class="w-5 h-5 md:w-8 md:h-8 rotate-30" alt="carrot icon">
                 <span>Tu cocina, tu lienzo</span>
             </div>
 
-            <h2 class="text-[60px] font-fraunces font-bold italic leading-[1.1] mb-6">
+            <h2 class="text-[38px] md:text-[50px] lg:text-[60px] font-fraunces font-bold italic leading-[1.1] mb-6">
                 ¿Qué tenés en la
                 <span class="relative inline-block w-fit">
                     <span class="text-green">cocina</span>
 
-                    <svg class="line absolute left-0 w-full" viewBox="0 0 300 60" preserveAspectRatio="none">
+                    <svg class="line-cocina absolute left-0 w-full" viewBox="0 0 300 60" preserveAspectRatio="none">
                         <path d="M0 35 C 75 -10, 225 70, 300 35" stroke-width="10" stroke="#EE9C2B" fill="none"
                             stroke-linecap="round" />
                     </svg>
@@ -100,13 +100,13 @@
                 ?
             </h2>
 
-            <p class="text-[20px] text-[#7A746E] font-basic leading-[1.5]">
-                Buscá ingredientes a tu izquierda y arrastralos a tu tabla.
+            <p class="text-[16px] md:text-[20px] text-[#7A746E] font-basic leading-[1.5]">
+                Contanos qué ingredientes tenés y la IA hará el resto.
             </p>
         </div>
 
         <!-- INGREDIENTES SECTION -->
-        <div class="grid lg:grid-cols-[1fr_380px] gap-8 items-start mt-10">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 items-start mt-10">
 
             <div>
 
@@ -143,7 +143,7 @@
                 <form action="/generar-recetas" method="post" onsubmit="return validateForm()">
 
                     <div
-                        class="grid grid-cols-5 gap-2 mt-2 max-h-[440px] overflow-y-auto pr-2 custom-scroll scroll-smooth">
+                        class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-2 max-h-[300px] md:max-h-[440px] overflow-y-auto overflow-x-hidden pr-2 custom-scroll scroll-smooth">
 
                         <div th:each="ing : ${ingredientes}" class="ingredient-card"
                             th:attr="data-category=${ing.category.name}, data-name=${ing.name}" draggable="true">
@@ -153,15 +153,15 @@
                                 <input type="checkbox" name="ingredientesSeleccionados" th:value="${ing.name}"
                                     th:attr="data-name=${ing.name}" class="sr-only peer" />
 
-                                <div class="bg-white border-2 border-[#E0DEDD] rounded-xl p-2 w-35 h-35 text-center flex flex-col items-center justify-center transition
+                                <div class="bg-white border-2 border-[#E0DEDD] rounded-xl p-1 md:p-2 w-full aspect-square text-center flex flex-col items-center justify-center transition
                                 duration-200 cursor-pointer hover:border-black hover:shadow-[4px_4px_0px_black] hover:-translate-y-1
                                 peer-checked:border-black
                                 peer-checked:shadow-[2px_2px_0px_black]
                                 peer-checked:scale-100 
                                 pointer-events-auto">
 
-                                    <img th:src="@{${ing.image}}" class="w-20 h-20 mb-1" />
-                                    <p class="text-m font-semibold" th:text="${ing.name}"></p>
+                                    <img th:src="@{${ing.image}}" class="w-12 h-12 md:w-20 md:h-20 mb-1" />
+                                    <p class="text-xs md:text-base font-semibold" th:text="${ing.name}"></p>
 
                                 </div>
 
