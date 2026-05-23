@@ -78,9 +78,18 @@ INSERT INTO public.ingredientes VALUES (39, 'Salsa de soja', '/images/API_image/
 INSERT INTO public.ingredientes VALUES (40, 'Aceto balsamico', '/images/API_image/acetobalsamico.png', 5);
 INSERT INTO public.ingredientes VALUES (41, 'Pera', '/images/API_image/pera.png', 2);
 INSERT INTO public.ingredientes VALUES (42, 'Durazno', '/images/API_image/durazno.png', 2);
+INSERT INTO public.ingredientes VALUES (43, 'Batata', '/images/API_image/batata.png', 1);
+INSERT INTO public.ingredientes VALUES (44, 'Remolacha', '/images/API_image/remolacha.png', 1);
+INSERT INTO public.ingredientes VALUES (45, 'Acelga', '/images/API_image/acelga.png', 1);
+INSERT INTO public.ingredientes VALUES (46, 'Rúcula', '/images/API_image/rucula.png', 1);
+INSERT INTO public.ingredientes VALUES (47, 'Champiñones', '/images/API_image/champiñones.png', 1);
+INSERT INTO public.ingredientes VALUES (48, 'Puerro', '/images/API_image/puerro.png', 1);
+INSERT INTO public.ingredientes VALUES (49, 'Quinoa', '/images/API_image/quinoa.png', 5);
+INSERT INTO public.ingredientes VALUES (50, 'Ricota', '/images/API_image/ricota.png', 5);
+INSERT INTO public.ingredientes VALUES (51, 'Lechuga', '/images/API_image/lechuga.png', 1);
+INSERT INTO public.ingredientes VALUES (52, 'Zapallo', '/images/API_image/zapallo.png', 1);
 
-
-SELECT pg_catalog.setval('public.ingredientes_id_seq', 42, true);
+SELECT pg_catalog.setval('public.ingredientes_id_seq', 50, true);
 
 --
 -- PostgreSQL database dump complete
