@@ -195,7 +195,7 @@ function addIngredient(ing, img) {
     if (card) {
         card.style.display = "none";
     }
-    
+
     updateGenerateButton();
     renderDropZone();
 }
@@ -318,6 +318,11 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
 
     e.preventDefault();
 
+    if (selectedIngredients.length < 2) {
+        alert("Seleccioná al menos 2 ingredientes.");
+        return;
+    }
+
     const button = document.getElementById("generate-recipes");
 
     button.disabled = true;
@@ -348,43 +353,65 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
         )
     ).map(i => i.value);
 
-    const res = await fetch("/generar-recetas", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ ingredientes })
-    });
+    try {
 
-    const recetas = await res.json();
+        const res = await fetch("/generar-recetas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ ingredientes })
+        });
 
-    console.log(recetas);
+        if (!res.ok) {
+            throw new Error("Error en la respuesta del servidor");
+        }
 
-    const seccion = document.getElementById("recetas");
+        const recetas = await res.json();
 
-    seccion.classList.remove("hidden");
+        if (!recetas || recetas.length === 0) {
+            throw new Error("La IA devolvió una respuesta vacía");
+        }
 
-    renderRecipes(recetas);
+        const seccion = document.getElementById("recetas");
 
-    button.disabled = false;
+        seccion.classList.remove("hidden");
 
-    button.innerHTML = "Generar 3 recetas";
+        renderRecipes(recetas);
 
-    button.classList.remove(
-        "bg-[#B7C7A1]",
-        "cursor-not-allowed"
-    );
+        seccion.scrollIntoView({
+            behavior: "smooth"
+        });
 
-    button.classList.add(
-        "bg-[#5B833F]",
-        "text-[#EEEEE3]"
-    );
+    } catch (error) {
 
-    button.classList.remove("animate-pulse");
+        console.error(error);
 
-    seccion.scrollIntoView({
-        behavior: "smooth"
-    });
+        alert(
+            "No pudimos generar las recetas. Intentá nuevamente en unos segundos."
+        );
+
+    }
+    finally {
+
+        button.disabled = false;
+
+        button.innerHTML = "Generar 3 recetas";
+
+        button.classList.remove(
+            "bg-[#B7C7A1]",
+            "cursor-not-allowed"
+        );
+
+        button.classList.add(
+            "bg-[#5B833F]",
+            "text-[#EEEEE3]"
+        );
+
+        button.classList.remove("animate-pulse");
+
+    }
+
 });
 
 function updateGenerateButton() {
