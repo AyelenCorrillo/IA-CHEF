@@ -176,6 +176,8 @@ function renderDropZone() {
 
 function addIngredient(ing, img) {
 
+    hideError();
+
     const checkbox = document.querySelector(`input[data-name="${ing}"]`);
 
     if (checkbox) {
@@ -195,7 +197,7 @@ function addIngredient(ing, img) {
     if (card) {
         card.style.display = "none";
     }
-    
+
     updateGenerateButton();
     renderDropZone();
 }
@@ -318,6 +320,11 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
 
     e.preventDefault();
 
+    if (selectedIngredients.length < 2) {
+        showError("Seleccioná al menos 2 ingredientes.");
+        return;
+    }
+
     const button = document.getElementById("generate-recipes");
 
     button.disabled = true;
@@ -348,43 +355,70 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
         )
     ).map(i => i.value);
 
-    const res = await fetch("/generar-recetas", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ ingredientes })
-    });
+    hideError();
 
-    const recetas = await res.json();
+    try {
 
-    console.log(recetas);
+        const res = await fetch("/generar-recetas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ ingredientes })
+        });
 
-    const seccion = document.getElementById("recetas");
+        if (!res.ok) {
+            throw new Error("Error en la respuesta del servidor");
+        }
 
-    seccion.classList.remove("hidden");
+        const recetas = await res.json();
 
-    renderRecipes(recetas);
+        if (!recetas || recetas.length === 0) {
+            throw new Error("La IA devolvió una respuesta vacía");
+        }
 
-    button.disabled = false;
+        const seccion = document.getElementById("recetas");
 
-    button.innerHTML = "Generar 3 recetas";
+        seccion.classList.remove("hidden");
 
-    button.classList.remove(
-        "bg-[#B7C7A1]",
-        "cursor-not-allowed"
-    );
+        renderRecipes(recetas);
 
-    button.classList.add(
-        "bg-[#5B833F]",
-        "text-[#EEEEE3]"
-    );
+        seccion.scrollIntoView({
+            behavior: "smooth"
+        });
 
-    button.classList.remove("animate-pulse");
+    } catch (error) {
 
-    seccion.scrollIntoView({
-        behavior: "smooth"
-    });
+        console.error(error);
+
+        if (error.message.includes("vacía")) {
+            showError("No se pudieron generar recetas con esos ingredientes.");
+        } else {
+            showError("Error de conexión. Intentá nuevamente.");
+        }
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+        button.innerHTML = "Generar 3 recetas";
+
+        button.classList.remove(
+            "bg-[#B7C7A1]",
+            "cursor-not-allowed"
+        );
+
+        button.classList.add(
+            "bg-[#5B833F]",
+            "text-[#EEEEE3]"
+        );
+
+        button.classList.remove("animate-pulse");
+
+    }
+
 });
 
 function updateGenerateButton() {
@@ -393,4 +427,17 @@ function updateGenerateButton() {
         document.getElementById("generate-recipes");
 
     button.disabled = selectedIngredients.length < 2;
+}
+
+function showError(message) {
+    const errorBox = document.getElementById("error-message");
+
+    errorBox.textContent = message;
+    errorBox.classList.remove("hidden");
+}
+
+function hideError() {
+    const errorBox = document.getElementById("error-message");
+
+    errorBox.classList.add("hidden");
 }
