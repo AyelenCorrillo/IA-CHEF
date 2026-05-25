@@ -1,12 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <title>Historial</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Tu recetario</title>
 </head>
-<body>
-    
+
+<body class="bg-[#F8F4ED] min-h-screen">
+
+    <header
+        class="fixed top-0 left-0 w-full h-15 flex flex-row justify-between items-center px-6 z-50 bg-[#F8F4ED]/70 backdrop-blur-md border-b border-[#E4DFD8]">
+
+        <div>
+            <img class="logo-AIChef" src="/images/logo_AIChef.png" alt="Logo AI Chef">
+        </div>
+
+        <nav>
+            <ul class="flex flex-row gap-4 md:gap-8 font-gantari text-sm md:text-lg">
+
+                <li>
+                    <a href="#ingredientes"
+                        class="transition-colors duration-200 hover:text-[#5B833F] active:text-[#5B833F]">
+                        Ingredientes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/historial"
+                        class="transition-colors duration-200 hover:text-[#5B833F] active:text-[#5B833F]">
+                        📖 Mi recetario
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-10">
+
+        <!-- Título -->
+        <h1 class="text-[15px] md:text-[25px] lg:text-[40px] font-fraunces font-bold mt-1 text-[#2A1B0F]">
+            <i>Recetas <span class="text-[#5B833F]">guardadas</span></i>
+        </h1>
+
+        <p class="text-[#7A746E] font-basic mt-2">
+            Marcá tus favoritas y vivirán acá para siempre.
+        </p>
+
+        <!-- Estado vacío -->
+        <section id="empty-state"
+            class="max-w-2xl mx-auto mt-8 bg-white rounded-[28px] border-[3px] border-[#E5DED5] shadow-[5px_5px_0_#E5DED5] p-8 md:p-10 text-center -rotate-2">
+
+            <div class="w-15 h-15 mx-auto rounded-full bg-[#F4D9B2] flex items-center justify-center border border-dashed rotate-6">
+                <img src="/images/save-icon.png" alt="save icon" class="w-6 h-6 rotate-12">
+            </div>
+
+            <h2 class="text-3xl md:text-4xl font-fraunces font-bold text-[#2A1B0F] mt-6">
+                <i>Tu recetario está esperando su primer plato</i>
+            </h2>
+
+            <p class="text-[#7A746E] font-basic mt-4 max-w-md mx-auto">
+                Generá recetas con tus ingredientes y tocá el marcador en la
+                tarjeta para guardar las que más te gusten.
+            </p>
+
+            <a href="/"
+                class="inline-flex items-center gap-2 md:gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-full bg-[#5B833F] text-white font-semibold border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
+                <img src="/images/star_icon.png" class="w-4 h-4 md:w-5 md:h-5">
+                Cocinar algo nuevo
+            </a>
+
+        </section>
+
+        <!-- Cards -->
+        <div id="historial-container" class="hidden flex-wrap justify-center gap-6 mt-12">
+        </div>
+
+        <!-- Template -->
+        <template id="recipe-template">
+
+            <article
+                class="rounded-[28px] overflow-hidden w-[330px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
+
+                <div class="h-48 bg-[#E8E1D7] flex items-center justify-center text-5xl">
+                    🍽️
+                </div>
+
+                <div class="p-6 flex flex-col flex-1">
+
+                    <h3 class="recipe-title text-2xl font-bold mb-3"></h3>
+
+                    <p class="recipe-desc text-[#6A6258] mb-4"></p>
+
+                    <div class="flex gap-2 mb-4">
+                        <span class="recipe-time px-3 py-1 rounded-full bg-[#E5EFD7] text-sm"></span>
+
+                        <span class="recipe-servings px-3 py-1 rounded-full bg-[#E5EFD7] text-sm"></span>
+                    </div>
+
+                    <div class="recipe-steps hidden space-y-2 mb-4"></div>
+
+                    <button class="recipe-toggle bg-[#5B833F] text-white rounded-full px-4 py-2 mb-3">
+                        Ver pasos
+                    </button>
+
+                    <button class="delete-recipe bg-red-500 text-white rounded-full px-4 py-2">
+                        Eliminar
+                    </button>
+
+                </div>
+
+            </article>
+
+        </template>
+
+    </main>
+
+    <div class="border-t-2 border-dashed border-gray-300 mt-4"></div>
+
+    <footer class="py-6 text-center text-sm text-gray-400">
+        <p>AI Chef — Proyecto Integrador PP4 © 2026</p>
+    </footer>
+
+    <script src="/js/historial.js"></script>
+
 </body>
+
 </html>

@@ -63,7 +63,20 @@ function getLabel(category) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    filterIngredients('all');
+
+    filterIngredients("all");
+
+    const recetasGuardadas =
+        obtenerRecetasGuardadas();
+
+    if (recetasGuardadas.length > 0) {
+
+        document
+            .getElementById("recetas")
+            .classList.remove("hidden");
+
+        renderRecipes(recetasGuardadas);
+    }
 });
 
 
@@ -243,6 +256,13 @@ function renderRecipes(recetas) {
     recetas.forEach(receta => {
 
         const clone = template.content.cloneNode(true);
+
+        const saveBtn =
+            clone.querySelector(".save-recipe-btn");
+
+        saveBtn.addEventListener("click", () => {
+            guardarReceta(receta);
+        });
 
         clone.querySelector(".recipe-title").textContent =
             receta.nombre;
@@ -440,4 +460,31 @@ function hideError() {
     const errorBox = document.getElementById("error-message");
 
     errorBox.classList.add("hidden");
+}
+
+function guardarReceta(receta) {
+
+    const recetas =
+        JSON.parse(
+            localStorage.getItem("recetasGuardadas")
+        ) || [];
+
+    const existe =
+        recetas.some(
+            r => r.nombre === receta.nombre
+        );
+
+    if (existe) {
+        alert("La receta ya está guardada");
+        return;
+    }
+
+    recetas.push(receta);
+
+    localStorage.setItem(
+        "recetasGuardadas",
+        JSON.stringify(recetas)
+    );
+
+    alert("Receta guardada");
 }
