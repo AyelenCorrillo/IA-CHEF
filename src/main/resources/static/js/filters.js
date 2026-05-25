@@ -176,6 +176,8 @@ function renderDropZone() {
 
 function addIngredient(ing, img) {
 
+    hideError();
+
     const checkbox = document.querySelector(`input[data-name="${ing}"]`);
 
     if (checkbox) {
@@ -319,7 +321,7 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
     e.preventDefault();
 
     if (selectedIngredients.length < 2) {
-        alert("Seleccioná al menos 2 ingredientes.");
+        showError("Seleccioná al menos 2 ingredientes.");
         return;
     }
 
@@ -352,6 +354,8 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
             'input[name="ingredientesSeleccionados"]:checked'
         )
     ).map(i => i.value);
+
+    hideError();
 
     try {
 
@@ -387,11 +391,14 @@ document.getElementById("generate-recipes").addEventListener("click", async (e) 
 
         console.error(error);
 
-        alert(
-            "No pudimos generar las recetas. Intentá nuevamente en unos segundos."
-        );
+        if (error.message.includes("vacía")) {
+            showError("No se pudieron generar recetas con esos ingredientes.");
+        } else {
+            showError("Error de conexión. Intentá nuevamente.");
+        }
 
     }
+
     finally {
 
         button.disabled = false;
@@ -420,4 +427,17 @@ function updateGenerateButton() {
         document.getElementById("generate-recipes");
 
     button.disabled = selectedIngredients.length < 2;
+}
+
+function showError(message) {
+    const errorBox = document.getElementById("error-message");
+
+    errorBox.textContent = message;
+    errorBox.classList.remove("hidden");
+}
+
+function hideError() {
+    const errorBox = document.getElementById("error-message");
+
+    errorBox.classList.add("hidden");
 }
