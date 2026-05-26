@@ -66,17 +66,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     filterIngredients("all");
 
-    const recetasGuardadas =
-        obtenerRecetasGuardadas();
-
-    if (recetasGuardadas.length > 0) {
-
-        document
-            .getElementById("recetas")
-            .classList.remove("hidden");
-
-        renderRecipes(recetasGuardadas);
-    }
 });
 
 
@@ -260,8 +249,26 @@ function renderRecipes(recetas) {
         const saveBtn =
             clone.querySelector(".save-recipe-btn");
 
+        const saveIcon =
+            clone.querySelector(".save-icon");
+
+        const yaGuardada =
+            obtenerRecetasGuardadas().some(
+                r => r.nombre === receta.nombre
+            );
+
+        saveIcon.src = yaGuardada
+            ? "/images/save-icon-filled.png"
+            : "/images/save-icon.png";
+
         saveBtn.addEventListener("click", () => {
-            guardarReceta(receta);
+
+            const guardada =
+                toggleRecetaGuardada(receta);
+
+            saveIcon.src = guardada
+                ? "/images/save-icon-filled.png"
+                : "/images/save-icon.png";
         });
 
         clone.querySelector(".recipe-title").textContent =
@@ -462,21 +469,32 @@ function hideError() {
     errorBox.classList.add("hidden");
 }
 
-function guardarReceta(receta) {
+function obtenerRecetasGuardadas() {
+    return JSON.parse(
+        localStorage.getItem("recetasGuardadas")
+    ) || [];
+}
+
+function toggleRecetaGuardada(receta) {
 
     const recetas =
-        JSON.parse(
-            localStorage.getItem("recetasGuardadas")
-        ) || [];
+        obtenerRecetasGuardadas();
 
-    const existe =
-        recetas.some(
+    const index =
+        recetas.findIndex(
             r => r.nombre === receta.nombre
         );
 
-    if (existe) {
-        alert("La receta ya está guardada");
-        return;
+    if (index >= 0) {
+
+        recetas.splice(index, 1);
+
+        localStorage.setItem(
+            "recetasGuardadas",
+            JSON.stringify(recetas)
+        );
+
+        return false;
     }
 
     recetas.push(receta);
@@ -486,5 +504,5 @@ function guardarReceta(receta) {
         JSON.stringify(recetas)
     );
 
-    alert("Receta guardada");
+    return true;
 }

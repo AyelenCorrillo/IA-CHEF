@@ -22,7 +22,7 @@
             <ul class="flex flex-row gap-4 md:gap-8 font-gantari text-sm md:text-lg">
 
                 <li>
-                    <a href="#ingredientes"
+                    <a href="/#ingredientes"
                         class="transition-colors duration-200 hover:text-[#5B833F] active:text-[#5B833F]">
                         Ingredientes
                     </a>
@@ -52,23 +52,23 @@
 
         <!-- Estado vacío -->
         <section id="empty-state"
-            class="max-w-2xl mx-auto mt-8 bg-white rounded-[28px] border-[3px] border-[#E5DED5] shadow-[5px_5px_0_#E5DED5] p-8 md:p-10 text-center -rotate-2">
+            class="max-w-xl mx-auto mt-8 bg-white rounded-[28px] border-[3px] border-[#E5DED5] shadow-[5px_5px_0_#E5DED5] p-8 md:p-10 text-center -rotate-2">
 
             <div class="w-15 h-15 mx-auto rounded-full bg-[#F4D9B2] flex items-center justify-center border border-dashed rotate-6">
-                <img src="/images/save-icon.png" alt="save icon" class="w-6 h-6 rotate-12">
+                <img src="/images/save-icon.png" alt="save icon" class="w-6 h-6 rotate-6">
             </div>
 
-            <h2 class="text-3xl md:text-4xl font-fraunces font-bold text-[#2A1B0F] mt-6">
+            <h2 class="text-xl md:text-2xl font-fraunces font-bold text-[#2A1B0F] mt-6">
                 <i>Tu recetario está esperando su primer plato</i>
             </h2>
 
             <p class="text-[#7A746E] font-basic mt-4 max-w-md mx-auto">
-                Generá recetas con tus ingredientes y tocá el marcador en la
+                Generá recetas con tus ingredientes y tocá el marcador <Bookmark className="inline w-4 h-4 -mt-0.5" /> en la
                 tarjeta para guardar las que más te gusten.
             </p>
 
             <a href="/"
-                class="inline-flex items-center gap-2 md:gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-full bg-[#5B833F] text-white font-semibold border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none w-fit">
+                class="inline-flex items-center gap-2 md:gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-full bg-[#5B833F] text-white font-semibold border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,0.6)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none mt-6 w-fit">
                 <img src="/images/star_icon.png" class="w-4 h-4 md:w-5 md:h-5">
                 Cocinar algo nuevo
             </a>
@@ -80,42 +80,118 @@
         </div>
 
         <!-- Template -->
-        <template id="recipe-template">
+<template id="recipe-template">
+    <article
+        class="rounded-[28px] overflow-hidden max-w-[330px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
 
-            <article
-                class="rounded-[28px] overflow-hidden w-[330px] bg-white border-[3px] border-[#D9D1C7] shadow-[0_4px_0_#D9D1C7] flex flex-col">
+        <div
+            class="h-20 overflow-hidden border-b-2 border-black/10 bg-[#E8E1D7] relative flex items-center justify-center">
 
-                <div class="h-48 bg-[#E8E1D7] flex items-center justify-center text-5xl">
-                    🍽️
+            <!-- MARCADOR -->
+            <div class="absolute top-3 right-3 z-20 hover:scale-110 transition-transform">
+                <button class="delete-recipe">
+                    <img src="/images/save-icon-filled.png"
+                        class="w-6 h-6">
+                </button>
+            </div>
+
+            <svg class="absolute inset-0 w-full h-full opacity-[0.06]"
+                xmlns="http://www.w3.org/2000/svg">
+
+                <defs>
+                    <pattern id="pattern-receta-historial"
+                        x="0" y="0"
+                        width="32" height="32"
+                        patternUnits="userSpaceOnUse">
+
+                        <circle cx="16" cy="16" r="1"
+                            fill="currentColor"
+                            class="text-black" />
+
+                        <path d="M8 8 Q16 4 24 8"
+                            stroke="currentColor"
+                            stroke-width="0.4"
+                            fill="none"
+                            class="text-black opacity-40" />
+                    </pattern>
+                </defs>
+
+                <rect width="100%"
+                    height="100%"
+                    fill="url(#pattern-receta-historial)" />
+            </svg>
+
+            <div class="relative z-10 flex items-center justify-center">
+                <div
+                    class="w-10 h-10 rounded-full bg-[#DCE8CC] flex items-center justify-center border border-dashed border-[#7C9B5A] rotate-6">
+                    <img src="/images/chef-hat-green-image.png"
+                        class="w-6 h-6 rotate-12">
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 md:p-6 flex flex-col flex-1">
+
+            <h5
+                class="font-fraunces italic font-semibold text-[24px] md:text-[32px] text-[#4B3425] leading-tight mb-4 recipe-title">
+            </h5>
+
+            <p
+                class="text-[#7D746C] font-barlow text-[14px] md:text-[16px] leading-relaxed mb-6 recipe-desc">
+            </p>
+
+            <div class="flex flex-wrap gap-2 md:gap-3 mb-4">
+
+                <div
+                    class="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                    <img src="/images/time.png"
+                        class="w-3 h-3 md:w-4 md:h-4">
+
+                    <p class="recipe-time font-barlow font-semibold text-[14px] text-[#6E8B4E]">
+                    </p>
                 </div>
 
-                <div class="p-6 flex flex-col flex-1">
+                <div
+                    class="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-1 rounded-full border border-[#9DB27C] bg-[#E5EFD7]">
+                    <img src="/images/users.png"
+                        class="w-3 h-3 md:w-4 md:h-4">
 
-                    <h3 class="recipe-title text-2xl font-bold mb-3"></h3>
+                    <p class="recipe-servings font-barlow font-semibold text-[14px] text-[#6E8B4E]">
+                    </p>
+                </div>
 
-                    <p class="recipe-desc text-[#6A6258] mb-4"></p>
+            </div>
 
-                    <div class="flex gap-2 mb-4">
-                        <span class="recipe-time px-3 py-1 rounded-full bg-[#E5EFD7] text-sm"></span>
+            <div class="border-t-2 border-dashed border-gray-300 pt-4">
 
-                        <span class="recipe-servings px-3 py-1 rounded-full bg-[#E5EFD7] text-sm"></span>
+                <button class="recipe-toggle w-full flex justify-between items-center">
+
+                    <div class="flex items-center gap-3">
+
+                        <img src="/images/chef-hat-green.png"
+                            class="recipe-hat w-5 h-5 md:w-6 md:h-6">
+
+                        <p
+                            class="recipe-text font-barlow text-[14px] md:text-[16px] text-[#6E8B4E] font-bold">
+                            VER PASOS
+                        </p>
+
                     </div>
 
-                    <div class="recipe-steps hidden space-y-2 mb-4"></div>
+                    <img src="/images/down-arrow-green.png"
+                        class="recipe-arrow w-3 h-3 transition-transform duration-300">
 
-                    <button class="recipe-toggle bg-[#5B833F] text-white rounded-full px-4 py-2 mb-3">
-                        Ver pasos
-                    </button>
+                </button>
 
-                    <button class="delete-recipe bg-red-500 text-white rounded-full px-4 py-2">
-                        Eliminar
-                    </button>
-
+                <div class="recipe-steps hidden mt-4 text-sm text-[#5C544C] space-y-3">
                 </div>
 
-            </article>
+            </div>
 
-        </template>
+        </div>
+
+    </article>
+</template>
 
     </main>
 

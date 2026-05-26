@@ -1,30 +1,3 @@
-const container =
-    document.getElementById("historial-container");
-
-const recetas =
-    JSON.parse(
-        localStorage.getItem("recetasGuardadas")
-    ) || [];
-
-recetas.forEach(receta => {
-
-    container.innerHTML += `
-        <article>
-            <h2>${receta.nombre}</h2>
-
-            <p>
-                ${receta.ingredientes
-            .map(i => i.nombre ?? i)
-            .join(", ")}
-            </p>
-
-            <p>${receta.tiempo}</p>
-
-            <p>${receta.porciones}</p>
-        </article>
-    `;
-});
-
 function obtenerRecetasGuardadas() {
     return JSON.parse(
         localStorage.getItem("recetasGuardadas")
@@ -60,18 +33,22 @@ function renderHistorial() {
     const recetas =
         obtenerRecetasGuardadas();
 
+    const emptyState =
+        document.getElementById("empty-state");
+
     container.innerHTML = "";
 
     if (recetas.length === 0) {
 
-        container.innerHTML = `
-            <p class="text-xl text-gray-500">
-                No hay recetas guardadas.
-            </p>
-        `;
+        emptyState.classList.remove("hidden");
+        container.classList.add("hidden");
 
         return;
     }
+
+    emptyState.classList.add("hidden");
+    container.classList.remove("hidden");
+    container.classList.add("flex");
 
     recetas.forEach(receta => {
 
@@ -109,8 +86,32 @@ function renderHistorial() {
         const toggleBtn =
             clone.querySelector(".recipe-toggle");
 
+        const arrow =
+            clone.querySelector(".recipe-arrow");
+
+        const text =
+            clone.querySelector(".recipe-text");
+
+        const hat =
+            clone.querySelector(".recipe-hat");
+
         toggleBtn.addEventListener("click", () => {
-            pasosContainer.classList.toggle("hidden");
+
+            const abierto =
+                pasosContainer.classList.toggle("hidden");
+
+            arrow.classList.toggle("rotate-180");
+
+            text.classList.toggle("text-[#CC754F]");
+            text.classList.toggle("text-[#6E8B4E]");
+
+            hat.src = abierto
+                ? "/images/chef-hat-green.png"
+                : "/images/chef-hat-orange.png";
+
+            arrow.src = abierto
+                ? "/images/down-arrow-green.png"
+                : "/images/down-arrow-orange.png";
         });
 
         const deleteBtn =
@@ -118,13 +119,6 @@ function renderHistorial() {
 
         deleteBtn.addEventListener("click", () => {
             eliminarReceta(receta.nombre);
-        });
-
-        const saveBtn =
-            clone.querySelector(".save-recipe-btn");
-
-        saveBtn.addEventListener("click", () => {
-            guardarReceta(receta);
         });
 
         container.appendChild(clone);
