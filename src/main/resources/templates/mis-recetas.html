@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>AI Chef — Mis Recetas Favoritas</title>
+</head>
+<body class="bg-[#F8F4ED] min-h-screen flex flex-col font-gantari">
+
+    <header class="fixed top-0 left-0 w-full h-15 flex flex-row justify-between items-center px-6 z-50 bg-[#F8F4ED]/70 backdrop-blur-md border-b border-[#E4DFD8]">
+        <div>
+            <img class="logo-AIChef" src="/images/logo_AIChef.png" alt="Logo AI Chef">
+        </div>
+        <nav>
+            <a href="/" class="text-sm md:text-base text-[#5C544C] hover:text-[#5B833F] font-medium transition-colors">
+                ← Volver a la Cocina
+            </a>
+        </nav>
+    </header>
+
+    <main class="flex-grow pt-24 px-4 max-w-4xl w-full mx-auto">
+        <div class="flex items-center gap-3 mb-8 border-b border-[#E4DFD8] pb-4">
+            <img src="/images/star_icon.png" class="w-7 h-7" style="filter: invert(47%) sepia(18%) saturate(1081%) hue-rotate(54deg) brightness(93%) contrast(85%);">
+            <h1 class="text-3xl font-bold text-[#2b4c1f] font-barlow">Mis Recetas Favoritas</h1>
+        </div>
+
+        <div id="historial-container" class="space-y-6 mb-12">
+            <p class="text-center text-gray-400 py-8 animate-pulse">Buscando tus recetas guardadas en el libro...</p>
+        </div>
+    </main>
+
+    <footer class="py-6 text-center text-sm text-gray-400 border-t border-[#E4DFD8] bg-white/50">
+        <p>AI Chef — Proyecto Integrador PP4 © 2026</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            cargarRecetasFavoritas();
+        });
+
+        // Separamos la carga en una función independiente para poder refrescar la grilla al borrar
+        async function cargarRecetasFavoritas() {
+            const token = localStorage.getItem('token');
+            const contenedor = document.getElementById('historial-container');
+
+            if (!token) {
+                alert('Para ver tus recetas favoritas, necesitas iniciar sesión.');
+                window.location.href = '/login';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/recetas/favoritas', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const recetas = await response.json();
+                    
+                    if (recetas.length === 0) {
+                        contenedor.innerHTML = `
+                            <div class="text-center py-12 bg-white rounded-2xl border border-[#E4DFD8] p-6">
+                                <p class="text-[#5C544C] font-medium mb-2">Tu libro de favoritas está vacío.</p>
+                                <a href="/" class="text-sm text-[#5B833F] font-bold hover:underline">Ir a cocinar →</a>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    contenedor.innerHTML = ""; 
+                    recetas.forEach(receta => {
+                        const tarjeta = document.createElement('article');
+                        tarjeta.className = "bg-white p-6 md:p-8 rounded-2xl border-2 border-[#D9D1C7] shadow-[4px_4px_0_#D9D1C7] mb-6";
+                        
+                        const lineasLimpias = receta.cuerpoReceta
+                            .split('\n')
+                            .map(linea => linea.trim())
+                            .filter(linea => linea.length > 0);
+
+                        // ESTRUCTURA CON EL BOTÓN ELIMINAR INCORPORADO EN EL ENCABEZADO
+                        let contenidoHTML = `
+                            <div class="flex flex-row justify-between items-center mb-6 border-b-2 border-dashed border-[#E4DFD8] pb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-[#E5EFD7] flex items-center justify-center border border-[#9DB27C]">
+                                        <img src="/images/chef-hat-green.png" class="w-5 h-5">
+                                    </div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-[#4B3425] font-fraunces italic">${receta.titulo}</h3>
+                                </div>
+                                
+                                <button onclick="ejecutarEliminacion(${receta.id}, '${receta.titulo}')" 
+                                        class="text-xs md:text-sm font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-xl transition-colors cursor-pointer border border-red-200">
+                                    ✕ Eliminar
+                                </button>
+                            </div>
+                            <div class="space-y-4 font-gantari text-[#5C544C]">
+                        `;
+
+                        lineasLimpias.forEach(linea => {
+                            if (/^\d+\.?$/.test(linea)) {
+                                contenidoHTML += `<p class="font-bold text-[#5B833F] text-base mt-2">${linea}</p>`;
+                            } else {
+                                contenidoHTML += `<p class="text-sm md:text-base leading-relaxed pl-2 border-l-2 border-[#E5EFD7] mb-3">${linea}</p>`;
+                            }
+                        });
+
+                        contenidoHTML += `</div>`;
+                        tarjeta.innerHTML = contenidoHTML;
+                        contenedor.appendChild(tarjeta);
+                    });
+
+                } else {
+                    localStorage.clear();
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // FUNCIÓN ASÍNCRONA QUE DISPARA EL BORRADO AL BACKEND
+        async function ejecutarEliminacion(idReceta, tituloReceta) {
+            // Confirmación de cortesía para evitar borrados accidentales
+            const confirmar = confirm(`¿Estás segura de que querés eliminar "${tituloReceta}" de tus favoritas?`);
+            if (!confirmar) return;
+
+            const token = localStorage.getItem('token');
+
+            try {
+                const response = await fetch(`/api/recetas/eliminar/${idReceta}`, {
+                    method: 'POST', // Tipo de petición correspondiente
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    alert('🗑️ Receta eliminada del libro con éxito.');
+                    cargarRecetasFavoritas(); // Volvemos a renderizar la lista actualizada sin recargar la página entera
+                } else {
+                    alert('No se pudo eliminar la receta. Intente nuevamente.');
+                }
+            } catch (error) {
+                console.error('Error al borrar receta:', error);
+                alert('Error de conexión con el servidor.');
+            }
+        }
+    </script>
+</body>
+</html>

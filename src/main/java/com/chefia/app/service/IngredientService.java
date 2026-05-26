@@ -18,6 +18,6 @@ public class IngredientService {
     }
 
     public List<Ingredient> getIngredientsByCategory(String categoryName) {
-    return ingredientRepository.findByCategory_Name(categoryName);
-}
+        return ingredientRepository.findByCategory_Name(categoryName);
+    }
 }

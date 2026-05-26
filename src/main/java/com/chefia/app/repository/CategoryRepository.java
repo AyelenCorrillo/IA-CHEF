@@ -7,4 +7,5 @@ import com.chefia.app.model.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
+    
 }
