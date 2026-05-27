@@ -441,3 +441,162 @@ function hideError() {
 
     errorBox.classList.add("hidden");
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    verificarEstadoSesion();
+    activarEscuchadoresDeRecetas();
+});
+
+// 1. COMPROBAR EL ESTADO DE LA SESIÓN EN EL NAVBAR
+function verificarEstadoSesion() {
+    const token = localStorage.getItem('token');
+    const nombre = localStorage.getItem('usuario_nombre');
+    const menu = document.getElementById('contenedor-autenticacion');
+
+    if (token && nombre) {
+        if (menu) {
+            menu.innerHTML = `
+                        <span class="text-sm text-gray-600 font-medium">Hola, <b class="text-[#5B833F]">${nombre}</b></span>
+                        <button onclick="cerrarSesion()" class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded-xl border border-red-200 transition-colors cursor-pointer ml-2">
+                            Salir
+                        </button>
+                    `;
+        }
+    }
+
+    const mobileAuth = document.getElementById("mobile-auth");
+    const mobileUserInfo = document.getElementById("mobile-user-info");
+    const mobileLogin = document.getElementById("mobile-login-link");
+
+    if (token && nombre) {
+
+        if (mobileUserInfo) {
+            mobileUserInfo.innerHTML = `
+            <div class="pb-3 border-b border-[#E4DFD8]">
+                Hola, <span class="font-bold text-[#5B833F]">${nombre}</span>
+            </div>
+        `;
+        }
+
+        if (mobileLogin) {
+            mobileLogin.remove();
+        }
+
+        if (mobileAuth) {
+            mobileAuth.innerHTML = `
+            <button
+                onclick="cerrarSesion()"
+                class="w-full text-left text-red-500 font-medium cursor-pointer">
+                Salir
+            </button>
+        `;
+        }
+    }
+
+}
+
+function cerrarSesion() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario_nombre');
+    alert('Sesión cerrada. Ahora estás navegando de forma anónima.');
+    window.location.reload();
+}
+
+// 3. LOGICA QUE INYECTA LOS BOTONES DE GUARDAR EN LAS TARJETAS DE ELI
+function activarEscuchadoresDeRecetas() {
+    const contenedorPadre = document.getElementById('recipes-container');
+    if (!contenedorPadre) return;
+
+    const ComicObserver = new MutationObserver(() => {
+        const tarjetas = contenedorPadre.querySelectorAll('article');
+        tarjetas.forEach(tarjeta => {
+            let botonFavorito = tarjeta.querySelector('.btn-guardar-receta');
+
+            if (!botonFavorito) {
+                const contenedorBotones = tarjeta.querySelector('.p-4, .p-6') || tarjeta;
+                const divBoton = document.createElement('div');
+                divBoton.className = "mt-auto pt-4 border-t border-dashed border-gray-200";
+                divBoton.innerHTML = `
+                            <button class="btn-guardar-receta w-full flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm bg-white text-[#5B833F] font-bold rounded-xl border border-[#9DB27C] transition-all duration-200 hover:bg-[#E5EFD7] cursor-pointer">
+                                <img src="/images/star_icon.png" class="w-3.5 h-3.5 opacity-80" style="filter: invert(47%) sepia(18%) saturate(1081%) hue-rotate(54deg) brightness(93%) contrast(85%);">
+                                <span>Guardar en mis favoritas</span>
+                            </button>
+                        `;
+                contenedorBotones.appendChild(divBoton);
+                botonFavorito = divBoton.querySelector('.btn-guardar-receta');
+            }
+
+            if (botonFavorito && !botonFavorito.dataset.conectado) {
+                botonFavorito.dataset.conectado = "true";
+                botonFavorito.addEventListener('click', () => {
+                    const tituloReceta = tarjeta.querySelector('.recipe-title').innerText;
+                    const instruccionesReceta = tarjeta.querySelector('.recipe-steps').innerText || tarjeta.querySelector('.recipe-desc').innerText;
+
+                    // Disparamos la verificación inteligente
+                    procesarGuardadoFavorito(tituloReceta, instruccionesReceta);
+                });
+            }
+        });
+    });
+    ComicObserver.observe(contenedorPadre, { childList: true });
+}
+
+// 3. INTELIGENCIA DEL BOTÓN: ¿Logueado o Anónimo?
+function procesarGuardadoFavorito(titulo, cuerpo) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        // Si es un usuario visitante: Guardamos la receta en el limbo temporal
+        const recetaTemporal = { titulo: titulo, cuerpoReceta: cuerpo };
+        sessionStorage.setItem('receta_pendiente', JSON.stringify(recetaTemporal));
+
+        alert('¡Qué rico plato! Para poder guardar esta receta en tu historial de Favoritos, necesitas iniciar sesión.');
+        // Lo mandamos a la pantalla externa de Login/Registro
+        window.location.href = "/login";
+    } else {
+        // Si ya inició sesión: Despachamos directo a la base de datos de usuarios
+        despacharHaciaPostgres(titulo, cuerpo, token);
+    }
+}
+
+// 4. PETICIÓN REST SEgURA CON TOKEN JWT
+async function despacharHaciaPostgres(titulo, cuerpoReceta, token) {
+    try {
+        const response = await fetch('/api/recetas/guardar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Adjuntamos las credenciales seguras
+            },
+            body: JSON.stringify({
+                titulo: titulo,
+                cuerpoReceta: cuerpoReceta
+            })
+
+        });
+
+        // Verificamos si el servidor nos devolvió una respuesta con error antes de parsear
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error("Detalle del error en el servidor:", errorData);
+            alert('No se pudo guardar la receta. Tu sesión puede haber expirado.');
+            return;
+        }
+
+        const data = await response.json();
+        alert('✨ ¡Espectacular! La receta se guardó correctamente en tus Favoritos.');
+
+    } catch (error) {
+        // Esto te va a mostrar en la consola F12 el motivo exacto si la red falla
+        console.error('Error completo atrapado en el catch:', error);
+        alert('Error de conexión con el servidor.');
+    }
+}
+
+
+const menuBtn = document.getElementById("menu-btn");
+const mobileMenu = document.getElementById("mobile-menu");
+
+menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+});
