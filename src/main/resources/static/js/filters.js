@@ -451,48 +451,49 @@ document.addEventListener('DOMContentLoaded', () => {
 function verificarEstadoSesion() {
     const token = localStorage.getItem('token');
     const nombre = localStorage.getItem('usuario_nombre');
+
     const menu = document.getElementById('contenedor-autenticacion');
-
-    if (token && nombre) {
-        if (menu) {
-            menu.innerHTML = `
-                        <span class="text-sm text-gray-600 font-medium">Hola, <b class="text-[#5B833F]">${nombre}</b></span>
-                        <button onclick="cerrarSesion()" class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded-xl border border-red-200 transition-colors cursor-pointer ml-2">
-                            Salir
-                        </button>
-                    `;
-        }
-    }
-
     const mobileAuth = document.getElementById("mobile-auth");
     const mobileUserInfo = document.getElementById("mobile-user-info");
-    const mobileLogin = document.getElementById("mobile-login-link");
+    const mobileLogin = document.getElementById("mobile-login-item");
 
-    if (token && nombre) {
-
-        if (mobileUserInfo) {
-            mobileUserInfo.innerHTML = `
-            <div class="pb-3 border-b border-[#E4DFD8]">
-                Hola, <span class="font-bold text-[#5B833F]">${nombre}</span>
-            </div>
+    // ===== DESKTOP =====
+    if (token && nombre && menu) {
+        menu.innerHTML = `
+            <span class="text-sm text-gray-600 font-medium">
+                Hola, <b class="text-[#5B833F]">${nombre}</b>
+            </span>
+            <button onclick="cerrarSesion()"
+                class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded-xl border border-red-200 transition-colors cursor-pointer ml-2">
+                Salir
+            </button>
         `;
-        }
+    }
+
+    // ===== MOBILE =====
+    if (token && nombre) {
 
         if (mobileLogin) {
             mobileLogin.remove();
         }
 
+        if (mobileUserInfo) {
+            mobileUserInfo.innerHTML = `
+                <div class="pb-3 border-b border-[#E4DFD8]">
+                    Hola, <span class="font-bold text-[#5B833F]">${nombre}</span>
+                </div>
+            `;
+        }
+
         if (mobileAuth) {
             mobileAuth.innerHTML = `
-            <button
-                onclick="cerrarSesion()"
-                class="w-full text-left text-red-500 font-medium cursor-pointer">
-                Salir
-            </button>
-        `;
+                <button onclick="cerrarSesion()"
+                    class="w-full text-left text-red-500 font-medium cursor-pointer">
+                    Salir
+                </button>
+            `;
         }
     }
-
 }
 
 function cerrarSesion() {
