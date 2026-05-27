@@ -33,12 +33,11 @@ public class RecetaController {
     private final RecetaGuardadaService recetaGuardadaService;
     private final RecetaGuardadaRepository recetaGuardadaRepository;
 
-
     public RecetaController(RecetaService recetaService,
-                            RecetaRepository recetaRepository,
-                            IngredientService ingredientService,
-                            RecetaGuardadaService recetaGuardadaService,
-                            RecetaGuardadaRepository recetaGuardadaRepository) {
+            RecetaRepository recetaRepository,
+            IngredientService ingredientService,
+            RecetaGuardadaService recetaGuardadaService,
+            RecetaGuardadaRepository recetaGuardadaRepository) {
         this.recetaService = recetaService;
         this.recetaRepository = recetaRepository;
         this.ingredientService = ingredientService;
@@ -51,20 +50,21 @@ public class RecetaController {
      */
     @GetMapping("/")
     public String mostrarIndex(@RequestParam(required = false) String cat,
-                            Model model) {
+            Model model) {
 
         List<Ingredient> ingredientes;
 
-            if (cat != null && !cat.isEmpty()) {
-        ingredientes = ingredientService.getIngredientsByCategory(cat);
-            } else {
-                ingredientes = ingredientService.getIngredients();
-            }
+        if (cat != null && !cat.isEmpty()) {
+            ingredientes = ingredientService.getIngredientsByCategory(cat);
+        } else {
+            ingredientes = ingredientService.getIngredients();
+        }
 
         model.addAttribute("ingredientes", ingredientes);
 
         return "index";
     }
+
     /**
      * Procesa los ingredientes seleccionados y pide las 3 recetas a Groq.
      */
@@ -89,35 +89,50 @@ public class RecetaController {
     @PostMapping("/api/recetas/guardar") // Verificá que tenga el "/api" adelante completo
     public ResponseEntity<?> guardarRecetaSegura(@RequestBody Map<String, String> payload) {
         String emailUsuario = SecurityContextHolder.getContext().getAuthentication().getName();
-        
-        String titulo = payload.get("titulo");
-        String cuerpoReceta = payload.get("cuerpoReceta");
 
-        if (titulo == null || cuerpoReceta == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Faltan datos de la receta"));
+        String titulo = payload.get("titulo");
+        String ingredientes = payload.get("ingredientes");
+        String tiempo = payload.get("tiempo");
+        String porciones = payload.get("porciones");
+        String pasos = payload.get("pasos");
+
+        if (titulo == null || pasos == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Faltan datos de la receta"));
         }
 
-        recetaGuardadaService.guardarReceta(titulo, cuerpoReceta, emailUsuario);
+        recetaGuardadaService.guardarReceta(
+                titulo,
+                ingredientes,
+                tiempo,
+                porciones,
+                pasos,
+                emailUsuario);
+
         return ResponseEntity.ok(Map.of("mensaje", "¡Receta guardada con éxito!"));
     }
 
     /**
-     * Endpoint REST seguro que devuelve las recetas favoritas del usuario autenticado en formato JSON.
+     * Endpoint REST seguro que devuelve las recetas favoritas del usuario
+     * autenticado en formato JSON.
      */
     @ResponseBody
     @GetMapping("/api/recetas/favoritas")
     public ResponseEntity<?> obtenerMisRecetasFavoritas() {
         try {
-            // Extraemos de forma segura el email del usuario autenticado mediante el token JWT
+            // Extraemos de forma segura el email del usuario autenticado mediante el token
+            // JWT
             String emailUsuario = SecurityContextHolder.getContext().getAuthentication().getName();
-            
-            // Buscamos la lista en la base de datos PostgreSQL usando tu servicio ya reparado
+
+            // Buscamos la lista en la base de datos PostgreSQL usando tu servicio ya
+            // reparado
             List<RecetaGuardada> favoritas = recetaGuardadaService.obtenerHistorialPorEmail(emailUsuario);
-            
+
             // Devolvemos la lista limpia con estado HTTP 200 OK
             return ResponseEntity.ok(favoritas);
         } catch (Exception e) {
-            // Si llega a fallar algo internamente, devolvemos el error en formato JSON para no romper el front
+            // Si llega a fallar algo internamente, devolvemos el error en formato JSON para
+            // no romper el front
             return ResponseEntity.status(500).body(Map.of("error", "Error interno: " + e.getMessage()));
         }
     }
@@ -131,22 +146,22 @@ public class RecetaController {
         try {
             // 1. Usamos el servicio para buscar la receta de forma segura
             RecetaGuardada receta = recetaGuardadaService.obtenerHistorialPorEmail(
-                SecurityContextHolder.getContext().getAuthentication().getName()
-            ).stream()
-             .filter(r -> r.getId().equals(id))
-             .findFirst()
-             .orElse(null);
-            
+                    SecurityContextHolder.getContext().getAuthentication().getName()).stream()
+                    .filter(r -> r.getId().equals(id))
+                    .findFirst()
+                    .orElse(null);
+
             if (receta != null) {
                 Usuario usuario = receta.getUsuario();
-                
+
                 // 2. Rompemos el lazo relacional en la memoria
                 if (usuario != null && usuario.getRecetasGuardadas() != null) {
                     usuario.getRecetasGuardadas().remove(receta);
-                }               
-                // 3. Mandamos la orden de borrado directo usando el repositorio que tenés en la línea 150
+                }
+                // 3. Mandamos la orden de borrado directo usando el repositorio que tenés en la
+                // línea 150
                 recetaGuardadaRepository.deleteById(receta.getId());
-                
+
                 return ResponseEntity.ok(Map.of("mensaje", "Receta eliminada correctamente."));
             } else {
                 return ResponseEntity.status(404).body(Map.of("error", "La receta ya no existe."));
@@ -155,5 +170,5 @@ public class RecetaController {
             return ResponseEntity.status(500).body(Map.of("error", "Error interno: " + e.getMessage()));
         }
     }
-    
+
 }

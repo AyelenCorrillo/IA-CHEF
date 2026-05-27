@@ -44,7 +44,7 @@ INSERT INTO public.ingredientes VALUES (5, 'Zanahoria', '/images/API_image/zanah
 INSERT INTO public.ingredientes VALUES (6, 'Espinaca', '/images/API_image/espinaca.png', 1);
 INSERT INTO public.ingredientes VALUES (7, 'Palta', '/images/API_image/palta.png', 1);
 INSERT INTO public.ingredientes VALUES (8, 'Pimiento', '/images/API_image/pimiento.png', 1);
-INSERT INTO public.ingredientes VALUES (9, 'Brócoli', '/images/API_image/brocoli.png', 1);
+INSERT INTO public.ingredientes VALUES (9, 'Brocoli', '/images/API_image/brocoli.png', 1);
 INSERT INTO public.ingredientes VALUES (10, 'Manzana', '/images/API_image/manzana.png', 2);
 INSERT INTO public.ingredientes VALUES (11, 'Banana', '/images/API_image/banana.png', 2);
 INSERT INTO public.ingredientes VALUES (12, 'Naranja', '/images/API_image/naranja.png', 2);
@@ -81,7 +81,7 @@ INSERT INTO public.ingredientes VALUES (42, 'Durazno', '/images/API_image/durazn
 INSERT INTO public.ingredientes VALUES (43, 'Batata', '/images/API_image/batata.png', 1);
 INSERT INTO public.ingredientes VALUES (44, 'Remolacha', '/images/API_image/remolacha.png', 1);
 INSERT INTO public.ingredientes VALUES (45, 'Acelga', '/images/API_image/acelga.png', 1);
-INSERT INTO public.ingredientes VALUES (46, 'Rúcula', '/images/API_image/rucula.png', 1);
+INSERT INTO public.ingredientes VALUES (46, 'Rucula', '/images/API_image/rucula.png', 1);
 INSERT INTO public.ingredientes VALUES (47, 'Champiñones', '/images/API_image/champiñones.png', 1);
 INSERT INTO public.ingredientes VALUES (48, 'Puerro', '/images/API_image/puerro.png', 1);
 INSERT INTO public.ingredientes VALUES (49, 'Quinoa', '/images/API_image/quinoa.png', 5);

@@ -244,6 +244,10 @@ function renderRecipes(recetas) {
 
         const clone = template.content.cloneNode(true);
 
+        const article = clone.querySelector('article');
+
+        article.dataset.receta = JSON.stringify(receta);
+
         clone.querySelector(".recipe-title").textContent =
             receta.nombre;
 
@@ -451,48 +455,49 @@ document.addEventListener('DOMContentLoaded', () => {
 function verificarEstadoSesion() {
     const token = localStorage.getItem('token');
     const nombre = localStorage.getItem('usuario_nombre');
+
     const menu = document.getElementById('contenedor-autenticacion');
-
-    if (token && nombre) {
-        if (menu) {
-            menu.innerHTML = `
-                        <span class="text-sm text-gray-600 font-medium">Hola, <b class="text-[#5B833F]">${nombre}</b></span>
-                        <button onclick="cerrarSesion()" class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded-xl border border-red-200 transition-colors cursor-pointer ml-2">
-                            Salir
-                        </button>
-                    `;
-        }
-    }
-
     const mobileAuth = document.getElementById("mobile-auth");
     const mobileUserInfo = document.getElementById("mobile-user-info");
-    const mobileLogin = document.getElementById("mobile-login-link");
+    const mobileLogin = document.getElementById("mobile-login-item");
 
-    if (token && nombre) {
-
-        if (mobileUserInfo) {
-            mobileUserInfo.innerHTML = `
-            <div class="pb-3 border-b border-[#E4DFD8]">
-                Hola, <span class="font-bold text-[#5B833F]">${nombre}</span>
-            </div>
+    // ===== DESKTOP =====
+    if (token && nombre && menu) {
+        menu.innerHTML = `
+            <span class="text-sm text-gray-600 font-medium">
+                Hola, <b class="text-[#5B833F]">${nombre}</b>
+            </span>
+            <button onclick="cerrarSesion()"
+                class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded-xl border border-red-200 transition-colors cursor-pointer ml-2">
+                Salir
+            </button>
         `;
-        }
+    }
+
+    // ===== MOBILE =====
+    if (token && nombre) {
 
         if (mobileLogin) {
             mobileLogin.remove();
         }
 
+        if (mobileUserInfo) {
+            mobileUserInfo.innerHTML = `
+                <div class="pb-3 border-b border-[#E4DFD8]">
+                    Hola, <span class="font-bold text-[#5B833F]">${nombre}</span>
+                </div>
+            `;
+        }
+
         if (mobileAuth) {
             mobileAuth.innerHTML = `
-            <button
-                onclick="cerrarSesion()"
-                class="w-full text-left text-red-500 font-medium cursor-pointer">
-                Salir
-            </button>
-        `;
+                <button onclick="cerrarSesion()"
+                    class="w-full text-left text-red-500 font-medium cursor-pointer">
+                    Salir
+                </button>
+            `;
         }
     }
-
 }
 
 function cerrarSesion() {
@@ -529,11 +534,9 @@ function activarEscuchadoresDeRecetas() {
             if (botonFavorito && !botonFavorito.dataset.conectado) {
                 botonFavorito.dataset.conectado = "true";
                 botonFavorito.addEventListener('click', () => {
-                    const tituloReceta = tarjeta.querySelector('.recipe-title').innerText;
-                    const instruccionesReceta = tarjeta.querySelector('.recipe-steps').innerText || tarjeta.querySelector('.recipe-desc').innerText;
+                    const recetaCompleta = JSON.parse(tarjeta.dataset.receta);
 
-                    // Disparamos la verificación inteligente
-                    procesarGuardadoFavorito(tituloReceta, instruccionesReceta);
+                    procesarGuardadoFavorito(recetaCompleta);
                 });
             }
         });
@@ -542,25 +545,26 @@ function activarEscuchadoresDeRecetas() {
 }
 
 // 3. INTELIGENCIA DEL BOTÓN: ¿Logueado o Anónimo?
-function procesarGuardadoFavorito(titulo, cuerpo) {
+function procesarGuardadoFavorito(receta) {
     const token = localStorage.getItem('token');
 
     if (!token) {
-        // Si es un usuario visitante: Guardamos la receta en el limbo temporal
-        const recetaTemporal = { titulo: titulo, cuerpoReceta: cuerpo };
-        sessionStorage.setItem('receta_pendiente', JSON.stringify(recetaTemporal));
+        sessionStorage.setItem(
+            'receta_pendiente',
+            JSON.stringify(receta)
+        );
 
         alert('¡Qué rico plato! Para poder guardar esta receta en tu historial de Favoritos, necesitas iniciar sesión.');
         // Lo mandamos a la pantalla externa de Login/Registro
         window.location.href = "/login";
     } else {
         // Si ya inició sesión: Despachamos directo a la base de datos de usuarios
-        despacharHaciaPostgres(titulo, cuerpo, token);
+        despacharHaciaPostgres(receta, token);
     }
 }
 
 // 4. PETICIÓN REST SEgURA CON TOKEN JWT
-async function despacharHaciaPostgres(titulo, cuerpoReceta, token) {
+async function despacharHaciaPostgres(receta, token) {
     try {
         const response = await fetch('/api/recetas/guardar', {
             method: 'POST',
@@ -569,8 +573,13 @@ async function despacharHaciaPostgres(titulo, cuerpoReceta, token) {
                 'Authorization': `Bearer ${token}` // Adjuntamos las credenciales seguras
             },
             body: JSON.stringify({
-                titulo: titulo,
-                cuerpoReceta: cuerpoReceta
+                titulo: receta.nombre,
+                ingredientes: receta.ingredientes
+                    .map(i => i.nombre ?? i)
+                    .join(', '),
+                tiempo: receta.tiempo,
+                porciones: receta.porciones,
+                pasos: receta.pasos.join('\n')
             })
 
         });
