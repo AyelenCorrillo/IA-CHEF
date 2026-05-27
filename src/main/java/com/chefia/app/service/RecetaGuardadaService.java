@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class RecetaGuardadaService {
 
@@ -17,22 +16,31 @@ public class RecetaGuardadaService {
     private final UsuarioRepository usuarioRepository;
 
     // Inyección por constructor (Buenas prácticas de Spring Boot)
-    public RecetaGuardadaService(RecetaGuardadaRepository recetaRepository, 
-                                 UsuarioRepository usuarioRepository) {
+    public RecetaGuardadaService(RecetaGuardadaRepository recetaRepository,
+            UsuarioRepository usuarioRepository) {
         this.recetaRepository = recetaRepository;
         this.usuarioRepository = usuarioRepository;
     }
 
     // Guardar receta asociándola al email del usuario autenticado
-    public RecetaGuardada guardarReceta(String titulo, String cuerpoReceta, String emailUsuario) {
+    public RecetaGuardada guardarReceta(
+            String titulo,
+            String ingredientes,
+            String tiempo,
+            String porciones,
+            String pasos,
+            String emailUsuario) {
         Usuario usuario = usuarioRepository.findByEmail(emailUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         RecetaGuardada nuevaReceta = new RecetaGuardada();
         nuevaReceta.setTitulo(titulo);
-        nuevaReceta.setCuerpoReceta(cuerpoReceta);
-        nuevaReceta.setUsuario(usuario);
+        nuevaReceta.setIngredientes(ingredientes);
+        nuevaReceta.setTiempo(tiempo);
+        nuevaReceta.setPorciones(porciones);
+        nuevaReceta.setPasos(pasos);
 
+        nuevaReceta.setUsuario(usuario);
         return recetaRepository.save(nuevaReceta);
     }
 
@@ -40,7 +48,7 @@ public class RecetaGuardadaService {
     public List<RecetaGuardada> obtenerHistorialPorEmail(String emailUsuario) {
         Usuario usuario = usuarioRepository.findByEmail(emailUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        
+
         return recetaRepository.findByUsuarioId(usuario.getId());
     }
 }
