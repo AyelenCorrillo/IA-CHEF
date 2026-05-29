@@ -53,6 +53,7 @@ public class RecetaService {
                 - Do not add extra text
                 - Use realistic recipes
                 - Use all the ingredients listed in each recipe.
+                - In case salt, sugar, water or spices are needed, include them in the recipe.
                 - Include clear cooking steps
                 - Tiempo must be a short string like "25 min"
                 - Porciones must be a short string like "2 personas"
