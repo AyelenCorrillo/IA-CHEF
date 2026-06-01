@@ -159,7 +159,6 @@ Opcionalmente, el contenedor puede recibir variables Spring de conexión si se d
 ## Posibles mejoras
 
 - Agregar la plantilla correcta para `/mis-recetas`.
-- Manejo de errores del backend más robusto (formular mensajes al usuario si la API de Groq falla).
 - Validar el JSON devuelto por Groq antes de parsearlo.
 - Extraer la URL de Groq a `application.properties` y usarla desde `RecetaService`.
 - Agregar tests de integración para el flujo de recetas.
