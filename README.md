@@ -162,3 +162,4 @@ Opcionalmente, el contenedor puede recibir variables Spring de conexión si se d
 - Validar el JSON devuelto por Groq antes de parsearlo.
 - Extraer la URL de Groq a `application.properties` y usarla desde `RecetaService`.
 - Agregar tests de integración para el flujo de recetas.
+- Integrar registro y login con Google, hotmail/outlook.
