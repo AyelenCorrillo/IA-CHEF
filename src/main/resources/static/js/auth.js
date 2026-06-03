@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function conmutarVista(mostrarRegistro) {
     const loginSec = document.getElementById('loginSection');
     const regSec = document.getElementById('registerSection');
-    
+
     if (mostrarRegistro) {
         loginSec.classList.add('hidden');
         regSec.classList.remove('hidden');
@@ -26,7 +26,7 @@ function conmutarVista(mostrarRegistro) {
 // 1. PETICIÓN ASÍNCRONA DE LOGIN
 async function ejecutarLogin(event) {
     event.preventDefault();
-    
+
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 
@@ -43,26 +43,39 @@ async function ejecutarLogin(event) {
             // Guardamos el token criptográfico y el nombre devuelto por el Backend
             localStorage.setItem('token', data.token);
             localStorage.setItem('usuario_nombre', data.nombre);
-            
+
             // LOGICA DE REINTEGRACIÓN: Si el usuario rebotó desde el Home al intentar guardar una receta
             const recetaPendiente = sessionStorage.getItem('receta_pendiente');
             if (recetaPendiente) {
                 const receta = JSON.parse(recetaPendiente);
-                
+
                 // Intentamos guardar la receta inmediatamente en segundo plano aprovechando el nuevo Token
-                await fetch('/api/recetas/guardar', {
+                const responseGuardar = await fetch('/api/recetas/guardar', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${data.token}`
                     },
-                    body: JSON.stringify(receta)
+                    body: JSON.stringify({
+                        titulo: receta.nombre,
+                        ingredientes: receta.ingredientes
+                            .map(i => i.nombre ?? i)
+                            .join(', '),
+                        tiempo: receta.tiempo,
+                        porciones: receta.porciones,
+                        pasos: receta.pasos.join('\n')
+                    })
                 });
-                
-                sessionStorage.removeItem('receta_pendiente'); // Vaciamos la cola
-                mostrarToast('¡Inicio de sesión exitoso! Guardamos la receta en tus favoritas.');
-            }
 
+                if (responseGuardar.ok) {
+                    sessionStorage.removeItem('receta_pendiente');
+                    mostrarToast('¡Inicio de sesión exitoso! Guardamos la receta en tus favoritas.');
+                } else {
+                    console.error(await responseGuardar.text());
+                    mostrarToast('Iniciaste sesión, pero no pudimos guardar la receta.');
+                }
+
+            }
             // Redirigimos al Home principal con la sesión iniciada
             window.location.href = "/";
         } else {
@@ -77,7 +90,7 @@ async function ejecutarLogin(event) {
 // 2. PETICIÓN ASÍNCRONA DE REGISTRO
 async function ejecutarRegistro(event) {
     event.preventDefault();
-    
+
     const nombre = document.getElementById('regNombre').value;
     const email = document.getElementById('regEmail').value;
     const password = document.getElementById('regPassword').value;

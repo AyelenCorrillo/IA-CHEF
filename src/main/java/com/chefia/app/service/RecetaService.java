@@ -52,7 +52,7 @@ public class RecetaService {
                 - Do not add explanations
                 - Do not add extra text
                 - Use realistic recipes
-                - Use all the ingredients listed in each recipe.
+                - Use all the ingredients across the 3 recipes, distributing them logically. Each recipe must be coherent and culinary realistic.
                 - In case salt, sugar, water or spices are needed, include them in the recipe.
                 - Include clear cooking steps
                 - Tiempo must be a short string like "25 min"
