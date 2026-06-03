@@ -68,8 +68,6 @@ Controlador principal encargado de manejar las rutas HTTP relacionadas con la ge
 | `POST` | `/guardar-receta`  | Guarda una receta en PostgreSQL                       |
 | `GET`  | `/mis-recetas`     | Obtiene las recetas guardadas                         |
 
----
-
 ### `RecetaService`
 
 Servicio encargado de la lógica de negocio relacionada con recetas e integración con la API de Groq.
@@ -82,8 +80,6 @@ Servicio encargado de la lógica de negocio relacionada con recetas e integraci�
 * Persistencia de recetas en PostgreSQL
 * Transformación de `RecetaDTO` a entidad `Receta`
 
----
-
 ### `IngredientService`
 
 Servicio encargado de la gestión y consulta de ingredientes disponibles.
@@ -93,8 +89,6 @@ Servicio encargado de la gestión y consulta de ingredientes disponibles.
 * Obtención de ingredientes desde PostgreSQL
 * Filtrado de ingredientes por categoría
 * Comunicación con `IngredientRepository`
-
----
 
 ## 🗄️ Modelo de datos
 
@@ -108,7 +102,7 @@ Entidad que representa una receta generada por IA.
 | `nombre`        | Nombre de la receta          |
 | `ingredientes`  | Ingredientes utilizados      |
 | `instrucciones` | Pasos de preparación         |
----
+
 
 ### `Ingredient`
 
@@ -122,8 +116,6 @@ Entidad que representa un ingrediente disponible en la aplicación.
 | `category` | Categoría asociada     |
 
 * Relación `@ManyToOne` con `Category`.
-
----
 
 ### `Category`
 
@@ -205,9 +197,9 @@ Opcionalmente, el contenedor puede recibir variables Spring de conexión si se d
 - Agregar autenticación OAuth2
 
 ## 👥 Autores
-Ayelén Corrillo
-Elisa Mele
-Gastón Perrone
+- Ayelén Corrillo
+- Elisa Mele
+- Gastón Perrone
 
 ## 📄 Licencia
 
