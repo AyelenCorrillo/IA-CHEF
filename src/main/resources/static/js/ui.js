@@ -3,8 +3,12 @@ function mostrarToast(mensaje, tipo = "info") {
 
     toast.textContent = mensaje;
 
-    // reset de clases
-    toast.className = "toast";
+    toast.classList.remove(
+        "toast-success",
+        "toast-error",
+        "toast-info",
+        "hidden"
+    );
 
     // tipo
     if (tipo === "success") {
@@ -17,7 +21,9 @@ function mostrarToast(mensaje, tipo = "info") {
 
     toast.classList.remove("hidden");
 
-    setTimeout(() => {
+    clearTimeout(toast.timeoutId);
+
+    toast.timeoutId = setTimeout(() => {
         toast.classList.add("hidden");
     }, 5000);
 }
