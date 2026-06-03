@@ -12,7 +12,7 @@ async function cargarRecetasFavoritas() {
         document.getElementById('recipes-grid');
 
     if (!token) {
-        alert('Para ver tus recetas favoritas, necesitas iniciar sesión.');
+        mostrarToast('Para ver tus recetas favoritas, necesitas iniciar sesión.');
         window.location.href = '/login';
         return;
     }
@@ -158,13 +158,13 @@ async function ejecutarEliminacion(idReceta, tituloReceta) {
         });
 
         if (response.ok) {
-            alert('🗑️ Receta eliminada del libro con éxito.');
+            mostrarToast('🗑️ Receta eliminada del libro con éxito.');
             cargarRecetasFavoritas(); // Volvemos a renderizar la lista actualizada sin recargar la página entera
         } else {
-            alert('No se pudo eliminar la receta. Intente nuevamente.');
+            mostrarToast('No se pudo eliminar la receta. Intente nuevamente.');
         }
     } catch (error) {
         console.error('Error al borrar receta:', error);
-        alert('Error de conexión con el servidor.');
+        mostrarToast('Error de conexión con el servidor.');
     }
 }

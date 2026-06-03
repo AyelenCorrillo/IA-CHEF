@@ -49,17 +49,17 @@ async function ejecutarLogin(event) {
                 });
                 
                 sessionStorage.removeItem('receta_pendiente'); // Vaciamos la cola
-                alert('¡Inicio de sesión exitoso! Guardamos la receta en tus favoritas.');
+                mostrarToast('¡Inicio de sesión exitoso! Guardamos la receta en tus favoritas.');
             }
 
             // Redirigimos al Home principal con la sesión iniciada
             window.location.href = "/";
         } else {
-            alert(data.error || 'Credenciales incorrectas. Verifique los datos.');
+            mostrarToast(data.error || 'Credenciales incorrectas. Verifique los datos.');
         }
     } catch (error) {
         console.error('Error en el login:', error);
-        alert('Error de red al conectar con el servidor.');
+        mostrarToast('Error de red al conectar con el servidor.');
     }
 }
 
@@ -81,10 +81,10 @@ async function ejecutarRegistro(event) {
         const data = await response.json();
 
         if (response.ok) {
-            alert('¡Cuenta creada con éxito! Ya podés iniciar sesión.');
+            mostrarToast('¡Cuenta creada con éxito! Ya podés iniciar sesión.');
             conmutarVista(false); // Volvemos automáticamente a la pantalla de login
         } else {
-            alert(data.error || 'No se pudo crear la cuenta.');
+            mostrarToast(data.error || 'No se pudo crear la cuenta.');
         }
     } catch (error) {
         console.error('Error en el registro:', error);

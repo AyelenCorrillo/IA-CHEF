@@ -503,7 +503,7 @@ function verificarEstadoSesion() {
 function cerrarSesion() {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario_nombre');
-    alert('Sesión cerrada. Ahora estás navegando de forma anónima.');
+    mostrarToast('Sesión cerrada. Ahora estás navegando de forma anónima.');
     window.location.reload();
 }
 
@@ -554,7 +554,7 @@ function procesarGuardadoFavorito(receta) {
             JSON.stringify(receta)
         );
 
-        alert('¡Qué rico plato! Para poder guardar esta receta en tu historial de Favoritos, necesitas iniciar sesión.');
+        mostrarToast('¡Qué rico plato! Para poder guardar esta receta en tu historial de Favoritos, necesitas iniciar sesión.');
         // Lo mandamos a la pantalla externa de Login/Registro
         window.location.href = "/login";
     } else {
@@ -588,17 +588,17 @@ async function despacharHaciaPostgres(receta, token) {
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             console.error("Detalle del error en el servidor:", errorData);
-            alert('No se pudo guardar la receta. Tu sesión puede haber expirado.');
+            mostrarToast('No se pudo guardar la receta. Tu sesión puede haber expirado.');
             return;
         }
 
         const data = await response.json();
-        alert('✨ ¡Espectacular! La receta se guardó correctamente en tus Favoritos.');
+        mostrarToast('✨ ¡Espectacular! La receta se guardó correctamente en tus Favoritos.');
 
     } catch (error) {
         // Esto te va a mostrar en la consola F12 el motivo exacto si la red falla
         console.error('Error completo atrapado en el catch:', error);
-        alert('Error de conexión con el servidor.');
+        mostrarToast('Error de conexión con el servidor.');
     }
 }
 
