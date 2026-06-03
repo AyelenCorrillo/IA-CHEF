@@ -1,93 +1,140 @@
-# IA-CHEF
+![Java](https://img.shields.io/badge/Java-21-red)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue)
+![Docker](https://img.shields.io/badge/Docker-2496ED)
 
-Proyecto Spring Boot que sugiere recetas generadas por IA a partir de los ingredientes que el usuario tiene disponible.
+# 🍳🤖 IA-CHEF 
 
-## Resumen
+Aplicación web desarrollada con Spring Boot que genera recetas utilizando inteligencia artificial a partir de los ingredientes seleccionados por el usuario.
 
-IA-CHEF es una aplicación web de cocina que permite seleccionar ingredientes desde una tabla, generar recetas con inteligencia artificial mediante la API de Groq y guardar recetas elegidas en una base de datos PostgreSQL.
+## 📌 Descripción
+
+IA-CHEF permite elegir ingredientes de forma interactiva, generar recetas mediante la API de Groq y guardar recetas favoritas en una base de datos PostgreSQL.
+
+## ✨ Características
+
+- Generación de recetas mediante IA
+- Selección interactiva de ingredientes
+- Drag & drop de ingredientes
+- Persistencia de recetas favoritas
+- Integración con PostgreSQL
+- Dockerización completa
+- Interfaz responsive
 
 ## Tecnologías principales
 
 - Java 21
-- Spring Boot 4
+- Spring Boot
 - Spring Data JPA
 - Thymeleaf
 - PostgreSQL
 - Docker / Docker Compose
-- JavaScript vanila para interactividad en el front-end
-- Tailwind CSS cargado desde CDN
+- JavaScript Vanilla
+- Tailwind CSS
 
-## Estructura del proyecto
+## 📂 Estructura del proyecto
 
-- `src/main/java/com/chefia/app`
-  - `ChefiaAppApplication.java`: punto de entrada de Spring Boot.
-  - `controller/RecetaController.java`: control de rutas HTTP y lógica de vistas.
-  - `service/RecetaService.java`: comunicación con la API de Groq y persistencia de recetas.
-  - `service/IngredientService.java`: consulta de ingredientes desde la base de datos.
-  - `repository/IngredientRepository.java`: repositorio JPA para ingredientes.
-  - `repository/RecetaRepository.java`: repositorio JPA para recetas.
-  - `model/`: entidades JPA (`Receta`, `Ingredient`, `Category`).
-  - `dto/RecetaDTO.java`: DTO usado para mapear la respuesta JSON de la IA.
+```bash
+src/
+├── controller/
+├── service/
+├── repository/
+├── model/
+├── dto/
+├── templates/
+└── static/
+```
 
-- `src/main/resources/templates/`
-  - `index.html`: página principal del usuario.
-  - `historial.html`: plantilla vacía actualmente disponible en el proyecto.
-  - `recetas-sugeridas.html`: plantilla vacía actualmente disponible en el proyecto.
+## 🔄 Flujo de funcionamiento
+1. El usuario selecciona ingredientes.
+2. El frontend envía los datos al backend.
+3. Spring Boot construye un prompt para Groq.
+4. La IA devuelve recetas en formato JSON.
+5. Las recetas se renderizan dinámicamente.
+6. El usuario puede guardar recetas favoritas.
 
-- `src/main/resources/static/js/filters.js`: lógica de selección, drag & drop, búsqueda y llamada AJAX para generar recetas.
-- `src/main/resources/static/css/style.css`: estilos de la aplicación.
-- `ingredientes.sql`: script de inicialización de PostgreSQL con categorías e ingredientes.
-- `docker-compose.yml`: orquestación de contenedores para PostgreSQL y la aplicación.
-- `Dockerfile`: build independiente de la aplicación para producción.
-- `Dockerfile.dev`: contenedor de desarrollo con `mvn spring-boot:run`.
-
-## Flujo de ejecución
-
-1. El usuario carga `/` y el backend devuelve `index.html` con el listado de ingredientes.
-2. El usuario arrastra o selecciona ingredientes en la tabla.
-3. Al presionar "Generar 3 recetas" se hace un POST a `/generar-recetas` con el listado de ingredientes.
-4. `RecetaService` arma un prompt y llama a la API de Groq.
-5. La respuesta JSON de la IA se parsea a `List<RecetaDTO>` y se devuelve al front-end.
-6. El front-end renderiza las 3 recetas en la misma página.
-7. Si el usuario guarda una receta, se envía un POST a `/guardar-receta`.
-8. `RecetaService.guardarEnBaseDeDatos()` convierte el DTO en una entidad `Receta` y la guarda en PostgreSQL.
-9. Al visitar `/mis-recetas` el controlador carga todas las recetas guardadas.
-
-## Componentes clave
+## 🧩 Componentes clave
 
 ### `RecetaController`
 
-Rutas principales:
-- `GET /`: muestra la pantalla inicial con ingredientes.
-- `POST /generar-recetas`: recibe un JSON con `ingredientes` y devuelve recetas generadas.
-- `POST /guardar-receta`: guarda la receta elegida en la base de datos.
-- `GET /mis-recetas`: muestra las recetas guardadas.
+Controlador principal encargado de manejar las rutas HTTP relacionadas con la generación y persistencia de recetas.
+
+#### Endpoints principales
+
+| Método | Ruta               | Descripción                                           |
+| ------ | ------------------ | ----------------------------------------------------- |
+| `GET`  | `/`                | Muestra la pantalla principal con ingredientes        |
+| `POST` | `/generar-recetas` | Genera recetas a partir de ingredientes seleccionados |
+| `POST` | `/guardar-receta`  | Guarda una receta en PostgreSQL                       |
+| `GET`  | `/mis-recetas`     | Obtiene las recetas guardadas                         |
+
+---
 
 ### `RecetaService`
 
-- Usa `RestClient` para llamar a la API de Groq.
-- Construye el prompt solicitando un JSON limpio y exacto.
-- Extrae `choices[0].message.content` de la respuesta y lo parsea con Jackson a `List<RecetaDTO>`.
-- Convierte `RecetaDTO` en entidad `Receta` para persistirla.
+Servicio encargado de la lógica de negocio relacionada con recetas e integración con la API de Groq.
+
+#### Responsabilidades principales
+
+* Construcción dinámica de prompts para la IA
+* Comunicación con Groq mediante `RestClient`
+* Conversión de respuestas JSON utilizando Jackson
+* Persistencia de recetas en PostgreSQL
+* Transformación de `RecetaDTO` a entidad `Receta`
+
+---
 
 ### `IngredientService`
 
-- Provee ingredientes desde la base de datos.
-- Incluye filtro por categoría con `findByCategory_Name(String name)`.
+Servicio encargado de la gestión y consulta de ingredientes disponibles.
 
-### Entidades JPA
+#### Funcionalidades
 
-- `Receta`
-  - `id`, `nombre`, `ingredientes`, `instrucciones`, `imagenUrl`, `fechaCreacion`
-  - `fechaCreacion` se asigna automáticamente con `@PrePersist`
+* Obtención de ingredientes desde PostgreSQL
+* Filtrado de ingredientes por categoría
+* Comunicación con `IngredientRepository`
 
-- `Ingredient`
-  - `id`, `name`, `image`, `category`
-  - relación `@ManyToOne` con `Category`
+---
 
-- `Category`
-  - `id`, `name`
-  - relación `@OneToMany` con `Ingredient`
+## 🗄️ Modelo de datos
+
+### `Receta`
+
+Entidad que representa una receta generada por IA.
+
+| Campo           | Descripción                  |
+| --------------- | ---------------------------- |
+| `id`            | Identificador único          |
+| `nombre`        | Nombre de la receta          |
+| `ingredientes`  | Ingredientes utilizados      |
+| `instrucciones` | Pasos de preparación         |
+---
+
+### `Ingredient`
+
+Entidad que representa un ingrediente disponible en la aplicación.
+
+| Campo      | Descripción            |
+| ---------- | ---------------------- |
+| `id`       | Identificador único    |
+| `name`     | Nombre del ingrediente |
+| `image`    | Imagen representativa  |
+| `category` | Categoría asociada     |
+
+* Relación `@ManyToOne` con `Category`.
+
+---
+
+### `Category`
+
+Entidad utilizada para clasificar ingredientes.
+
+| Campo  | Descripción            |
+| ------ | ---------------------- |
+| `id`   | Identificador único    |
+| `name` | Nombre de la categoría |
+
+* Relación `@OneToMany` con `Ingredient`.
 
 ## Configuración de la base de datos
 
@@ -141,12 +188,6 @@ docker compose down
 
 Opcionalmente, el contenedor puede recibir variables Spring de conexión si se desea sobrescribir la configuración.
 
-## Notas importantes
-
-- `package.json` existe pero actualmente está vacío (`{}`), por lo que no hay dependencias de Node ni build frontend en el proyecto.
-- `src/main/resources/templates/historial.html` y `recetas-sugeridas.html` existen, pero la ruta `/mis-recetas` en el controlador intenta cargar una vista llamada `mis-recetas`, que actualmente no se encuentra en el proyecto. Esto puede requerir una corrección o un renombrado de plantilla.
-- La propiedad `groq.api.url` en `application.properties` no es usada actualmente por `RecetaService`, que tiene la URL codificada en el servicio.
-
 ## Estructura de archivos relevante
 
 - `Dockerfile`: build de producción.
@@ -156,10 +197,18 @@ Opcionalmente, el contenedor puede recibir variables Spring de conexión si se d
 - `src/main/resources/static/css/style.css`: estilos globales.
 - `ingredientes.sql`: script de creación y datos iniciales para PostgreSQL.
 
-## Posibles mejoras
+## Mejoras futuras
 
-- Agregar la plantilla correcta para `/mis-recetas`.
-- Validar el JSON devuelto por Groq antes de parsearlo.
-- Extraer la URL de Groq a `application.properties` y usarla desde `RecetaService`.
-- Agregar tests de integración para el flujo de recetas.
-- Integrar registro y login con Google, hotmail/outlook.
+- Implementar vista completa de recetas favoritas
+- Externalizar configuración de Groq
+- Incorporar testing automatizado
+- Agregar autenticación OAuth2
+
+## 👥 Autores
+Ayelén Corrillo
+Elisa Mele
+Gastón Perrone
+
+## 📄 Licencia
+
+Proyecto desarrollado con fines educativos.
