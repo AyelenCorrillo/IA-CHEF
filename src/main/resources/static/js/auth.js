@@ -1,3 +1,14 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    const mensajeToast = sessionStorage.getItem('toast');
+
+    if (mensajeToast) {
+        mostrarToast(mensajeToast);
+        sessionStorage.removeItem('toast');
+    }
+
+});
+
 // Alternar visualmente entre Login y Registro usando clases de Tailwind
 function conmutarVista(mostrarRegistro) {
     const loginSec = document.getElementById('loginSection');

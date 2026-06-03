@@ -12,8 +12,13 @@ async function cargarRecetasFavoritas() {
         document.getElementById('recipes-grid');
 
     if (!token) {
-        mostrarToast('Para ver tus recetas favoritas, necesitas iniciar sesión.');
+        sessionStorage.setItem(
+            'toast',
+            'Para ver tus recetas favoritas, necesitas iniciar sesión.'
+        );
+
         window.location.href = '/login';
+
         return;
     }
 
@@ -105,7 +110,7 @@ async function cargarRecetasFavoritas() {
 
                     text.classList.toggle('text-[#CC754F]');
                     text.classList.toggle('text-[#6E8B4E]');
-                    
+
                     arrow.classList.toggle("brightness-0");
                     arrow.classList.toggle("sepia");
                     arrow.classList.toggle("saturate-[5]");
