@@ -28,7 +28,6 @@ import com.chefia.app.service.RecetaGuardadaService;
 public class RecetaController {
 
     private final RecetaService recetaService;
-    private final RecetaRepository recetaRepository;
     private final IngredientService ingredientService;
     private final RecetaGuardadaService recetaGuardadaService;
     private final RecetaGuardadaRepository recetaGuardadaRepository;
@@ -39,7 +38,6 @@ public class RecetaController {
             RecetaGuardadaService recetaGuardadaService,
             RecetaGuardadaRepository recetaGuardadaRepository) {
         this.recetaService = recetaService;
-        this.recetaRepository = recetaRepository;
         this.ingredientService = ingredientService;
         this.recetaGuardadaService = recetaGuardadaService;
         this.recetaGuardadaRepository = recetaGuardadaRepository;
