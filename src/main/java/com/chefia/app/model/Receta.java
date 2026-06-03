@@ -1,14 +1,11 @@
 package com.chefia.app.model;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.PrePersist;
 
 @Entity
 @Table(name = "recetas")
@@ -26,15 +23,6 @@ public class Receta {
 
     @Column(columnDefinition = "TEXT")
     private String instrucciones;
-
-    private String imagenUrl;
-
-    private LocalDateTime fechaCreacion;
-
-    @PrePersist
-    public void prePersist() {
-    this.fechaCreacion = LocalDateTime.now();
-    }
 
     public Receta() {}
 
