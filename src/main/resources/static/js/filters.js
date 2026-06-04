@@ -507,7 +507,7 @@ function cerrarSesion() {
     window.location.reload();
 }
 
-// 3. LOGICA QUE INYECTA LOS BOTONES DE GUARDAR EN LAS TARJETAS DE ELI
+// 3. LOGICA QUE INYECTA LOS BOTONES DE GUARDAR EN LAS TARJETAS
 function activarEscuchadoresDeRecetas() {
     const contenedorPadre = document.getElementById('recipes-container');
     if (!contenedorPadre) return;
@@ -520,9 +520,9 @@ function activarEscuchadoresDeRecetas() {
             if (!botonFavorito) {
                 const contenedorBotones = tarjeta.querySelector('.p-4, .p-6') || tarjeta;
                 const divBoton = document.createElement('div');
-                divBoton.className = "mt-auto pt-4 border-t border-dashed border-gray-200";
+                divBoton.className = "mt-5 pt-3";
                 divBoton.innerHTML = `
-                            <button class="btn-guardar-receta w-full flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm bg-white text-[#5B833F] font-bold rounded-xl border border-[#9DB27C] transition-all duration-200 hover:bg-[#E5EFD7] cursor-pointer">
+                            <button class="btn-guardar-receta w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs md:text-sm bg-white text-[#5B833F] font-bold rounded-xl border border-[#9DB27C] transition-all duration-200 hover:bg-[#E5EFD7] cursor-pointer">
                                 <img src="/images/star_icon.png" class="w-3.5 h-3.5 opacity-80" style="filter: invert(47%) sepia(18%) saturate(1081%) hue-rotate(54deg) brightness(93%) contrast(85%);">
                                 <span>Guardar en mis favoritas</span>
                             </button>
