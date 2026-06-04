@@ -51,9 +51,20 @@ public class RecetaService {
                 - Do not use markdown
                 - Do not add explanations
                 - Do not add extra text
-                - Use realistic recipes
-                - Use all the ingredients across the 3 recipes, distributing them logically. Each recipe must be coherent and culinary realistic.
-                - In case salt, sugar, water or spices are needed, include them in the recipe.
+                - Recipes MUST be culinary realistic
+                - Only generate recipes commonly eaten by humans
+                - Prefer traditional or popular homemade recipes
+                - Do not invent unusual or experimental dishes
+                - Avoid bizarre or incompatible ingredient combinations
+                - Sweet and savory ingredients must not be mixed unless it is a known real recipe
+                - Ingredients must have culinary compatibility
+                - Reject combinations that would seem strange or unrealistic in a real kitchen
+                - Do NOT force all ingredients into the same recipe
+                - Distribute ingredients naturally across the 3 recipes
+                - Use as many ingredients as possible while keeping recipes realistic
+                - If some ingredients are incompatible, leave them unused
+                - Each recipe must make sense as a real dish someone would cook
+                - Salt, oil, water and common spices may be added when necessary
                 - Include clear cooking steps
                 - Tiempo must be a short string like "25 min"
                 - Porciones must be a short string like "2 personas"
@@ -62,7 +73,8 @@ public class RecetaService {
                 - "ingredientes" must be an array of strings
                 - Do NOT return ingredient objects
                 - Do NOT use keys like "nombre" or "cantidad" inside ingredientes
-                - Correct example:
+
+                Correct example:
                   "ingredientes": ["2 papas", "1 zanahoria"]
 
                 JSON format:

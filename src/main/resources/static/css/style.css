@@ -25,7 +25,7 @@
 }
 
 html {
-scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 /* Body definition */
@@ -81,11 +81,12 @@ header {
 .gradient-box {
     background: var(--Color-gradient-box);
 }
+
 /* Lists and other elements */
 nav ul li {
     color: var(--Color-text-grey);
-    }
-    
+}
+
 .text-green {
     color: var(--Color-text-and-buttons-green);
 }
@@ -93,7 +94,7 @@ nav ul li {
 .text-green-recipes {
     color: var(--Color-border-text-green-recipes);
 }
-        
+
 .color-border-text-green-recipes {
     border: 1px solid var(--Color-border-text-green-recipes);
     padding: 0.75rem;
@@ -105,18 +106,19 @@ nav ul li {
     gap: 0.5rem;
     min-width: 3rem;
 }
+
 .text-brown {
     color: var(--Color-text-brown-steps);
 }
-    
+
 .text-black {
     color: black;
 }
-    
+
 .text-buttons-green {
     color: var(--Color-text-buttons-green);
 }
-        
+
 /* Images */
 
 .logo-AIChef {
@@ -194,4 +196,21 @@ nav ul li {
 
 .toast-info {
     background-color: var(--Color-curvy-line);
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.2s ease-out;
 }

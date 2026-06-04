@@ -145,10 +145,72 @@ async function cargarRecetasFavoritas() {
     }
 }
 
+function mostrarModalConfirmacion(mensaje) {
+
+    return new Promise((resolve) => {
+
+        const modal =
+            document.getElementById('modal-confirmacion');
+
+        const mensajeModal =
+            document.getElementById('modal-mensaje');
+
+        const btnConfirmar =
+            document.getElementById('btn-confirmar');
+
+        const btnCancelar =
+            document.getElementById('btn-cancelar');
+
+        mensajeModal.textContent = mensaje;
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        function limpiar() {
+
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+
+            btnConfirmar.removeEventListener(
+                'click',
+                confirmar
+            );
+
+            btnCancelar.removeEventListener(
+                'click',
+                cancelar
+            );
+        }
+
+        function confirmar() {
+            limpiar();
+            resolve(true);
+        }
+
+        function cancelar() {
+            limpiar();
+            resolve(false);
+        }
+
+        btnConfirmar.addEventListener(
+            'click',
+            confirmar
+        );
+
+        btnCancelar.addEventListener(
+            'click',
+            cancelar
+        );
+    });
+}
+
+
 // FUNCIÓN ASÍNCRONA QUE DISPARA EL BORRADO AL BACKEND
 async function ejecutarEliminacion(idReceta, tituloReceta) {
     // Confirmación de cortesía para evitar borrados accidentales
-    const confirmar = confirm(`¿Estás segura de que querés eliminar "${tituloReceta}" de tus favoritas?`);
+    const confirmar = await mostrarModalConfirmacion(
+        `¿Querés eliminar "${tituloReceta}" de tus favoritas?`
+    );
     if (!confirmar) return;
 
     const token = localStorage.getItem('token');
@@ -163,7 +225,7 @@ async function ejecutarEliminacion(idReceta, tituloReceta) {
         });
 
         if (response.ok) {
-            mostrarToast('🗑️ Receta eliminada del libro con éxito.');
+            mostrarToast('🗑️ Receta eliminada con éxito.');
             cargarRecetasFavoritas(); // Volvemos a renderizar la lista actualizada sin recargar la página entera
         } else {
             mostrarToast('No se pudo eliminar la receta. Intente nuevamente.');
