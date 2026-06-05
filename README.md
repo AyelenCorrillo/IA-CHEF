@@ -41,7 +41,6 @@ IA-CHEF permite elegir ingredientes de forma interactiva, generar recetas median
 
 - Java 21
 - Spring Boot
-- Spring Data JPA
 - Thymeleaf
 - PostgreSQL
 - Docker / Docker Compose
@@ -187,7 +186,7 @@ Esto levanta:
 
 ```bash
 # Detener y remover los contenedores
-docker compose down
+docker compose down -v
 ```
 
 ## Variables de entorno necesarias
@@ -207,7 +206,9 @@ Opcionalmente, el contenedor puede recibir variables Spring de conexión si se d
 
 ## Mejoras futuras
 
-- Implementar vista completa de recetas favoritas
+- Filtros alimenticios
+- Recomendaciones personalizadas
+- App mobile
 - Externalizar configuración de Groq
 - Incorporar testing automatizado
 - Agregar autenticación OAuth2
