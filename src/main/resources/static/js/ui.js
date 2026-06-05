@@ -25,5 +25,5 @@ function mostrarToast(mensaje, tipo = "info") {
 
     toast.timeoutId = setTimeout(() => {
         toast.classList.add("hidden");
-    }, 5000);
+    }, 3000);
 }

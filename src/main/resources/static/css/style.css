@@ -123,8 +123,13 @@ nav ul li {
 
 .logo-AIChef {
     width: 140px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
+.logo-AIChef:hover{
+    transform: scale(1.03);
+}
 
 .line {
     bottom: -10px;
